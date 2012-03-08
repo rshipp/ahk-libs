@@ -1,0 +1,196 @@
+#SingleInstance, Force
+#NoEnv
+    
+    global iahklib
+    iahklib := new ahklib()
+    iahklib.RefreshList()
+return
+
+; TODO: add details pane for currently selected row item
+
+#Include AsyncHttp\AsyncHttp.ahk
+#Include LSON\LSON.ahk
+
+class ahklib extends CGUI {
+    Title := "Download libraries"
+    CloseOnEscape := true
+    DestroyOnClose := true
+    
+    txtLibLoc := this.AddControl("Text", "txtLibLoc", "", "Library type:")
+    ddlLibLoc := this.AddControl("DropDownList", "ddlLibLoc", "x100 yp w95", "StdLib||UserLib|Custom")
+    edtLibLoc := this.AddControl("Edit", "edtLibLoc", "x+5 yp w200", "")
+    
+    txtPackages := this.AddControl("text", "txtPackages", "xm", "Select package:")
+    ddlPackages := this.AddControl("DropDownList", "ddlPackages", "x100 yp w95", "(custom)||")
+    btnRefresh  := this.AddControl("Button", "btnRefresh", "x+5 yp", "Refresh List")
+    btnRefresh_Click := ahklib.RefreshList
+    
+    lvDownloads := this.AddControl("ListView", "lvDownloads", "xm w400 h200 checked", "|Name|Description|Current|Installed")
+    
+    edtDetails   := this.AddControl("Edit", "edtDetails", "wp h100", "")
+    
+    btnInstall := this.AddControl("Button", "btnInstall", "xm", "Install Selected")
+    
+    status1 := this.AddControl("StatusBar", "status1", "", "Loading...")
+    
+    libraries := []
+    reqs := []
+    reqstart := 0
+    
+    __new() {
+        this.lvDownloads.IndependentSorting := True
+        this.Show()
+    }
+    
+    RefreshList() {
+        this.lvDownloads.items.Clear()
+        this.DownloadList()
+        this.UpdateCheckmarks()
+        Loop, 5
+            this.lvDownloads.ModifyCol(A_Index,"AutoHdr")
+        this.lvDownloads.SelectedIndex := 1
+        this.status1.Text := "Ready."
+    }
+    
+    DownloadList() {
+        this.status1.Text := "Loading list of libraries..."
+        
+        reqs := new AsyncHttp()
+        reqs.Request("get", "https://api.github.com/orgs/ahklib/repos")
+        if !reqs.Wait(10)
+            ExitError("Didn't receive repos list!")
+        
+        reqs.callbacks := { OnResponseFinished: ahklib.AddItem }
+        
+        this.status1.Text := "Getting libraries details..."
+        
+        for i, repo in LSON(reqs[1].whr.responsetext)
+            if (repo.name != "AutoHotkey-StdLib")
+            {
+                if !this.libraries.HasKey(repo.name)
+                    this.libraries[repo.name] := { custom_checked: False }
+                this.libraries[repo.name].row := this.lvDownloads.items.Add("col2 " (this.libraries[repo.name].custom_checked ? "checked" : "") , repo.name)
+                this.reqs[reqs.request("get", repo.url)] := { name: repo.name, type: "details" }
+                url := "https://api.github.com/repos/ahklib/" repo.name "/tags"
+                this.reqs[reqs.request("get", url)]      := { name: repo.name, type: "downloads" }
+            }
+        
+        this.reqstart := A_TickCount
+        while !reqs.wait(0)
+        {
+            sleep 100
+            if (A_TickCount - this.reqstart > 10000)
+                ExitError("Timed out getting repos!")
+        }
+        
+        this.status1.Text := "Libraries details downloaded."
+    }
+    
+    ; This function is called via RegisterCallback from AsyncHttp
+    ; The first arg (`this`) is an object which contains a 
+    ;    pointer to the request object in key pthis and the 
+    ;    request object's index for this http request in idx
+    AddItem() {
+        idx := this.idx
+        reqs := Object(this.pthis)
+        
+        if iahklib.reqs.HasKey(idx)
+        {
+            iahklib.reqstart := A_TickCount
+            req := iahklib.reqs.remove(idx, "")
+            
+            lib := iahklib.libraries[req.name]
+            lib[req.type] := LSON(reqs[idx].whr.ResponseText)
+            
+            ; TODO: search lib.downloads for latest version; group tag names that point to the same hash
+            if (req.type = "details")
+                lib.row[3] := Ellipse(lib.details.description, 40)
+            else
+                lib.row[4] := lib.downloads[1].name
+        }
+    }
+    
+    UpdateCheckmarks() {
+        this.status1.Text := "Refresing list"
+        ; save/restore checked items
+        for name,lib in iahklib.libraries
+        {
+        }
+        ; column resize...
+        ; order list
+    }
+    
+    ddlLibLoc_SelectionChanged( item ) {
+        if (item.text = "StdLib")
+        {
+            ; TODO: look up location of executable that runs .ahk files from registry (this script might be compiled)
+            ; TODO: choice of file extensions
+            this.edtLibLoc.text := A_AhkPath
+            this.edtLibLoc.ReadOnly := True
+        }
+        else if (item.text = "UserLib")
+        {
+            this.edtLibLoc.text := A_MyDocuments
+            this.edtLibLoc.ReadOnly := True
+        }
+        else if (item.text = "Custom")
+        {
+            this.edtLibLoc.text := ""
+            this.edtLibLoc.ReadOnly := False
+        }
+    }
+    
+    lvDownloads_CheckedChange( row ) {
+        if (this.ddlPackages.SelectedIndex != 1)
+        {
+            this.ddlPackages.SelectedIndex := 1
+            for i, row in this.ddlPackages
+                this.libraries[row[2]].custom_checked := row.Checked
+        }
+        else
+            this.libraries[row[2]].custom_checked := row.Checked
+    }
+    
+    lvDownloads_SelectionChanged( row ) {
+        this.edtDetails.text := this.libraries[row[2]].details.description
+    }
+    
+    btnInstall_Click() {
+        if InStr(FileExist(this.edtLibLoc.text), "D")
+        {
+            ; get temp dir
+            ; clear dir
+            ; download all selected libraries to dir
+            this.status1.text := "Starting installer..."
+            
+            ; do something different when A_IsCompiled
+            run % "install.ahk_l """ this.edtLibLoc.text """ "
+        }
+        else
+            this.status1.text := "Invalid library install location"
+    }
+    
+    PostDestroy() {
+        ExitApp
+    }
+}
+
+Ellipse(text, length) {
+    if StrLen(text) > length
+        text := SubStr(text, 1, length-3) "..."
+    return text
+}
+
+ExitError(error = "`r") {
+    if (error != "`r")
+        msgbox % error
+    ExitApp
+}
+
+; ** https://api.github.com/orgs/ahklib/repos
+; ** https://api.github.com/repos/ahklib/LSON
+; ** https://api.github.com/repos/ahklib/LSON/tags
+; https://api.github.com/repos/ahklib/LSON/branches
+; https://api.github.com/repos/ahklib/LSON/git/trees/68e51adf6ded6d4c82a36d50aa59c858b45bce7c
+; https://api.github.com/repos/ahklib/LSON/git/blobs/9aa860965383723fa466fbf838edf8b1a54a72f2
+; https://api.github.com/repos/ahklib/LSON/downloads

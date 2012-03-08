@@ -1,0 +1,46 @@
+#SingleInstance, Force
+
+
+    Gui, Add, Edit, vedt readonly hwndedtHwnd
+    Gui, Add, Button, , Change
+    Gui, +LastFound
+    guiHwnd := WinExist()
+    Gui, Show
+return
+
+ButtonChange:
+    ControlGet, get, Style, , , ahk_id %edtHwnd%
+    SendMessage, 0xCF, % !(get & 0x800), , , ahk_id %edtHwnd%
+return
+
+
+/*
+    x := new testgui()
+    x.show()
+return
+
+#Include <CGUI>
+
+class testgui extends CGUI {
+    edt := this.AddControl("Edit", "edt", "", "")
+    btn := this.AddControl("Button", "btn", "", "Switch")
+    
+    btn_Click() {
+        this.edt.ReadOnly := !this.edt.ReadOnly
+        tooltip % this.edt.ReadOnly
+    }
+}
+*/
+
+/*
+; TODO: abstract downloader part into this script so downloads can be done via command line
+
+; try to write to the first script arg dir
+; if it didn't work:
+if not A_IsAdmin
+{
+   Run *RunAs "%A_ScriptFullPath%"  ; Requires v1.0.92.01+
+   ExitApp
+}
+
+; copy all files from second script arg dir to first script arg dir

@@ -1,0 +1,110 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Zip()</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="default.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<h1>Zip()</h1>
+
+<pre class="Syntax">Zip( [mode,] array1 [..., arrayN] )</pre>
+<h3>Parameters</h4>
+<table class="info">
+<tr>
+  <td width="15%">mode</td>
+  <td width="85%">(Optional) If the first arg is a string it is interpreted as the mode specifier
+which modifies the function's behavior when arrays have differing sizes.</td>
+</tr>
+<tr>
+  <td width="15%">array1...arrayN</td>
+  <td width="85%">Arrays to zip.</td>
+</tr>
+</table>
+<h3>Returns</h3>
+<p>An array of arrays where the <em>i</em>-th array contains the <em>i</em>-th element from all of the parameter arrays.<br/>
+E.g. passing arrays <code>[1,2,3]</code> and <code>[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</code>  would return <code>[[1,&quot;a&quot;],[2,&quot;b&quot;],[3,&quot;c&quot;]]</code></p>
+<h3>Throws</h3>
+<p>Non object arg passed.</p>
+<h2>Remarks</h2>
+<h3>Behavior when arrays have different sizes</h3>
+<p>This is changed by specifying the <code>mode</code> parameter.</p>
+<ul>
+<li>default (omitted or when options param is any string other than <code>all</code> or <code>copy</code>)  </li>
+</ul>
+<p>When one array is longer than another, truncate the longer array to the length 
+of the shorter array.<br/>
+See example A</p>
+<ul>
+<li>all</li>
+</ul>
+<p>When one array is shorter than another it is extended with empty values (skipped).<br/>
+This can result in sparsely populated return arrays like: <code>{3: &quot;c&quot;, 5: &quot;e&quot;}</code><br/>
+See example B<br/>
+Since nothing is truncated in this mode the result is 100% reversible. (Example C)</p>
+<ul>
+<li>copy</li>
+</ul>
+<p>When one array is shorter than another, the last value in the
+array is copied to extended it.<br/>
+See example D</p>
+<h3>Unzipping</h3>
+<p>zip() in conjunction with the * operator can be used to unzip zipped arrays.<br/>
+See example C</p>
+<h3>Examples</h3>
+<p>These are referred to in the examples.<br/>
+When they're lined up like this, you can look down the columns to see the values it will return.</p>
+<pre class="NoIndent">a1 := [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
+a2 := [&quot;A&quot;,&quot;B&quot;,&quot;C&quot;]
+a3 := [ 1 , 2 , 3 , 4]   <em>; this one has 4 elements</em></pre>
+<p>A:</p>
+<pre class="NoIndent">zipped := zip(a1, a2, a3)
+<em>; [[&quot;a&quot;, &quot;A&quot;, 1], [&quot;b&quot;, &quot;B&quot;, 2], [&quot;c&quot;, &quot;C&quot;, 3]]</em>
+<em>; notice that the value 4 has been omitted entirely</em></pre>
+<p>B:</p>
+<pre class="NoIndent">zipped := zip(&quot;all&quot;, a1, a2, a3)
+<em>; [[&quot;a&quot;, &quot;A&quot;, 1], [&quot;b&quot;, &quot;B&quot;, 2], [&quot;c&quot;, &quot;C&quot;, 3], {3: 4}]</em>
+<em>; notice the sparsely-populated fourth array</em></pre>
+<p>C:</p>
+<pre class="NoIndent">unzipped := zip(zipped*)
+<em>; [[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;],[1,2,3,4]]</em>
+<em>; using zip again unzips and returns the originals</em></pre>
+<p>D:</p>
+<pre class="NoIndent">zipped := zip(&quot;copy&quot;, a1, a2, a3)
+<em>; [[&quot;a&quot;, &quot;A&quot;, 1], [&quot;b&quot;, &quot;B&quot;, 2], [&quot;c&quot;, &quot;C&quot;, 3], [&quot;c&quot;, &quot;C&quot;, 4]]</em>
+<em>; notice where &quot;all&quot; produced a sparsely-populated fourth array, this copies </em>
+<em>;    the last value of the smaller arrays to fill in missing indexes</em></pre>
+<p>E: side-effects of &quot;copy&quot; mode</p>
+<pre class="NoIndent">unzipped := zip(zipped*)
+<em>; [[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;c&quot;], [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;C&quot;], [1, 2, 3, 4]]</em>
+<em>; notice the extra &quot;c&quot; and &quot;C&quot; where they were too short.</em></pre>
+<h3>See also</h3>
+<p><a href="http://www.autohotkey.com/forum/viewtopic.php?t=77832">AutoHotkey Forum topic</a></p>
+<p>The default mode is similar to <a href="http://docs.python.org/library/functions.html#zip">Python's zip</a></p>
+<h3>License</h3>
+<pre class="NoIndent">Copyright (c) 2011, infogulch
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted 
+provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of 
+      conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list 
+      of conditions and the following disclaimer in the documentation and/or other materials 
+      provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR 
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
+AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR 
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.</pre>
+
+</body>
+</html>
