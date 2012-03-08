@@ -1,0 +1,9 @@
+License of Hardeep`s WinServ.ahk library
+
+Refers to the source code.
+
+Hardeep wrote:
+
+    "License: You may use this code freely and without any restriction. If you find it useful, do post your feedback at the above mentioned forum topic."
+    
+    The Forum Topic: http://www.autohotkey.com/forum/viewtopic.php?t=21975

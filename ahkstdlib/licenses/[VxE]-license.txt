@@ -1,0 +1,12 @@
+Refers to this post: Sun May 10, 2009 12:48 pm
+    
+    o    http://www.autohotkey.com/forum/viewtopic.php?p=268240#268240
+
+
+DataLife asked:
+    
+    "Can I have permission to use it in one of my scripts?"
+
+[VxE] answered:
+
+    "Yes, everyone has permission to use code found in any of my posts in any manner they see fit."

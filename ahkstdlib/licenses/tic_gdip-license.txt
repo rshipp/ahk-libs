@@ -1,0 +1,12 @@
+License of tic`s Gdip.ahk library
+
+Refers to this post: Wed May 28, 2008 3:27 am
+    
+    o    http://www.autohotkey.com/forum/viewtopic.php?p=198949#198949
+
+tic said:
+
+    "This library can be distributed for commercial and non-commercial use and I actively encourage both. I would appreciate it if people give acknowledgement for my work and would be nice to have pasted once at the top of your script something similar to:"
+
+    [code]Thanks to tic (Tariq Porter) for his GDI+ Library
+    http://www.autohotkey.com/forum/viewtopic.php?t=32238[/code]

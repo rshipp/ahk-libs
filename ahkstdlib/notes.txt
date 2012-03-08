@@ -1,0 +1,46 @@
+Todo (just ideas, not real todo list)
+
+- make a note of all required steps, when updating the collection
+- settings of script LibraryExplorer in external ini
+- live browser and instant forum search results?
+- rename temp folder to VAR and create subfolders for swap, cache and backup
+- write a script project_cleanup.ahk: delete unneeded files, set readonly flags
+- write a script prject_build.ahk: create an archive with all needed files
+- An enhanced copy info dialog gui, where specific fields can be copied.
+- "please wait" notices per tray or progress bar, whenever waiting for something
+- select category from list, to show those libraries matching the category only
+- rework on categories, to clean a bit up and make more clear
+- Description about the used database structure *ini*
+- documention of the gui
+
+Proposed to be added, review needed:
+
+    http://www.autohotkey.com/forum/topic48616.html - WinSock2
+    http://www.autohotkey.com/forum/viewtopic.php?t=36168 - send/expect() for Autohotkey TelnetAlike sessions
+    http://www.autohotkey.com/forum/viewtopic.php?t=59816 - klist() --Key list maker--
+    http://www.autohotkey.com/forum/viewtopic.php?t=62298 - GetUserInput() - Dialog for different value types
+    http://www.autohotkey.com/forum/viewtopic.php?t=34517 - Using standard input/output
+    http://www.autohotkey.com/forum/viewtopic.php?t=61345 - MouseMove_Ellipse
+    http://www.autohotkey.com/forum/viewtopic.php?t=52403 - Font
+
+    
+These are not included. Either they are not tested. not compatible with my collection or need non standard DLL files:
+
+    http://www.autohotkey.com/forum/viewtopic.php?t=26300 - LowLevel & dynamic code
+    http://www.autohotkey.com/forum/viewtopic.php?t=53317 - Forms Framework
+    http://www.autohotkey.com/forum/viewtopic.php?t=31923 - MS Office Automation Functions
+    http://www.autohotkey.com/forum/viewtopic.php?t=26191 - .NET Framework Interop
+    http://www.autohotkey.com/forum/viewtopic.php?t=21674 - Embedded Windows Scripting (VBScript & JScript) and COM
+    http://www.autohotkey.com/forum/viewtopic.php?t=52913 - PPJoy library
+    http://www.autohotkey.com/forum/viewtopic.php?t=26841 - Voice Recognition COM
+    http://www.autohotkey.com/forum/viewtopic.php?t=33263 - WinTraymin to trayicon
+    http://www.autohotkey.com/forum/viewtopic.php?t=8316 - Clock + cpu and memory usage
+
+
+Interesting helper stuff for coders:
+
+    http://www.autohotkey.com/forum/viewtopic.php?t=59593 - MCodeGen - Easily transform C/C++ code into mcode
+    http://www.autohotkey.com/forum/viewtopic.php?t=2510 - Scriptlet Library
+    http://www.autohotkey.com/forum/viewtopic.php?t=61752 - Easy Script Block Editor
+    http://www.autohotkey.com/forum/viewtopic.php?t=39649 - WinAPI Listing [New Version]
+    http://www.autohotkey.com/forum/viewtopic.php?t=49262 - U T e s t 

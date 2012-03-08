@@ -1,0 +1,13 @@
+License of drifter`s consoleApp.ahk library
+
+Refers to this post: Tue Mar 09, 2010 4:41 am
+    
+    o    http://www.autohotkey.com/forum/viewtopic.php?p=338195#338195
+
+Tuncay asked:
+    
+    "Am I allowed to republish the modified version?"
+
+drifter answered:
+
+    "You may modify and distribute this script with your applications for any purposes, public or commercial."

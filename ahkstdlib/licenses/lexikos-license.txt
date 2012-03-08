@@ -1,0 +1,26 @@
+Lexikos' default copyright license
+	http://www.autohotkey.com/forum/viewtopic.php?t=39287
+
+Update 2010-02-15:
+Unless explicitly marked otherwise, any original script I write and post or have written and posted in these forums may be considered public domain. If parts are derived from scripts written by others, those parts may be copyright their respective authors. I will attempt to identify such parts if they are present, typically with a name and/or URL.
+
+In other words: use, modify, distribute, etc. my scripts however you like.
+
+A while back, I wrote:
+I've always felt that attaching explicit licenses detracts from my posts, so this thread is here to remove any doubt about how my scripts may be used, and to save me answering should someone ask. Since the zlib license is very close to my own views, I've used it as a base.
+
+Obviously if I post a script which is not entirely my own work, the original author's terms also apply. (If I post such a script and don't mention the original author, feel free to berate me.)
+
+
+Unless otherwise noted, the following license may be applied to any script I have posted or will post in Scripts & Functions:
+Quote:
+This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
+
+   1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+
+   2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+
+
+This may also be applied to any script I have posted or will post in Ask for Help, except that restrictions 1 and 2 are optional. Wink

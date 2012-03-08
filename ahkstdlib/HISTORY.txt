@@ -1,0 +1,198 @@
+ahkstdlib
+    HISTORY
+    
+2010-09-18
+
+    * General: I have set the read-only flag on all files which should prevent changes from end user (doc, lib, licenses, samp, tools).
+    * General: Some small changes in database *ini* data and header, without making a note.
+
+    * GUI: Bug. Incorrect date was displayed on title of gui.
+    * GUI: Bug. If search result have a clear list, then the current selected item is nothing too.
+    * GUI: Bug. The clean button [X] should set to first entry and update the title correctly.
+    * GUI: Bug. Run Example button had to be pushed twice to work, if current active tab was not the Example tab.
+        
+    * GUI: Improved. Some improvements to core script and rearrangements of gui.
+    
+    * GUI: New. A small notification at right upper corner of gui is shown, if an update to the collection is available.
+    * GUI: New. Added button for compare two sources. Button is available only, if the source is installed AND MD5 
+        checksum differs. Otherwise it wouldn`t make sense to compare identical files. Text Compare v2 by jaco0646 
+        was modified so it can be used without a gui.
+    
+    * LIB: Updated tf.ahk by hugov. (GUID=f24c8170-955e-126a-98a5-19ac76b08d4a)
+    * LIB: Updated Gdip.ahk by tic. (GUID=5d568b50-955f-126a-9aba-12407a205cc2)
+    * LIB: Updated MCI.ahk by jballi. (GUID=6a14b880-955f-126a-93e1-15da721e9de9)
+    * LIB: Updated MI.ahk by Lexikos. (GUID=8c02c950-955f-126a-938a-112554ca6e33)
+    * LIB: Updated Hotstrings.ahk by Titan. (GUID=fe63f180-9ed9-126a-9597-1e6ec5af61f2)
+    * LIB: Updated Eval.ahk by Laszlo. (GUID=af6c1c30-a639-126a-9ff3-132aa35070d5)
+    * LIB: Updated ToolTip.ahk by HotKeyIt. (GUID=57020800-c611-126a-99b9-1b9e7d60ee54)
+    * LIB: Updated ping.ahk by Drugwash. (GUID=abdf1c50-118e-126b-9f1a-191b4b3d258b)
+    * LIB: Updated UnHTM.ahk by SKAN. (GUID=7177b690-ace3-126a-97df-1505eb9499ff)
+    
+    * LIB: Added RemoteBuf.ahk by majkinetor. (GUID=33cab160-e80c-126c-9ce9-15070a8a9dec)
+    * LIB: Added AHKsock.ahk by TheGood. (GUID=8d34fc10-e834-126c-9ffb-12ea3226340b)
+    * LIB: Added InternetFileRead.ahk by SKAN. (GUID=e2b17120-e864-126c-92a0-13d8c82a09fa)
+    * LIB: Added HtmDlg.ahk by SKAN. (GUID=181da900-e888-126c-93a3-16947f4a5b2b)
+    * LIB: Added StrPut.ahk by Lexikos. (GUID=05b63080-022c-126d-9ea6-1411d6eb9aff)
+    * LIB: Added StrGet.ahk by Lexikos. (GUID=11a69650-0240-126d-9697-1d6eed540aab)
+    * LIB: Added QPX.ahk by SKAN. (GUID=4f0abb60-0250-126d-95c0-13932914576d)
+    * LIB: Added Delay.ahk by SKAN. (GUID=1f9c0b60-028a-126d-9ae0-1948659080b9)
+    * LIB: Added grep.ahk by Titan. (GUID=03987090-03a0-126d-9a63-1c0e071b5138)
+    * LIB: Added difference.ahk by toralf. (GUID=0b407180-06d9-126d-98b8-19b7b6c7f941)
+    * LIB: Added RPath.ahk by toralf and Titan. (GUID=28243340-091d-126d-9a62-123a48ba1a37)
+    * LIB: Added WaitPixelColor.ahk by MasterFocus. (GUID=f60c4e80-0951-126d-9902-181cdc65740e)
+    * LIB: Added ShellFileOperation.ahk by SKAN. (GUID=39d69930-097b-126d-9d9e-1713c1956b60)
+    * LIB: Added Notify.ahk by gwarble. (GUID=bb1bd500-09a3-126d-9a50-1d41345a9626)
+    * LIB: Added Edit.ahk by jballi. (GUID=d1fde810-0af9-126d-9a8e-131a1044c4ac)
+    * LIB: Added yaml.ahk by HotKeyIt. (GUID=49cbc450-0c82-126d-943b-15cbbaad1d47)
+    * LIB: Added AHKHID.ahk by TheGood. (GUID=e2dbf440-0c9a-126d-94aa-11af83b7c411)
+    * LIB: Added LetUserSelectRect.ahk by Lexikos. (GUID=cd069190-116b-126d-95d9-1c314e60e45c)
+    * LIB: Added PixPut.ahk by SKAN. (GUID=03a97340-1485-126d-95fe-18379476aa73)
+    * LIB: Added type.ahk by MasterFocus. (GUID=481b1950-14e1-126d-9d29-1a8eecc89f2e)
+    * LIB: Added dll.ahk by SKAN. (GUID=ff352f20-1506-126d-9f1c-147568c71101)
+    * LIB: Added WinServ.ahk by Hardeep. (GUID=b4a3ff90-1524-126d-9445-1f23ca6c98e7)
+    * LIB: Added ShowMenu.ahk by majkinetor. (GUID=245b5320-154c-126d-997c-1f43fa949821)
+
+
+2010-04-11
+
+    * GUI: Added a copy to-button. The source will be copied to selected file / folder path. Additional filename.ahk.manifest file is created.
+    * GUI: Added functionality to search field, now every search term prefixed with "!" do must NOT be found in searched data.
+    
+    * LIB: Updated license of tic`s Gdip.ahk library, formerly marked as <Unknown>. (GIUD=5d568b50-955f-126a-9aba-12407a205cc2)
+    * LIB: Updated Lexikos`s VA.ahk library, just one small fix w/o changing revision. (GIUD=b5a82970-98fd-126a-9389-138e21f31941)
+    * LIB: Updated HuBa`s ProcessInfo.ahk library, just one small fix w/o changing revision. (GIUD=e25e5490-955f-126a-980b-1c5a9135cbad)
+    * LIB: Updated incorrect prefix of GUID=f0f24340-a8d3-126a-9963-16eb15ad24c9 from TrayButton to correct TaskButton.
+    
+    * LIB: Added ToolTip.ahk by HotKeyIt. (GUID=57020800-c611-126a-99b9-1b9e7d60ee54)
+    * LIB: Added msTill.ahk by None. (GUID=134b6220-c966-126a-98bc-1d6fdd1af51d)
+    * LIB: Added Exec.ahk by HotKeyIt. (GUID=010e2790-1165-126b-932f-1a071d901920)
+    * LIB: Added ping.ahk by Drugwash. (GUID=abdf1c50-118e-126b-9f1a-191b4b3d258b)
+    * LIB: Added strTail.ahk by Tuncay. (GUID=645e3900-11b7-126b-9c91-1bbbeb671a20)
+    * LIB: Added WatchDirectory.ahk by HotKeyIt. (GUID=ec793e40-11ce-126b-9eaa-122c74919448)
+    * LIB: Added mg.ahk by Learning one. (GUID=de0dff80-11dd-126b-99a2-11fb0295efc7)
+    * LIB: Added baseConvert.ahk by Holle. (GUID=d8075830-1236-126b-9328-1541d57d79f2)
+
+
+2010-03-11
+
+    * General: For libraries without a documentation, but having a comprehensive description at the forum 
+        post, will be selected and saved the selection with ScrapBook. After that, the page will be saved 
+        with Firefox native save as command. All that only to have the selected part as a separate file,
+        without loosing the original posts stylings.
+        Location: http://amb.vis.ne.jp/mozilla/scrapbook/
+        
+    * GUI: Some small changes and improvements.
+    * GUI: Added to the title the count of current search matching and the total number of libraries.
+    * GUI: Added a link to all libraries with an unknown license, pointing to a default license text. 
+    * GUI: Improved/Changed the way the search field works. Now it sees every typed word as individual
+        search term. It shows only those items, who matches all search words.
+    
+    * LIB: The documentation entry in the database accepts multiple files in csv format also.
+    * LIB: Added a gui tool for adding entries in the database: libdb-add_entry.ahk
+    
+    * LIB: Added CMDret.ahk by corrupt. (GUID=c34f6d30-a529-126a-9d45-113e3e5de4a6)
+    * LIB: Added CMDret_stream.ahk by corrupt. (GUID=62a84c80-a557-126a-96e9-1d01bbbb3a89)
+    * LIB: Added SB.ahk by DerRaphael. (GUID=7f9bd500-a593-126a-953f-14d140efa75e)
+    * LIB: Added GetCommonPath.ahk by majkinetor. (GUID=b1cc7600-a61b-126a-9160-1b177ec0d468)
+    * LIB: Added Eval.ahk by Laszlo. (GUID=af6c1c30-a639-126a-9ff3-132aa35070d5)
+    * LIB: Added ftp.ahk by olfen. (GUID=f9cc0690-a5ef-126a-9780-1ee71b8ae8a0)
+    * LIB: Added Crypt.ahk by Sean. (GUID=35e34f20-a696-126a-9be6-1e1a54a3292e)
+    * LIB: Added File.ahk by Sean. (GUID=6e9da590-a682-126a-9fb2-14966547c727)
+    * LIB: Added TrayIcon.ahk by Sean. (GUID=261da040-a7f4-126a-92c7-11524d1f1df5)
+    * LIB: Added TaskButton.ahk by Sean. (GUID=f0f24340-a8d3-126a-9963-16eb15ad24c9)
+    * LIB: Added RandomUniqNum.ahk by Laszlo. (GUID=29a02810-a938-126a-991f-129be1ffffd9)
+    * LIB: Added Win.ahk by majkinetor. (GUID=2e009d40-aaff-126a-9bdc-13ad9e9ec159)
+    * LIB: Added Align.ahk by majkinetor. (GUID=9b312810-aae8-126a-9d26-1d2919edd232)
+    * LIB: Added CColor.ahk by majkinetor. (GUID=9a27e010-ab85-126a-9892-15b8121c4ae1)
+    * LIB: Added ILButton.ahk by majkinetor. (GUID=24d6e950-ac2f-126a-9cb7-1f1ea184d563)
+    * LIB: Added Font.ahk by majkinetor. (GUID=8a94db30-ac39-126a-915e-11be63bc1dde)
+    * LIB: Added Toolbar.ahk by majkinetor. (GUID=a2f16550-ac47-126a-9117-1294d276d4b1)
+    * LIB: Added Rebar.ahk by majkinetor. (GUID=6ba96490-ac50-126a-926b-16e3eaff0f8e)
+    * LIB: Added RichEdit.ahk by majkinetor. (GUID=59e4a950-ac59-126a-98c1-12146b74db76)
+    * LIB: Added HLink.ahk by majkinetor. (GUID=050c5a50-ac67-126a-9611-158451ae38ac)
+    * LIB: Added Splitter.ahk by majkinetor. (GUID=7a326b10-ac6e-126a-9ba1-14a055f3eb15)
+    * LIB: Added DockA.ahk by majkinetor. (GUID=ed633b80-ac75-126a-97c9-1634b021e32f)
+    * LIB: Added argp.ahk by Tuncay. (GUID=c7711350-ac90-126a-980d-180b2e7d254c)
+    * LIB: Added Mem.ahk by Philo. (GUID=db92c800-aca0-126a-9d99-137a13b80698)
+    * LIB: Added UnHTM.ahk by SKAN. (GUID=7177b690-ace3-126a-97df-1505eb9499ff)
+    * LIB: Added StrX.ahk by SKAN. (GUID=4b482750-acea-126a-9125-18093784c24a)
+    * LIB: Added TVX.ahk by majkinetor. (GUID=d34c3290-ae48-126a-947c-1680d72944cb)
+    * LIB: Added StdoutToVar.ahk by Sean. (GUID=7e93d650-af14-126a-97a8-1212949628eb)
+    * LIB: Added regionGetColor.ahk by Infogulch. (GUID=90e4f670-af34-126a-9abf-1c0b1fede15b)
+    * LIB: Added fileIsBinary.ahk by Lexikos. (GUID=af0f3490-af4c-126a-9bbb-14077bf2c1be)
+    * LIB: Added ThousandsSep.ahk by infogulch. (GUID=af0f3490-af4c-126a-9bbb-14077bf2c1be)
+    * LIB: Added FileExtract.ahk by Lexikos. (GUID=a03bce10-af6f-126a-9196-1c8e368e8d4e)
+    * LIB: Added IsFullScreen.ahk by TheGood. (GUID=5eeeef9e-af7f-126a-988e-162a974c743d)
+
+
+2010-03-07
+
+    * GUI: Improved search field. Type recognization and general speed. Also normal searches at
+        the description and notes also. New: If search line is prefixed with a ">" character, then
+        all source files are searched. New: Added some buttons and checkboxes for searching.
+    * GUI: Added the ability to copy current row to clipboard, with double left or right click.
+    * GUI: Replaced back the compiled tool doc-o-matic.exe with the uncompiled version doc-o-matic.ahk
+        (Thx hugov).
+
+
+2010-03-06
+
+    * LIB: Removed the default library $.ahk and resolved the functions to separate files.
+        Internal numbering of some scripts are rearranged. Resolved to these two:
+        * LIB: Added Random.ahk by [VxE]. (GUID=360f6d10-9e23-126a-986d-1ca5a588dc11)
+        * LIB: Added ConnectedToInternet.ahk by SKAN. (GUID=cdf2e490-9e82-126a-9250-1aa2d0890913)
+    * LIB: Added DamerauLevenshteinDistance.ahk by Titan. (GUID=683cc900-9ec7-126a-9f10-15a625f9f073)
+    * LIB: Added Hotstrings.ahk by Titan. (GUID=fe63f180-9ed9-126a-9597-1e6ec5af61f2)
+    * LIB: Added json.ahk by Titan. (GUID=86f4d720-9efe-126a-9bc1-1f8fbf25d100)
+    * LIB: Added pgArray.ahk by Infogulch. (GUID=acfea630-9f08-126a-9c3e-14a09d53a8c7)
+
+    * GUI: Added an "Analyze Source" button, which uses a modified version from DerRaphael`s
+        script "Doc-O-Matic" to generate an "on the fly"-documentation.
+        Location: http://www.autohotkey.com/forum/viewtopic.php?t=54846
+    * GUI: Added a search field (control), which filters out all entries not matching the regex.
+        It recognizes if an id/md5/guid search is done.
+        (Thx to jaco0646, http://www.autohotkey.com/forum/viewtopic.php?p=250231#250231)
+
+
+2010-03-05
+
+    * IMPORTANT: Changed all library Guids. Now all Guids are created from Titan`s uuid.ahk script!
+
+    * LIB: Added sXMLget.ahk by infogulch. (GUID=379fbd40-9560-126a-9d15-19e66f18ae9d)
+    * LIB: Added uuid.ahk by Titan. (GUID=419a0f80-9560-126a-911e-12f0811bfaba
+    * LIB: Added cdomessage.ahk by Sean. (GUID=00bdf260-95ab-126a-9b35-1c3983b2b3d8)
+    * LIB: Added VA.ahk by Lexikos. (GUID=b5a82970-98fd-126a-9389-138e21f31941)
+    * LIB: Added GetAvailableFileName.ahk by toralf. (GUID=c4dc7a30-9912-126a-9e34-1e1327e792ec)
+    * LIB: Added Mount.ahk by Tuncay. (GUID=481ea630-9935-126a-96ab-15c4af760f7f)
+    * LIB: Added httpQuery.ahk by DerRaphael. (GUID=70ee3630-9a56-126a-9d45-136c428259a0)
+    * LIB: Added HttpQueryInfo.ahk by olfen. (GUID=83fc1040-9a6e-126a-941c-151ed87341f3)
+    
+    * GUI: Changed to install (at install button) all dependent libraries automatically.
+            But deinstall does not deinstall all dependent libraries.
+    * GUI: Added a tab for showing all those dependent libraries in a fast and dirty way.
+    * GUI: Extended the testing example routine, working with uninstalled dependent files.
+
+
+2010-03-01
+
+    * LIB: Added library Dock.ahk by majkinetor. (GUID=a7a64970-955f-126a-96cc-1a6e80e6c03f)
+    * LIB: Added library md5.ahk by SKAN. (GUID=b5576220-955f-126a-9799-17b30ca87cd2)
+    * LIB: Added library st.ahk by Banane. (GUID=d0dab010-955f-126a-9d8c-1e5e493abb60)
+    * LIB: Added library ProcessInfo.ahk by HuBa and wOxxOm. (GUID=e25e5490-955f-126a-980b-1c5a9135cbad)
+    * LIB: Added library EmptyMem.ahk by heresy. (GUID=f0193140-955f-126a-92d5-1d08fbdc372c)
+    * LIB: Added library DateParse.ahk by Titan. (GUID=08777170-9560-126a-9e6b-1499751d6bf1)
+    * LIB: Added library FileGetVersionInfo.ahk by SKAN, wOxxOm. (GUID=14d7ee40-9560-126a-96aa-1b461b275de4)
+    * LIB: Added library USBD.ahk by SKAN. (GUID=2114dd80-9560-126a-9df3-1d123f681d06)
+    * LIB: Added library Affinity.ahk by SKAN. (GUID=2cfdb950-9560-126a-9eb5-12ac28a72484)
+    
+    * DOC: Removed unneeded counter.js and pixel.gif from documentation of TF. (Thx hugov)
+    
+    * GUI: Library Explorer completly rewritten and reorganized code.
+    * GUI: The compiled version of the Library Explorer is removed.
+    * GUI: Now all installed libraries are shown. (Thx hugov)
+    * GUI: Every examples process will be terminated automatically on exit of main script.
+
+
+2010-02-25
+
+    * Initial Release.

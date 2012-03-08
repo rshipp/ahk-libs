@@ -1,0 +1,12 @@
+Unknown License: Assume Public Domain
+-------------------------------------
+
+The license for this work is not specified or not found and so marked as unknown. And because this work is released in a public forum, the usage is assumed to be public domain. That can vary from country to country.
+
+As a good manners, at least credit to the original author should be given and possibly the location where it is found. 
+
+More about Public Domain:
+
+    *   http://en.wikipedia.org/wiki/Public_domain
+    * 	http://creativecommons.org/licenses/publicdomain/
+    *   http://unlicense.org/

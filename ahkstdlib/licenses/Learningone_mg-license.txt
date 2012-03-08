@@ -1,0 +1,6 @@
+Mouse gestures module is free for non-commercial, personal use.
+You are not allowed to use it commercialy or have any profit from it in general, without my written permission.
+I'm not responsible for any damages arising from the use of Mouse gestures module. You are not allowed to remove
+comments from this file.
+In majotiry of cases, mentioning my name and contact will probably be all what I'll demand for giving you permission
+to use this module commercialy. First ask and than act!
