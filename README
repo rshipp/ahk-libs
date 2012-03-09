@@ -1,2 +1,6 @@
 All the (redistributable) AHK libs I can find...
 Licenses are scattered around in there somewhere.
+
+So far, the included libs are:
+Those specified in the "Sources" file, which were cloned
+directly from other git repos, and the 'ahkstdlib' collection.
