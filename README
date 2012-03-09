@@ -32,3 +32,4 @@ So far, the included libs are (in no particular order):
 
 The "Sources" file contains a list of the git repos cloned and included here. 
 
+Note to developers of these libs: If your code is in this repo, and you do not want it to be, I apologize. Please just let me know, and I will remove it. 
