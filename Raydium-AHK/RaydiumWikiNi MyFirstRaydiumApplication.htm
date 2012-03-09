@@ -1,0 +1,269 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+
+<head>
+<title>RaydiumWikiNi:MyFirstRaydiumApplication</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link rel="stylesheet" type="text/css" media="screen" href="/wiki/style/wakka.css" />
+<link rel="stylesheet" type="text/css" media="print" href="/wiki/style/print.css" />
+<!-- <link rel="alternate" type="application/rss+xml" title="Dernières Modifications Wiki" href="http://wiki.raydium.org/wiki/DerniersChangementsRSS/xml" /> -->
+<style type="text/css" media="all"></style>
+
+
+<script type="text/javascript">
+function fKeyDown()	{
+	if (event.keyCode == 9) {
+		event.returnValue= false;
+		document.selection.createRange().text = String.fromCharCode(9) } }
+</script>
+</head>
+
+
+<body ondblclick="document.location='http://wiki.raydium.org/wiki/MyFirstRaydiumApplication/edit';"  >
+<div class="topbanner">
+    <ul>
+        <li>CQFD Corp web</li>
+	<li><a href='http://raydium.org'>Raydium</a></li>
+	<li><a href='http://memak.raydium.org'>MeMak</a></li>
+	<li><a href='http://wiki.raydium.org/'>Wiki</a></li>
+	<li><a href='http://maniadrive.raydium.org'>ManiaDrive</a></li>
+	<li><a href='http://skydiver.raydium.org'>NewSkyDiver</a></li>
+	<li><a href='http://cqfd-corp.org/'>WWW</a></li>
+	<li><a href='http://cqfd-corp.org/wap/'>WAP</a></li>
+	<li><a href='http://mail.cqfd-corp.org'>Mails</a></li>
+	<li><a href='http://cam.cqfd-corp.org'>webcam</a></li>
+	<li><a href='http://shell.cqfd-corp.org'>Shell</a></li>
+	<li><a href='http://asso.cqfd-corp.org/'>Asso</a></li>
+	<li><a href='http://cqfd-corp.org/jo.php'>JOTR</a></li>
+	<li><a href='http://old.cqfd-corp.org'>Oldies</a></li>
+    </ul>
+</div>
+
+<div style="display: none;"><a href="http://wiki.raydium.org/wiki/MyFirstRaydiumApplication/resetstyle" accesskey="7"></a></div>
+
+
+<h1 class="wiki_name">RaydiumWikiNi</h1>
+
+
+<h1 class="page_name">
+<a href="http://wiki.raydium.org/wiki/RechercheTexte&amp;phrase=MyFirstRaydiumApplication">
+MyFirstRaydiumApplication</a>
+</h1>
+
+
+<div class="header">
+<a href="http://wiki.raydium.org/wiki/PagePrincipale">PagePrincipale</a> ::
+<a href="http://wiki.raydium.org/wiki/DerniersChangements">DerniersChangements</a> :: <a href="http://wiki.raydium.org/wiki/ParametresUtilisateur">ParametresUtilisateur</a> :: 
+Vous &ecirc;tes CPE38c85ca64f8e-CM38c85ca64f8c.cpe.net.cable.rogers.com</div>
+
+
+<div class="page">
+<h1>My first 3D application with Raydium</h1>
+<br />
+Ref: <a href="http://wiki.raydium.org/wiki/RaydiumTutorials">RaydiumTutorials</a><br />
+<br />
+<img src="http://raydium.cqfd-corp.org/pics/tuto1.jpg" alt="tuto" /><br />
+<br />
+<h2>Before anything:</h2>
+<br />
+<ul>
+<li> Follow <span class="missingpage">InstallRaydiumEn</span><a href="http://wiki.raydium.org/wiki/InstallRaydiumEn/edit">?</a> instructions</li>
+<li> Create a new file, named <i>test.c</i>, in Raydium root directory (and not "raydium/" subdirectory)</li>
+</ul>
+<br />
+<h2>Includes:</h2>
+<br />
+<div class="code"><pre><span style="color: #339933;">#include &quot;raydium/index.c&quot; </span>
+&nbsp;</pre>
+</div><br />
+This line allows use of all <a href="http://wiki.raydium.org/wiki/Raydium">Raydium</a>'s functions.<br />
+<h2>main:</h2>
+<br />
+<h3>Window's declaration:</h3>
+<br />
+<div class="code"><pre><span style="color: #993333;">int</span> main<span style="color: #66cc66;">&#40;</span><span style="color: #993333;">int</span> argc, <span style="color: #993333;">char</span> **argv<span style="color: #66cc66;">&#41;</span>
+<span style="color: #66cc66;">&#123;</span>
+raydium_init_args<span style="color: #66cc66;">&#40;</span>argc,argv<span style="color: #66cc66;">&#41;</span>;
+raydium_window_create<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">640</span>,<span style="color: #cc66cc;">480</span>,RAYDIUM_RENDERING_WINDOW,<span style="color: #ff0000;">"Mon premier test !"</span><span style="color: #66cc66;">&#41;</span>;
+raydium_texture_filter_change<span style="color: #66cc66;">&#40;</span>RAYDIUM_TEXTURE_FILTER_TRILINEAR<span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+Nothing hard, here : we send command line arguments to <a href="http://wiki.raydium.org/wiki/Raydium">Raydium</a>, and we create a window (640x480). It's also possible to use RAYDIUM_RENDERING_FULLSCREEN, and to change window's title, of course.<br />
+<br />
+<tt>raydium_texture_filter_change</tt> will switch to a trilinear filter, the best one allowed by <a href="http://wiki.raydium.org/wiki/Raydium">Raydium</a>.<br />
+<br />
+<h3>Visibility space:</h3>
+<br />
+<div class="code"><pre>raydium_projection_near=<span style="color: #cc66cc;">0</span>.<span style="color: #cc66cc;">01</span>;
+raydium_projection_far=<span style="color: #cc66cc;">1000</span>;
+raydium_projection_fov=<span style="color: #cc66cc;">60</span>;
+raydium_window_view_update<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+These three variables will define min and max visibility values (near and far) of the camera.<br />
+Values depends on objects sizes : here, we can imagine a world of 1000 units that we want to display integrally.<br />
+<br />
+raydium_window_view_update() function will updade values to hardware.<br />
+<br />
+<h3>Primary light settings (sun):</h3>
+<br />
+For this step, a good idea is to store light color with a variable:<br />
+<div class="code"><pre>GLfloat sun<span style="color: #66cc66;">&#91;</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #66cc66;">&#123;</span><span style="color: #cc66cc;">1</span>.<span style="color: #cc66cc;">0</span>,<span style="color: #cc66cc;">0</span>.<span style="color: #cc66cc;">9</span>,<span style="color: #cc66cc;">0</span>.<span style="color: #cc66cc;">5</span>,<span style="color: #cc66cc;">1</span>.<span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#125;</span>;</pre>
+</div><br />
+Colors are expressed with RGBA schema (Red, Green, Blue, Alpha). Each element is clamped to the range [0, 1]. Alpha have no effect here.<br />
+<div class="code"><pre>raydium_light_on<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#41;</span>;
+memcpy<span style="color: #66cc66;">&#40;</span>raydium_light_color<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span>,sun,raydium_internal_size_vector_float_<span style="color: #cc66cc;">4</span><span style="color: #66cc66;">&#41;</span>;
+raydium_light_intensity<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #cc66cc;">1000000</span>;
+&nbsp;
+raydium_light_position<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #cc66cc;">50</span>;
+raydium_light_position<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #cc66cc;">150</span>;
+raydium_light_position<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #cc66cc;">200</span>;
+&nbsp;
+raydium_light_update_all<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+Then, we turn on light 0, and assign color with memcpy. We must also sets intensity (Intense here, for a "sun effect"), position (X,Y and Z), and apply.<br />
+<br />
+<div class="code"><pre>raydium_background_color_change<span style="color: #66cc66;">&#40;</span>sun<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span>,sun<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #66cc66;">&#93;</span>,sun<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #66cc66;">&#93;</span>,sun<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">3</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+This function will sets sun's color as the background color of the scene.<br />
+<br />
+It's interesting to disable fog, since it allows us to see the sky.<br />
+<div class="code"><pre>raydium_fog_disable<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+<h2>Drawing function:</h2>
+<br />
+<h3>Declaration</h3>
+<br />
+The next step is to declare a new function, dedicated to drawing ("rendering"). This function will be then called by Raydium.<br />
+<br />
+This function must follow the following prototype: void function(void)<br />
+<div class="code"><pre><span style="color: #993333;">void</span> display<span style="color: #66cc66;">&#40;</span><span style="color: #993333;">void</span><span style="color: #66cc66;">&#41;</span>
+<span style="color: #66cc66;">&#123;</span>
+&nbsp;
+<span style="color: #66cc66;">&#125;</span></pre>
+</div><br />
+Then, we will send this function to <a href="http://wiki.raydium.org/wiki/Raydium">Raydium</a> , at the end of main():<br />
+<br />
+<div class="code"><pre>raydium_callback<span style="color: #66cc66;">&#40;</span>&amp;display<span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+<br />
+<h3>Implementation:</h3>
+<br />
+This function will allow the user to move camera, and this camera will always look at the scene's center (0,0,0).<br />
+<br />
+First step: manage user input:<br />
+<div class="code"><pre>raydium_joy_key_emul<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+This call will emulate a joystick, if none is detected. This function allows you to use raydium_joy_*, even if no joystick nor joypad is configured.<br />
+<br />
+Now, we can declare three global variables to store camera's position, juste after includes, for example.<br />
+<div class="code"><pre>GLfloat camx=<span style="color: #cc66cc;">10</span>;
+GLfloat camy=<span style="color: #cc66cc;">10</span>;
+GLfloat camz=<span style="color: #cc66cc;">20</span>;</pre>
+</div><br />
+Then we modify this values using user inputs:<br />
+<div class="code"><pre>camx+=raydium_joy_x;
+camy+=raydium_joy_y;
+&nbsp;
+<span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span>raydium_key<span style="color: #66cc66;">&#91;</span>GLUT_KEY_PAGE_DOWN<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> camz--;
+<span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span>raydium_key<span style="color: #66cc66;">&#91;</span>GLUT_KEY_PAGE_UP<span style="color: #66cc66;">&#93;</span>  <span style="color: #66cc66;">&#41;</span> camz++;
+&nbsp;
+<span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span>raydium_key_last==<span style="color: #cc66cc;">1027</span><span style="color: #66cc66;">&#41;</span> exit<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+Now, the drawing part of the function:<br />
+<div class="code"><pre>raydium_clear_frame<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+raydium_camera_look_at<span style="color: #66cc66;">&#40;</span>camx,camy,camz,<span style="color: #cc66cc;">0</span>,<span style="color: #cc66cc;">0</span>,<span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#41;</span>;
+raydium_object_draw_name<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">"cocorobix.tri"</span><span style="color: #66cc66;">&#41;</span>;
+raydium_rendering_finish<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;</pre>
+</div><br />
+It's time to compile this first application, using ocomp.sh script, for example:<br />
+<br />
+<div class="indent"><i>./ocomp.sh test.c</i></div>
+<br />
+<h2>Complete source code:</h2>
+<br />
+<div class="code"><pre><span style="color: #339933;">#include &quot;raydium/index.c&quot;</span>
+&nbsp;
+GLfloat sun<span style="color: #66cc66;">&#91;</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #66cc66;">&#123;</span><span style="color: #cc66cc;">1</span>.<span style="color: #cc66cc;">0</span>,<span style="color: #cc66cc;">0</span>.<span style="color: #cc66cc;">9</span>,<span style="color: #cc66cc;">0</span>.<span style="color: #cc66cc;">5</span>,<span style="color: #cc66cc;">1</span>.<span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#125;</span>;
+&nbsp;
+GLfloat camx=<span style="color: #cc66cc;">10</span>;
+GLfloat camy=<span style="color: #cc66cc;">10</span>;
+GLfloat camz=<span style="color: #cc66cc;">20</span>;
+&nbsp;
+<span style="color: #993333;">void</span> display<span style="color: #66cc66;">&#40;</span><span style="color: #993333;">void</span><span style="color: #66cc66;">&#41;</span>
+<span style="color: #66cc66;">&#123;</span>
+raydium_joy_key_emul<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+&nbsp;
+camx+=raydium_joy_x;
+camy+=raydium_joy_y;
+&nbsp;
+<span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span>raydium_key<span style="color: #66cc66;">&#91;</span>GLUT_KEY_PAGE_DOWN<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> camz--;
+<span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span>raydium_key<span style="color: #66cc66;">&#91;</span>GLUT_KEY_PAGE_UP<span style="color: #66cc66;">&#93;</span>  <span style="color: #66cc66;">&#41;</span> camz++;
+&nbsp;
+<span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span>raydium_key_last==<span style="color: #cc66cc;">1027</span><span style="color: #66cc66;">&#41;</span> exit<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#41;</span>;
+&nbsp;
+raydium_clear_frame<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+raydium_camera_look_at<span style="color: #66cc66;">&#40;</span>camx,camy,camz,<span style="color: #cc66cc;">0</span>,<span style="color: #cc66cc;">0</span>,<span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#41;</span>;
+raydium_object_draw_name<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">"cocorobix.tri"</span><span style="color: #66cc66;">&#41;</span>;
+raydium_rendering_finish<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+<span style="color: #66cc66;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">int</span> main<span style="color: #66cc66;">&#40;</span><span style="color: #993333;">int</span> argc, <span style="color: #993333;">char</span> **argv<span style="color: #66cc66;">&#41;</span>
+<span style="color: #66cc66;">&#123;</span>
+raydium_init_args<span style="color: #66cc66;">&#40;</span>argc,argv<span style="color: #66cc66;">&#41;</span>;
+raydium_window_create<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">640</span>,<span style="color: #cc66cc;">480</span>,RAYDIUM_RENDERING_WINDOW,<span style="color: #ff0000;">"Mon premier test !"</span><span style="color: #66cc66;">&#41;</span>;
+raydium_texture_filter_change<span style="color: #66cc66;">&#40;</span>RAYDIUM_TEXTURE_FILTER_TRILINEAR<span style="color: #66cc66;">&#41;</span>;
+raydium_projection_near=<span style="color: #cc66cc;">0</span>.<span style="color: #cc66cc;">01</span>;
+raydium_projection_far=<span style="color: #cc66cc;">1000</span>;
+raydium_projection_fov=<span style="color: #cc66cc;">60</span>;
+raydium_window_view_update<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+raydium_light_on<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#41;</span>;
+memcpy<span style="color: #66cc66;">&#40;</span>raydium_light_color<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span>,sun,raydium_internal_size_vector_float_<span style="color: #cc66cc;">4</span><span style="color: #66cc66;">&#41;</span>;
+raydium_light_intensity<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #cc66cc;">1000000</span>;
+&nbsp;
+raydium_light_position<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #cc66cc;">50</span>;
+raydium_light_position<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #cc66cc;">150</span>;
+raydium_light_position<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #66cc66;">&#93;</span>=<span style="color: #cc66cc;">200</span>;
+&nbsp;
+raydium_light_update_all<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#41;</span>;
+raydium_background_color_change<span style="color: #66cc66;">&#40;</span>sun<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">&#93;</span>,sun<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #66cc66;">&#93;</span>,sun<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #66cc66;">&#93;</span>,sun<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">3</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>;
+raydium_fog_disable<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+raydium_callback<span style="color: #66cc66;">&#40;</span>&amp;display<span style="color: #66cc66;">&#41;</span>;
+&nbsp;
+<span style="color: #b1b100;">return</span> <span style="color: #cc66cc;">0</span>;
+<span style="color: #66cc66;">&#125;</span></pre>
+</div><br />
+<br />
+<br />
+<hr />
+Tutorial 2: <span class="missingpage">TutorialMoveObjects</span><a href="http://wiki.raydium.org/wiki/TutorialMoveObjects/edit">?</a><hr class="hr_clear" />
+</div>
+
+
+
+
+<div class="footer">
+<form action="http://wiki.raydium.org/wiki/RechercheTexte" method="get">
+<img src='/img/edit.gif'alt='[Editer]'/><a href="http://wiki.raydium.org/wiki/MyFirstRaydiumApplication/edit" title="Cliquez pour &eacute;diter cette page.">&Eacute;diter</a> ::
+<img src='/img/log.gif' alt='[Modif]' /><a href="http://wiki.raydium.org/wiki/MyFirstRaydiumApplication/revisions" title="Cliquez pour voir les derni&egrave;res modifications sur cette page.">Historique</a> ::
+<img src='/img/proprio.gif' alt='[Proprio]' /> <a href="http://wiki.raydium.org/wiki/XfenneC">XfenneC</a> :: 
+<img src='/img/refers.png' alt='[Ref]'/><a href="http://wiki.raydium.org/wiki/MyFirstRaydiumApplication/referrers" title="Cliquez pour voir les URLs faisant r&eacute;f&eacute;rence &agrave; cette page.">
+R&eacute;f&eacute;rences</a> ::
+<img src='/img/find.gif' alt='[Rechercher]'/> Recherche : <input name="phrase" size="15" class="searchbox"/>
+
+<!-- :: <a href="/wiki/FluxRSS"> <img src="/img/rss.png" alt="Flux RSS" border='0' /></a>-->
+:: <a href="http://raydium.org/"> <img src="http://raydium.org/rayicomini.png" alt="Raydium" border='0' /></a>
+
+</form>
+</div>
+
+
+<div class="copyright">
+<a href="http://validator.w3.org/check/referer">XHTML 1.0 valide ?</a>
+-- Fonctionne avec <a href="http://www.wikini.net/wakka.php?wiki=PagePrincipale">WikiNi 0.4.2 (interwiki)</a> CQFD Corp. Custom
+</div>
+ 
+</body>
+</html>

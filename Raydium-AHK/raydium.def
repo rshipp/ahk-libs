@@ -1,0 +1,1460 @@
+EXPORTS
+    BufferData @1
+    StartMusic @2
+    _glutMouseVisible @3 DATA
+    _glutWindowSize @4 DATA
+    _raydium_math_MatrixInverse @5
+    dump_vertex_to @6
+    dump_vertex_to_alpha @7
+    glutDisplayFunc @8
+    glutDisplayFuncCB @9 DATA
+    glutExtensionSupported @10
+    glutGet @11
+    glutIdleFunc @12
+    glutIdleFuncCB @13 DATA
+    glutIgnoreKeyRepeat @14
+    glutInit @15
+    glutKeyboardFunc @16
+    glutKeyboardFuncCB @17 DATA
+    glutMainLoop @18
+    glutManualLoop @19
+    glutMotionFunc @20
+    glutMotionFuncCB @21 DATA
+    glutMouseFunc @22
+    glutMouseFuncCB @23 DATA
+    glutPassiveMotionFunc @24
+    glutPassiveMotionFuncCB @25 DATA
+    glutReshapeFunc @26
+    glutReshapeFuncCB @27 DATA
+    glutSetCursor @28
+    glutSpecialFunc @29
+    glutSpecialFuncCB @30 DATA
+    glutSpecialUpFunc @31
+    glutSpecialUpFuncCB @32 DATA
+    glutSwapBuffers @33
+    glutWarpPointer @34
+    glutWireSphere @35
+    infov @36
+    myglutCreateWindow @37
+    raydium_atexit @38
+    raydium_atexit_call @39
+    raydium_atexit_functions @40 DATA
+    raydium_atexit_index @41 DATA
+    raydium_atexit_init @42
+    raydium_background_color @43 DATA
+    raydium_background_color_change @44
+    raydium_callback @45
+    raydium_callback_display_set @46
+    raydium_callback_image @47
+    raydium_callback_loop @48 DATA
+    raydium_callback_set @49
+    raydium_camera_cursor_place @50 DATA
+    raydium_camera_data @51 DATA
+    raydium_camera_data_reset @52
+    raydium_camera_freemove @53
+    raydium_camera_freemove_sensibility @54 DATA
+    raydium_camera_freemove_speed @55 DATA
+    raydium_camera_get_data @56
+    raydium_camera_gl_modelview @57 DATA
+    raydium_camera_gl_projection @58 DATA
+    raydium_camera_gl_viewport @59 DATA
+    raydium_camera_init @60
+    raydium_camera_internal @61
+    raydium_camera_internal_prepare @62
+    raydium_camera_look_at @63
+    raydium_camera_look_at_roll @64 DATA
+    raydium_camera_orbitmove @65
+    raydium_camera_path @66 DATA
+    raydium_camera_path_draw @67
+    raydium_camera_path_draw_name @68
+    raydium_camera_path_find @69
+    raydium_camera_path_init @70
+    raydium_camera_path_init_all @71
+    raydium_camera_path_load @72
+    raydium_camera_path_reset @73
+    raydium_camera_path_reset_flag @74 DATA
+    raydium_camera_place @75
+    raydium_camera_push @76
+    raydium_camera_push_current @77 DATA
+    raydium_camera_push_end @78 DATA
+    raydium_camera_push_internal_step @79
+    raydium_camera_push_slowness @80 DATA
+    raydium_camera_push_type @81 DATA
+    raydium_camera_pushed @82 DATA
+    raydium_camera_replace @83
+    raydium_camera_replace_go @84
+    raydium_camera_rumble @85
+    raydium_camera_rumble_amplitude @86 DATA
+    raydium_camera_rumble_evolution @87 DATA
+    raydium_camera_rumble_remaining @88 DATA
+    raydium_camera_saved_gl_modelview @89 DATA
+    raydium_camera_saved_gl_projection @90 DATA
+    raydium_camera_saved_gl_viewport @91 DATA
+    raydium_camera_smooth @92
+    raydium_camera_smooth_data_init @93
+    raydium_camera_smooth_data_primary @94 DATA
+    raydium_camera_smooth_data_ptr @95 DATA
+    raydium_camera_smooth_data_set @96
+    raydium_camera_smooth_element_to_path_name @97
+    raydium_camera_smooth_element_to_path_offset @98
+    raydium_camera_smooth_element_to_path_offset_name @99
+    raydium_camera_smooth_path @100
+    raydium_camera_smooth_path_to_element @101
+    raydium_camera_smooth_path_to_element_name @102
+    raydium_camera_smooth_path_to_path @103
+    raydium_camera_smooth_path_to_pos @104
+    raydium_camera_smooth_pos_to_path @105
+    raydium_camera_vectors @106
+    raydium_camera_x @107 DATA
+    raydium_camera_y @108 DATA
+    raydium_camera_z @109 DATA
+    raydium_capture_asked @110 DATA
+    raydium_capture_filename @111 DATA
+    raydium_capture_filename_auto @112
+    raydium_capture_frame @113
+    raydium_capture_frame_auto @114
+    raydium_capture_frame_jpeg @115
+    raydium_capture_frame_jpeg_auto @116
+    raydium_capture_frame_jpeg_now @117
+    raydium_capture_frame_now @118
+    raydium_clear_color_update @119
+    raydium_clear_frame @120
+    raydium_console_complete @121
+    raydium_console_config_font @122 DATA
+    raydium_console_config_max @123 DATA
+    raydium_console_config_speed @124 DATA
+    raydium_console_config_texture @125 DATA
+    raydium_console_cursor_blink @126 DATA
+    raydium_console_draw @127
+    raydium_console_event @128
+    raydium_console_exec_last_command @129
+    raydium_console_exec_script @130
+    raydium_console_get_string @131 DATA
+    raydium_console_get_string_last @132 DATA
+    raydium_console_gets @133
+    raydium_console_gets_callback @134 DATA
+    raydium_console_history @135 DATA
+    raydium_console_history_add @136
+    raydium_console_history_filename @137 DATA
+    raydium_console_history_index @138 DATA
+    raydium_console_history_index_current @139 DATA
+    raydium_console_history_next @140
+    raydium_console_history_previous @141
+    raydium_console_history_read @142
+    raydium_console_history_save @143
+    raydium_console_inc @144 DATA
+    raydium_console_init @145
+    raydium_console_internal_isalphanumuscore @146
+    raydium_console_line_add @147
+    raydium_console_line_last @148 DATA
+    raydium_console_lines @149 DATA
+    raydium_console_pos @150 DATA
+    raydium_current_sprite @151 DATA
+    raydium_file_basename @152
+    raydium_file_binary_fgets @153
+    raydium_file_cache_flush @154
+    raydium_file_directory_writable @155
+    raydium_file_dirname @156
+    raydium_file_ext @157
+    raydium_file_fopen @158
+    raydium_file_home_path @159
+    raydium_file_home_path_cpy @160
+    raydium_file_isdir @161
+    raydium_file_load @162
+    raydium_file_log_fopen @163 DATA
+    raydium_file_log_fopen_display @164
+    raydium_file_log_fopen_index @165 DATA
+    raydium_file_log_fopen_status @166 DATA
+    raydium_file_log_mode @167 DATA
+    raydium_file_log_time @168 DATA
+    raydium_file_readable @169
+    raydium_file_rm_rf @170
+    raydium_file_set_textures @171
+    raydium_file_sum_simple @172
+    raydium_file_utime @173
+    raydium_fog_apply @174
+    raydium_fog_color_update @175
+    raydium_fog_density @176
+    raydium_fog_density_value @177 DATA
+    raydium_fog_disable @178
+    raydium_fog_enable @179
+    raydium_fog_enabled_tag @180 DATA
+    raydium_fog_far @181
+    raydium_fog_far_value @182 DATA
+    raydium_fog_mode @183
+    raydium_fog_mode_value @184 DATA
+    raydium_fog_near @185
+    raydium_fog_near_value @186 DATA
+    raydium_fog_volumetric_axis @187 DATA
+    raydium_fog_volumetric_disable @188
+    raydium_fog_volumetric_enable @189
+    raydium_fog_volumetric_enabled_tag @190 DATA
+    raydium_fog_volumetric_support @191
+    raydium_fog_wait @192
+    raydium_frame_first_camera_pass @193 DATA
+    raydium_frame_time @194 DATA
+    raydium_gui_AfterGuiDrawCallback @195 DATA
+    raydium_gui_button_clicked @196
+    raydium_gui_button_clicked_id @197 DATA
+    raydium_gui_button_create @198
+    raydium_gui_button_create_simple @199
+    raydium_gui_button_draw @200
+    raydium_gui_button_read @201
+    raydium_gui_button_write @202
+    raydium_gui_check_create @203
+    raydium_gui_check_draw @204
+    raydium_gui_check_read @205
+    raydium_gui_check_write @206
+    raydium_gui_combo_create @207
+    raydium_gui_combo_draw @208
+    raydium_gui_combo_read @209
+    raydium_gui_combo_write @210
+    raydium_gui_draw @211
+    raydium_gui_edit_create @212
+    raydium_gui_edit_draw @213
+    raydium_gui_edit_read @214
+    raydium_gui_edit_write @215
+    raydium_gui_hide @216
+    raydium_gui_init @217
+    raydium_gui_internal_object_create @218
+    raydium_gui_label_create @219
+    raydium_gui_label_draw @220
+    raydium_gui_label_read @221
+    raydium_gui_label_write @222
+    raydium_gui_list_id @223
+    raydium_gui_oldstate @224 DATA
+    raydium_gui_read @225
+    raydium_gui_read_name @226
+    raydium_gui_read_widget @227
+    raydium_gui_show @228
+    raydium_gui_theme_current @229 DATA
+    raydium_gui_theme_init @230
+    raydium_gui_theme_load @231
+    raydium_gui_track_create @232
+    raydium_gui_track_draw @233
+    raydium_gui_track_read @234
+    raydium_gui_track_write @235
+    raydium_gui_visible @236 DATA
+    raydium_gui_widget_draw_internal @237
+    raydium_gui_widget_find @238
+    raydium_gui_widget_focus @239
+    raydium_gui_widget_focus_name @240
+    raydium_gui_widget_isvalid @241
+    raydium_gui_widget_next @242
+    raydium_gui_widget_sizes @243
+    raydium_gui_widget_sizes_default @244 DATA
+    raydium_gui_window_OnDelete @245
+    raydium_gui_window_OnDelete_name @246
+    raydium_gui_window_create @247
+    raydium_gui_window_delete @248
+    raydium_gui_window_delete_name @249
+    raydium_gui_window_draw @250
+    raydium_gui_window_find @251
+    raydium_gui_window_focused @252 DATA
+    raydium_gui_window_init @253
+    raydium_gui_window_isvalid @254
+    raydium_gui_windows @255 DATA
+    raydium_gui_write @256
+    raydium_gui_write_name @257
+    raydium_gui_zone_create @258
+    raydium_gui_zone_draw @259
+    raydium_gui_zone_read @260
+    raydium_hdr_alpha_max @261 DATA
+    raydium_hdr_block @262
+    raydium_hdr_blur @263
+    raydium_hdr_color_ambient @264 DATA
+    raydium_hdr_color_local @265 DATA
+    raydium_hdr_disable @266
+    raydium_hdr_enable @267
+    raydium_hdr_eye @268 DATA
+    raydium_hdr_eye_speed @269 DATA
+    raydium_hdr_generated @270 DATA
+    raydium_hdr_init @271
+    raydium_hdr_internal_window_malloc @272
+    raydium_hdr_map @273
+    raydium_hdr_map_apply @274
+    raydium_hdr_mem @275 DATA
+    raydium_hdr_mem_hdr @276 DATA
+    raydium_hdr_mem_hdr2 @277 DATA
+    raydium_hdr_mem_hdr3 @278 DATA
+    raydium_hdr_settings @279
+    raydium_hdr_settings_color_ambient @280
+    raydium_hdr_settings_color_local @281
+    raydium_hdr_settings_eye @282
+    raydium_hdr_state @283 DATA
+    raydium_hdr_texture @284
+    raydium_hdr_texture_id @285 DATA
+    raydium_hdr_texture_name @286
+    raydium_hdr_texture_reset @287
+    raydium_homedir @288 DATA
+    raydium_init_argc @289 DATA
+    raydium_init_args_hack @290
+    raydium_init_args_name_hack @291
+    raydium_init_argv @292 DATA
+    raydium_init_cli_option @293
+    raydium_init_cli_option_default @294
+    raydium_init_engine @295
+    raydium_init_internal_homedir_find @296
+    raydium_init_key @297
+    raydium_init_lights @298
+    raydium_init_load @299
+    raydium_init_objects @300
+    raydium_init_reset @301
+    raydium_init_wd @302 DATA
+    raydium_internal_dump @303
+    raydium_internal_dump_matrix @304
+    raydium_internal_live_close @305
+    raydium_internal_live_video_callback @306
+    raydium_internal_size_vector_float_4 @307 DATA
+    raydium_internal_vertex_next_extras @308 DATA
+    raydium_internal_vertex_next_nx @309 DATA
+    raydium_internal_vertex_next_ny @310 DATA
+    raydium_internal_vertex_next_nz @311 DATA
+    raydium_internal_vertex_next_u @312 DATA
+    raydium_internal_vertex_next_v @313 DATA
+    raydium_joy @314 DATA
+    raydium_joy_axis @315 DATA
+    raydium_joy_button @316 DATA
+    raydium_joy_callback @317
+    raydium_joy_click @318 DATA
+    raydium_joy_close @319
+    raydium_joy_emul_type @320 DATA
+    raydium_joy_ff @321
+    raydium_joy_ff_autocenter @322
+    raydium_joy_ff_tremble_set @323
+    raydium_joy_init @324
+    raydium_joy_init_vars @325
+    raydium_joy_key_emul @326
+    raydium_joy_n_axes @327 DATA
+    raydium_joy_n_buttons @328 DATA
+    raydium_joy_name @329 DATA
+    raydium_joy_x @330 DATA
+    raydium_joy_y @331 DATA
+    raydium_joy_z @332 DATA
+    raydium_key @333 DATA
+    raydium_key_last @334 DATA
+    raydium_key_normal_callback @335
+    raydium_key_pressed @336
+    raydium_key_special_callback @337
+    raydium_key_special_up_callback @338
+    raydium_key_trace @339 DATA
+    raydium_land_draw_water @340
+    raydium_land_internal_landtmp @341
+    raydium_land_surface @342
+    raydium_lensflare_appearance @343 DATA
+    raydium_lensflare_create @344
+    raydium_lensflare_disable @345
+    raydium_lensflare_draw @346
+    raydium_lensflare_draw_all @347
+    raydium_lensflare_enable @348
+    raydium_lensflare_enabled_tag @349 DATA
+    raydium_lensflare_find @350
+    raydium_lensflare_fx_alpha_change @351
+    raydium_lensflare_fx_color @352 DATA
+    raydium_lensflare_fx_color_change @353
+    raydium_lensflare_fx_color_rgba @354
+    raydium_lensflare_fx_internal_draw @355
+    raydium_lensflare_fx_internal_state @356 DATA
+    raydium_lensflare_fx_isvalid @357
+    raydium_lensflare_fx_off @358
+    raydium_lensflare_fx_on @359
+    raydium_lensflare_fx_size @360 DATA
+    raydium_lensflare_fx_size_change @361
+    raydium_lensflare_fx_switch @362
+    raydium_lensflare_fx_velocity @363 DATA
+    raydium_lensflare_fx_velocity_change @364
+    raydium_lensflare_init @365
+    raydium_lensflare_internal_created @366 DATA
+    raydium_lensflare_internal_load @367
+    raydium_lensflare_internal_point_is_occluded @368
+    raydium_lensflare_internal_state @369 DATA
+    raydium_lensflare_isvalid @370
+    raydium_lensflare_move @371
+    raydium_lensflare_move_3f @372
+    raydium_lensflare_move_relative_3f @373
+    raydium_lensflare_name @374 DATA
+    raydium_lensflare_off @375
+    raydium_lensflare_on @376
+    raydium_lensflare_position @377 DATA
+    raydium_lensflare_reset @378
+    raydium_lensflare_switch @379
+    raydium_lensflare_texture_id @380 DATA
+    raydium_lensflare_texture_name @381
+    raydium_light_blink_high @382 DATA
+    raydium_light_blink_increment @383 DATA
+    raydium_light_blink_internal_update @384
+    raydium_light_blink_low @385 DATA
+    raydium_light_blink_start @386
+    raydium_light_callback @387
+    raydium_light_color @388 DATA
+    raydium_light_conf_7f @389
+    raydium_light_disable @390
+    raydium_light_enable @391
+    raydium_light_enabled_tag @392 DATA
+    raydium_light_intensity @393 DATA
+    raydium_light_internal_state @394 DATA
+    raydium_light_move @395
+    raydium_light_move_3f @396
+    raydium_light_off @397
+    raydium_light_on @398
+    raydium_light_position @399 DATA
+    raydium_light_reset @400
+    raydium_light_switch @401
+    raydium_light_texture @402
+    raydium_light_texture_name @403
+    raydium_light_to_GL_light @404
+    raydium_light_update_all @405
+    raydium_light_update_intensity @406
+    raydium_light_update_position @407
+    raydium_light_update_position_all @408
+    raydium_live_device @409 DATA
+    raydium_live_init @410
+    raydium_live_texture @411 DATA
+    raydium_live_texture_create @412
+    raydium_live_texture_draw @413
+    raydium_live_texture_draw_name @414
+    raydium_live_texture_find @415
+    raydium_live_texture_find_free @416
+    raydium_live_texture_isvalid @417
+    raydium_live_texture_mask @418
+    raydium_live_texture_mask_name @419
+    raydium_live_texture_refresh @420
+    raydium_live_texture_refresh_callback_set @421
+    raydium_live_texture_refresh_callback_set_name @422
+    raydium_live_texture_refresh_name @423
+    raydium_live_texture_video @424
+    raydium_live_video_find_free @425
+    raydium_live_video_isvalid @426
+    raydium_live_video_open @427
+    raydium_live_video_open_auto @428
+    raydium_live_video_read @429
+    raydium_log @430
+    raydium_log_atexit_dump @431 DATA
+    raydium_log_atexit_quiet @432
+    raydium_log_file @433 DATA
+    raydium_loop @434
+    raydium_math_angle_from_projections @435
+    raydium_math_cos @436
+    raydium_math_cos_inv @437
+    raydium_math_hms @438
+    raydium_math_point_unproject_3D @439
+    raydium_math_pos_get_modelview @440
+    raydium_math_pos_to_matrix @441
+    raydium_math_pow2_next @442
+    raydium_math_quaternion_normalize @443
+    raydium_math_quaternion_slerp @444
+    raydium_math_rotate @445
+    raydium_math_sin @446
+    raydium_math_sin_inv @447
+    raydium_mouse_button @448 DATA
+    raydium_mouse_button_pressed @449
+    raydium_mouse_click @450 DATA
+    raydium_mouse_click_callback @451
+    raydium_mouse_grab_delta @452
+    raydium_mouse_init @453
+    raydium_mouse_isvisible @454
+    raydium_mouse_mode_delta @455 DATA
+    raydium_mouse_move @456
+    raydium_mouse_move_callback @457
+    raydium_mouse_x @458 DATA
+    raydium_mouse_y @459 DATA
+    raydium_netwok_queue_ack_delay_client @460 DATA
+    raydium_netwok_queue_ack_delay_server @461 DATA
+    raydium_network_beacon @462 DATA
+    raydium_network_beacon_info_offset @463 DATA
+    raydium_network_beacon_search @464 DATA
+    raydium_network_broadcast @465
+    raydium_network_client @466 DATA
+    raydium_network_client_addr @467 DATA
+    raydium_network_client_connect_to @468
+    raydium_network_client_disconnect @469
+    raydium_network_client_discover @470
+    raydium_network_close @471
+    raydium_network_connected_server @472 DATA
+    raydium_network_discover_getserver @473
+    raydium_network_discover_numservers @474
+    raydium_network_init @475
+    raydium_network_init_sub @476
+    raydium_network_internal_dump @477
+    raydium_network_internal_find_delay_addr @478
+    raydium_network_internal_server_delays_dump @479
+    raydium_network_internet_test @480
+    raydium_network_keepalive @481 DATA
+    raydium_network_mode @482 DATA
+    raydium_network_name @483 DATA
+    raydium_network_name_local @484 DATA
+    raydium_network_netcall_add @485
+    raydium_network_netcall_exec @486
+    raydium_network_netcall_func @487 DATA
+    raydium_network_netcall_tcp @488 DATA
+    raydium_network_netcall_type @489 DATA
+    raydium_network_nid_element_find @490
+    raydium_network_on_connect @491 DATA
+    raydium_network_on_disconnect @492 DATA
+    raydium_network_player_name @493
+    raydium_network_propag @494 DATA
+    raydium_network_propag_add @495
+    raydium_network_propag_find @496
+    raydium_network_propag_recv @497
+    raydium_network_propag_refresh @498
+    raydium_network_propag_refresh_all @499
+    raydium_network_propag_refresh_id @500
+    raydium_network_queue @501 DATA
+    raydium_network_queue_ack_recv @502
+    raydium_network_queue_ack_send @503
+    raydium_network_queue_check_time @504
+    raydium_network_queue_element_add @505
+    raydium_network_queue_element_init @506
+    raydium_network_queue_index @507 DATA
+    raydium_network_queue_is_tcpid @508
+    raydium_network_queue_tcpid_gen @509
+    raydium_network_queue_tcpid_known @510
+    raydium_network_queue_tcpid_known_add @511
+    raydium_network_read @512
+    raydium_network_read_faked @513
+    raydium_network_read_flushed @514
+    raydium_network_server_broadcast @515
+    raydium_network_server_broadcast_check @516
+    raydium_network_server_broadcast_info @517
+    raydium_network_server_create @518
+    raydium_network_server_list @519 DATA
+    raydium_network_set_socket_block @520
+    raydium_network_set_socket_block_internal @521
+    raydium_network_socket @522 DATA
+    raydium_network_socket_close @523
+    raydium_network_socket_is_readable @524
+    raydium_network_start @525 DATA
+    raydium_network_stat_bogus_ack @526 DATA
+    raydium_network_stat_double @527 DATA
+    raydium_network_stat_lost @528 DATA
+    raydium_network_stat_reemitted @529 DATA
+    raydium_network_stat_rx @530 DATA
+    raydium_network_stat_tx @531 DATA
+    raydium_network_tcpid_i @532 DATA
+    raydium_network_tcpid_index @533 DATA
+    raydium_network_tcpid_p @534 DATA
+    raydium_network_timeout_check @535
+    raydium_network_uid @536 DATA
+    raydium_network_write @537
+    raydium_network_write_notcp @538 DATA
+    raydium_normal_generate_lastest_tangent @539
+    raydium_normal_generate_lastest_triangle @540
+    raydium_normal_internal_smooth_generic @541
+    raydium_normal_regenerate_all @542
+    raydium_normal_restore_all @543
+    raydium_normal_smooth_all @544
+    raydium_normal_smooth_from_to @545
+    raydium_normal_tangent_smooth_all @546
+    raydium_normal_tangent_smooth_from_to @547
+    raydium_object_anim @548
+    raydium_object_anim_automatic @549
+    raydium_object_anim_automatic_factor @550 DATA
+    raydium_object_anim_automatic_name @551
+    raydium_object_anim_current @552 DATA
+    raydium_object_anim_default @553
+    raydium_object_anim_default_anim @554 DATA
+    raydium_object_anim_end @555 DATA
+    raydium_object_anim_find @556
+    raydium_object_anim_frame @557
+    raydium_object_anim_frame_current @558 DATA
+    raydium_object_anim_frame_name @559
+    raydium_object_anim_frame_previous @560 DATA
+    raydium_object_anim_frame_previous_timeout @561 DATA
+    raydium_object_anim_generate_internal @562
+    raydium_object_anim_instance @563
+    raydium_object_anim_instance_current @564 DATA
+    raydium_object_anim_instance_name @565
+    raydium_object_anim_ispunctually @566
+    raydium_object_anim_ispunctually_name @567
+    raydium_object_anim_len @568 DATA
+    raydium_object_anim_name @569
+    raydium_object_anim_names @570 DATA
+    raydium_object_anim_previous @571 DATA
+    raydium_object_anim_punctually @572
+    raydium_object_anim_punctually_flag @573 DATA
+    raydium_object_anim_punctually_name @574
+    raydium_object_anim_start @575 DATA
+    raydium_object_anim_time_factor @576 DATA
+    raydium_object_anims @577 DATA
+    raydium_object_cache @578 DATA
+    raydium_object_callback @579
+    raydium_object_deform @580
+    raydium_object_deform_name @581
+    raydium_object_draw @582
+    raydium_object_draw_name @583
+    raydium_object_end @584 DATA
+    raydium_object_find @585
+    raydium_object_find_axes_max @586
+    raydium_object_find_center_factors @587
+    raydium_object_find_dist_max @588
+    raydium_object_find_load @589
+    raydium_object_find_minmax @590
+    raydium_object_index @591 DATA
+    raydium_object_isvalid @592
+    raydium_object_load @593
+    raydium_object_name @594 DATA
+    raydium_object_reset @595
+    raydium_object_start @596 DATA
+    raydium_object_tangent_smooth @597
+    raydium_object_tangent_smooth_name @598
+    raydium_object_translate @599
+    raydium_ode_AfterElementDrawCallback @600 DATA
+    raydium_ode_BeforeElementDrawCallback @601 DATA
+    raydium_ode_CollideCallback @602 DATA
+    raydium_ode_ExplosionCallback @603 DATA
+    raydium_ode_ObjectNearCollide @604 DATA
+    raydium_ode_PickCallback @605 DATA
+    raydium_ode_RayCallback @606 DATA
+    raydium_ode_StepCallback @607 DATA
+    raydium_ode_autodisable_get @608
+    raydium_ode_autodisable_set @609
+    raydium_ode_callback @610
+    raydium_ode_capture_3d @611
+    raydium_ode_capture_internal_create @612
+    raydium_ode_capture_internal_create_all @613
+    raydium_ode_capture_internal_delete @614
+    raydium_ode_capture_internal_read_event @615
+    raydium_ode_capture_internal_read_move @616
+    raydium_ode_capture_play @617
+    raydium_ode_capture_play_callback @618
+    raydium_ode_capture_play_internal_index_build @619
+    raydium_ode_capture_record @620
+    raydium_ode_capture_record_rate @621
+    raydium_ode_capture_record_stop @622
+    raydium_ode_capture_seek @623
+    raydium_ode_capture_seek_rel @624
+    raydium_ode_capture_speed @625
+    raydium_ode_capture_stop @626
+    raydium_ode_contact_feedback_get @627
+    raydium_ode_contact_feedback_request @628 DATA
+    raydium_ode_contact_feedback_save @629
+    raydium_ode_contact_feedbacks @630 DATA
+    raydium_ode_contactgroup @631 DATA
+    raydium_ode_draw_all @632
+    raydium_ode_draw_all_post @633
+    raydium_ode_element @634 DATA
+    raydium_ode_element_OnBlow @635
+    raydium_ode_element_OnBlow_name @636
+    raydium_ode_element_OnDelete @637
+    raydium_ode_element_OnDelete_name @638
+    raydium_ode_element_RelPointPos @639
+    raydium_ode_element_RelPointPos_name @640
+    raydium_ode_element_aabb_get @641
+    raydium_ode_element_aabb_get_name @642
+    raydium_ode_element_addforce @643
+    raydium_ode_element_addforce_3f @644
+    raydium_ode_element_addforce_name @645
+    raydium_ode_element_addforce_name_3f @646
+    raydium_ode_element_addrelforce @647
+    raydium_ode_element_addrelforce_3f @648
+    raydium_ode_element_addrelforce_name @649
+    raydium_ode_element_addrelforce_name_3f @650
+    raydium_ode_element_addtorque @651
+    raydium_ode_element_addtorque_3f @652
+    raydium_ode_element_addtorque_name @653
+    raydium_ode_element_addtorque_name_3f @654
+    raydium_ode_element_angularvelocity_get @655
+    raydium_ode_element_angularvelocity_get_name @656
+    raydium_ode_element_angularvelocity_set @657
+    raydium_ode_element_angularvelocity_set_3f @658
+    raydium_ode_element_angularvelocity_set_name @659
+    raydium_ode_element_angularvelocity_set_name_3f @660
+    raydium_ode_element_camera_inboard @661
+    raydium_ode_element_camera_inboard_name @662
+    raydium_ode_element_data_get @663
+    raydium_ode_element_data_get_name @664
+    raydium_ode_element_data_set @665
+    raydium_ode_element_data_set_name @666
+    raydium_ode_element_delete @667
+    raydium_ode_element_delete_LOCK @668 DATA
+    raydium_ode_element_delete_name @669
+    raydium_ode_element_disable_get @670
+    raydium_ode_element_disable_get_name @671
+    raydium_ode_element_disable_set @672
+    raydium_ode_element_disable_set_name @673
+    raydium_ode_element_euler_get @674
+    raydium_ode_element_euler_get_name @675
+    raydium_ode_element_find @676
+    raydium_ode_element_fix @677
+    raydium_ode_element_force_get @678
+    raydium_ode_element_force_get_name @679
+    raydium_ode_element_gravity @680
+    raydium_ode_element_gravity_name @681
+    raydium_ode_element_ground_texture_get @682
+    raydium_ode_element_ground_texture_get_name @683
+    raydium_ode_element_isvalid @684
+    raydium_ode_element_lensflare_offset @685
+    raydium_ode_element_lensflare_offset_name @686
+    raydium_ode_element_lensflare_offset_name_3f @687
+    raydium_ode_element_linearvelocity_get @688
+    raydium_ode_element_linearvelocity_get_name @689
+    raydium_ode_element_linearvelocity_set @690
+    raydium_ode_element_linearvelocity_set_3f @691
+    raydium_ode_element_linearvelocity_set_name @692
+    raydium_ode_element_linearvelocity_set_name_3f @693
+    raydium_ode_element_mass @694
+    raydium_ode_element_mass_get @695
+    raydium_ode_element_mass_get_name @696
+    raydium_ode_element_mass_name @697
+    raydium_ode_element_mass_set @698
+    raydium_ode_element_mass_set_name @699
+    raydium_ode_element_material @700
+    raydium_ode_element_material_name @701
+    raydium_ode_element_mesh_scale @702
+    raydium_ode_element_mesh_scale_name @703
+    raydium_ode_element_move @704
+    raydium_ode_element_move_3f @705
+    raydium_ode_element_move_name @706
+    raydium_ode_element_move_name_3f @707
+    raydium_ode_element_moveto @708
+    raydium_ode_element_moveto_name @709
+    raydium_ode_element_object_get @710
+    raydium_ode_element_object_get_name @711
+    raydium_ode_element_particle @712
+    raydium_ode_element_particle_name @713
+    raydium_ode_element_particle_offset @714
+    raydium_ode_element_particle_offset_name @715
+    raydium_ode_element_particle_offset_name_3f @716
+    raydium_ode_element_particle_point @717
+    raydium_ode_element_particle_point_name @718
+    raydium_ode_element_player_angle @719
+    raydium_ode_element_player_angle_name @720
+    raydium_ode_element_player_get @721
+    raydium_ode_element_player_get_name @722
+    raydium_ode_element_player_set @723
+    raydium_ode_element_player_set_name @724
+    raydium_ode_element_pos_get @725
+    raydium_ode_element_pos_get_name @726
+    raydium_ode_element_ray_attach @727
+    raydium_ode_element_ray_attach_name @728
+    raydium_ode_element_ray_delete @729
+    raydium_ode_element_ray_delete_name @730
+    raydium_ode_element_ray_get @731
+    raydium_ode_element_ray_get_name @732
+    raydium_ode_element_ray_pos @733
+    raydium_ode_element_ray_pos_3f @734
+    raydium_ode_element_ray_pos_name @735
+    raydium_ode_element_ray_pos_name_3f @736
+    raydium_ode_element_ray_set_length @737
+    raydium_ode_element_ray_set_length_name @738
+    raydium_ode_element_rel2world @739
+    raydium_ode_element_rellinearvelocity_get @740
+    raydium_ode_element_rellinearvelocity_get_name @741
+    raydium_ode_element_rot_get @742
+    raydium_ode_element_rot_get_name @743
+    raydium_ode_element_rotate @744
+    raydium_ode_element_rotate_3f @745
+    raydium_ode_element_rotate_direction @746
+    raydium_ode_element_rotate_direction_name @747
+    raydium_ode_element_rotate_name @748
+    raydium_ode_element_rotate_name_3f @749
+    raydium_ode_element_rotateq @750
+    raydium_ode_element_rotateq_name @751
+    raydium_ode_element_rotfriction @752
+    raydium_ode_element_rotfriction_name @753
+    raydium_ode_element_rotq_get @754
+    raydium_ode_element_rotq_get_name @755
+    raydium_ode_element_slip @756
+    raydium_ode_element_slip_name @757
+    raydium_ode_element_sound_update @758
+    raydium_ode_element_sound_update_name @759
+    raydium_ode_element_tag_get @760
+    raydium_ode_element_tag_get_name @761
+    raydium_ode_element_touched_get @762
+    raydium_ode_element_touched_get_name @763
+    raydium_ode_element_ttl_set @764
+    raydium_ode_element_ttl_set_name @765
+    raydium_ode_element_unfix @766
+    raydium_ode_element_vect2world @767
+    raydium_ode_element_world2rel @768
+    raydium_ode_element_world2vect @769
+    raydium_ode_explosion @770 DATA
+    raydium_ode_explosion_blow @771
+    raydium_ode_explosion_blow_3f @772
+    raydium_ode_explosion_blow_rand @773
+    raydium_ode_explosion_blow_rand_3f @774
+    raydium_ode_explosion_create @775
+    raydium_ode_explosion_delete @776
+    raydium_ode_explosion_find @777
+    raydium_ode_explosion_isvalid @778
+    raydium_ode_get_physics_freq @779
+    raydium_ode_get_timestep @780
+    raydium_ode_gravity @781
+    raydium_ode_gravity_3f @782
+    raydium_ode_ground_dTriArrayCallback @783
+    raydium_ode_ground_dTriCallback @784
+    raydium_ode_ground_mesh @785 DATA
+    raydium_ode_ground_set_name @786
+    raydium_ode_init @787
+    raydium_ode_init_element @788
+    raydium_ode_init_explosion @789
+    raydium_ode_init_joint @790
+    raydium_ode_init_motor @791
+    raydium_ode_init_object @792
+    raydium_ode_joint @793 DATA
+    raydium_ode_joint_attach_fixed @794
+    raydium_ode_joint_attach_fixed_name @795
+    raydium_ode_joint_attach_hinge @796
+    raydium_ode_joint_attach_hinge2 @797
+    raydium_ode_joint_attach_hinge2_name @798
+    raydium_ode_joint_attach_hinge_name @799
+    raydium_ode_joint_attach_universal @800
+    raydium_ode_joint_attach_universal_name @801
+    raydium_ode_joint_break @802
+    raydium_ode_joint_break_force @803
+    raydium_ode_joint_break_force_name @804
+    raydium_ode_joint_delete @805
+    raydium_ode_joint_delete_callback @806
+    raydium_ode_joint_delete_callback_name @807
+    raydium_ode_joint_delete_name @808
+    raydium_ode_joint_elements_get @809
+    raydium_ode_joint_elements_get_name @810
+    raydium_ode_joint_find @811
+    raydium_ode_joint_hinge2_block @812
+    raydium_ode_joint_hinge2_block_name @813
+    raydium_ode_joint_hinge2_limits @814
+    raydium_ode_joint_hinge2_limits_name @815
+    raydium_ode_joint_hinge_limits @816
+    raydium_ode_joint_hinge_limits_name @817
+    raydium_ode_joint_isvalid @818
+    raydium_ode_joint_suspension @819
+    raydium_ode_joint_suspension_name @820
+    raydium_ode_joint_universal_limits @821
+    raydium_ode_joint_universal_limits_name @822
+    raydium_ode_launcher @823
+    raydium_ode_launcher_name @824
+    raydium_ode_launcher_name_3f @825
+    raydium_ode_launcher_simple @826
+    raydium_ode_launcher_simple_name @827
+    raydium_ode_launcher_simple_name_3f @828
+    raydium_ode_motor @829 DATA
+    raydium_ode_motor_angle @830
+    raydium_ode_motor_angle_get @831
+    raydium_ode_motor_angle_get_name @832
+    raydium_ode_motor_angle_name @833
+    raydium_ode_motor_attach @834
+    raydium_ode_motor_attach_name @835
+    raydium_ode_motor_create @836
+    raydium_ode_motor_delete @837
+    raydium_ode_motor_delete_name @838
+    raydium_ode_motor_find @839
+    raydium_ode_motor_gear_change @840
+    raydium_ode_motor_gear_change_name @841
+    raydium_ode_motor_gear_ratio @842
+    raydium_ode_motor_gear_ratio_name @843
+    raydium_ode_motor_gears_set @844
+    raydium_ode_motor_gears_set_name @845
+    raydium_ode_motor_isvalid @846
+    raydium_ode_motor_power_max @847
+    raydium_ode_motor_power_max_name @848
+    raydium_ode_motor_rocket_orientation @849
+    raydium_ode_motor_rocket_orientation_name @850
+    raydium_ode_motor_rocket_playermovement @851
+    raydium_ode_motor_rocket_playermovement_name @852
+    raydium_ode_motor_rocket_set @853
+    raydium_ode_motor_rocket_set_name @854
+    raydium_ode_motor_speed @855
+    raydium_ode_motor_speed_get @856
+    raydium_ode_motor_speed_get_name @857
+    raydium_ode_motor_speed_name @858
+    raydium_ode_motor_update_joints_data_internal @859
+    raydium_ode_mouse_pick @860
+    raydium_ode_name_auto @861
+    raydium_ode_near_callback @862
+    raydium_ode_network_MaxElementsPerPacket @863
+    raydium_ode_network_TimeToSend @864
+    raydium_ode_network_apply @865
+    raydium_ode_network_distant_create @866 DATA
+    raydium_ode_network_element_delete @867
+    raydium_ode_network_element_distantowner @868
+    raydium_ode_network_element_distantowner_name @869
+    raydium_ode_network_element_isdistant @870
+    raydium_ode_network_element_isdistant_name @871
+    raydium_ode_network_element_new @872
+    raydium_ode_network_element_send @873
+    raydium_ode_network_element_send_all @874
+    raydium_ode_network_element_send_iterative @875
+    raydium_ode_network_element_send_random @876
+    raydium_ode_network_element_trajectory_correct @877
+    raydium_ode_network_elment_next_local @878
+    raydium_ode_network_explosion_create @879 DATA
+    raydium_ode_network_explosion_event @880
+    raydium_ode_network_explosion_send @881
+    raydium_ode_network_init @882
+    raydium_ode_network_maxfreq @883 DATA
+    raydium_ode_network_newdel_event @884
+    raydium_ode_network_next_local_only @885 DATA
+    raydium_ode_network_nidwho @886
+    raydium_ode_network_nidwho_event @887
+    raydium_ode_network_read @888
+    raydium_ode_object @889 DATA
+    raydium_ode_object_OnDelete @890
+    raydium_ode_object_OnDelete_name @891
+    raydium_ode_object_addforce @892
+    raydium_ode_object_addforce_3f @893
+    raydium_ode_object_addforce_name @894
+    raydium_ode_object_addforce_name_3f @895
+    raydium_ode_object_box_add @896
+    raydium_ode_object_capsule_add @897
+    raydium_ode_object_colliding @898
+    raydium_ode_object_colliding_name @899
+    raydium_ode_object_create @900
+    raydium_ode_object_data_get @901
+    raydium_ode_object_data_get_name @902
+    raydium_ode_object_data_set @903
+    raydium_ode_object_data_set_name @904
+    raydium_ode_object_delete @905
+    raydium_ode_object_delete_name @906
+    raydium_ode_object_find @907
+    raydium_ode_object_isvalid @908
+    raydium_ode_object_linearvelocity_set @909
+    raydium_ode_object_linearvelocity_set_name @910
+    raydium_ode_object_linearvelocity_set_name_3f @911
+    raydium_ode_object_move @912
+    raydium_ode_object_move_3f @913
+    raydium_ode_object_move_name @914
+    raydium_ode_object_move_name_3f @915
+    raydium_ode_object_rename @916
+    raydium_ode_object_rename_name @917
+    raydium_ode_object_rotate @918
+    raydium_ode_object_rotate_name @919
+    raydium_ode_object_rotate_name_3f @920
+    raydium_ode_object_rotateq @921
+    raydium_ode_object_rotateq_name @922
+    raydium_ode_object_sphere_add @923
+    raydium_ode_orphans_check @924
+    raydium_ode_physics_freq @925 DATA
+    raydium_ode_record_countdown @926 DATA
+    raydium_ode_record_element_mappings @927 DATA
+    raydium_ode_record_fp @928 DATA
+    raydium_ode_record_index_backward @929 DATA
+    raydium_ode_record_index_forward @930 DATA
+    raydium_ode_record_index_moves @931 DATA
+    raydium_ode_record_index_size @932 DATA
+    raydium_ode_record_play_current @933 DATA
+    raydium_ode_record_play_factor @934 DATA
+    raydium_ode_record_play_fp @935 DATA
+    raydium_ode_record_play_ghost @936
+    raydium_ode_record_play_ghost_tag @937 DATA
+    raydium_ode_record_play_ground @938 DATA
+    raydium_ode_record_play_rate @939 DATA
+    raydium_ode_record_play_world @940 DATA
+    raydium_ode_record_rate @941 DATA
+    raydium_ode_set_physics_freq @942
+    raydium_ode_set_timestep @943
+    raydium_ode_space @944 DATA
+    raydium_ode_time_change @945
+    raydium_ode_timecall @946 DATA
+    raydium_ode_timestep @947 DATA
+    raydium_ode_world @948 DATA
+    raydium_osd_alpha_change @949
+    raydium_osd_color @950 DATA
+    raydium_osd_color_change @951
+    raydium_osd_color_ega @952
+    raydium_osd_color_rgba @953
+    raydium_osd_cursor_draw @954
+    raydium_osd_cursor_hide @955
+    raydium_osd_cursor_offset @956
+    raydium_osd_cursor_set @957
+    raydium_osd_cursor_show @958
+    raydium_osd_cursor_texture @959 DATA
+    raydium_osd_cursor_visible @960 DATA
+    raydium_osd_cursor_xoffset @961 DATA
+    raydium_osd_cursor_xsize @962 DATA
+    raydium_osd_cursor_yoffset @963 DATA
+    raydium_osd_cursor_ysize @964 DATA
+    raydium_osd_draw @965
+    raydium_osd_draw_name @966
+    raydium_osd_draw_quad @967
+    raydium_osd_draw_quad_name @968
+    raydium_osd_ega @969 DATA
+    raydium_osd_fade_OnFadeEnd @970 DATA
+    raydium_osd_fade_callback @971
+    raydium_osd_fade_color_current @972 DATA
+    raydium_osd_fade_color_increment @973 DATA
+    raydium_osd_fade_color_timeleft @974 DATA
+    raydium_osd_fade_from @975
+    raydium_osd_fade_init @976
+    raydium_osd_internal_vertex @977
+    raydium_osd_logo @978
+    raydium_osd_logo_angle @979 DATA
+    raydium_osd_mask @980
+    raydium_osd_mask_texture @981
+    raydium_osd_mask_texture_clip @982
+    raydium_osd_mask_texture_clip_name @983
+    raydium_osd_mask_texture_name @984
+    raydium_osd_network_stat_draw @985
+    raydium_osd_printf @986
+    raydium_osd_printf_3D @987
+    raydium_osd_start @988
+    raydium_osd_stop @989
+    raydium_parser_cut @990
+    raydium_parser_db_get @991
+    raydium_parser_db_set @992
+    raydium_parser_isdata @993
+    raydium_parser_read @994
+    raydium_parser_remove @995
+    raydium_parser_replace @996
+    raydium_parser_trim @997
+    raydium_parser_trim_right @998
+    raydium_particle_callback @999
+    raydium_particle_draw @1000
+    raydium_particle_draw_all @1001
+    raydium_particle_find_free @1002
+    raydium_particle_generator_delete @1003
+    raydium_particle_generator_delete_name @1004
+    raydium_particle_generator_enable @1005
+    raydium_particle_generator_enable_name @1006
+    raydium_particle_generator_find @1007
+    raydium_particle_generator_isvalid @1008
+    raydium_particle_generator_load @1009
+    raydium_particle_generator_load_internal @1010
+    raydium_particle_generator_move @1011
+    raydium_particle_generator_move_name @1012
+    raydium_particle_generator_move_name_3f @1013
+    raydium_particle_generator_particles_OnDelete @1014
+    raydium_particle_generator_particles_OnDelete_name @1015
+    raydium_particle_generator_update @1016
+    raydium_particle_generators @1017 DATA
+    raydium_particle_init @1018
+    raydium_particle_name_auto @1019
+    raydium_particle_particles @1020 DATA
+    raydium_particle_preload @1021
+    raydium_particle_scale_all @1022
+    raydium_particle_scale_factor @1023 DATA
+    raydium_particle_state_dump @1024
+    raydium_particle_state_restore @1025
+    raydium_particle_time_factor @1026 DATA
+    raydium_particle_update @1027
+    raydium_path_add @1028
+    raydium_path_add_priority @1029
+    raydium_path_dump @1030
+    raydium_path_ext @1031
+    raydium_path_ext_priority @1032
+    raydium_path_find @1033
+    raydium_path_find_free @1034
+    raydium_path_init @1035
+    raydium_path_package_cache_clear @1036
+    raydium_path_package_file @1037 DATA
+    raydium_path_package_find_free @1038
+    raydium_path_package_internal_add @1039
+    raydium_path_package_mode @1040
+    raydium_path_package_mode_internal @1041 DATA
+    raydium_path_package_register @1042
+    raydium_path_paths @1043 DATA
+    raydium_path_reset @1044
+    raydium_path_resolv @1045
+    raydium_path_string_from @1046
+    raydium_path_string_to @1047
+    raydium_path_write @1048
+    raydium_path_write_current @1049 DATA
+    raydium_path_write_local_deny @1050
+    raydium_path_write_local_dir_allowed @1051 DATA
+    raydium_php_close @1052
+    raydium_php_error @1053
+    raydium_php_exec @1054
+    raydium_php_init @1055
+    raydium_php_init_request @1056
+    raydium_php_rayphp_path @1057 DATA
+    raydium_php_rayphp_path_change @1058
+    raydium_php_uwrite @1059
+    raydium_profile_end @1060
+    raydium_profile_start @1061
+    raydium_profile_timer @1062 DATA
+    raydium_projection @1063 DATA
+    raydium_projection_bottom @1064 DATA
+    raydium_projection_far @1065 DATA
+    raydium_projection_fov @1066 DATA
+    raydium_projection_left @1067 DATA
+    raydium_projection_near @1068 DATA
+    raydium_projection_right @1069 DATA
+    raydium_projection_top @1070 DATA
+    raydium_random_0_x @1071
+    raydium_random_f @1072
+    raydium_random_i @1073
+    raydium_random_neg_pos_1 @1074
+    raydium_random_pos_1 @1075
+    raydium_random_proba @1076
+    raydium_random_randomize @1077
+    raydium_rayphp_http_test @1078
+    raydium_rayphp_repository_defaults @1079
+    raydium_rayphp_repository_file_get @1080
+    raydium_rayphp_repository_file_list @1081
+    raydium_rayphp_repository_file_put @1082
+    raydium_rayphp_zip_add @1083
+    raydium_rayphp_zip_extract @1084
+    raydium_register_api @1085
+    raydium_register_dump @1086
+    raydium_register_find_name @1087
+    raydium_register_function @1088
+    raydium_register_function_index @1089 DATA
+    raydium_register_function_list @1090 DATA
+    raydium_register_modifiy @1091
+    raydium_register_name_isvalid @1092
+    raydium_register_variable @1093
+    raydium_register_variable_addr @1094 DATA
+    raydium_register_variable_const_f @1095
+    raydium_register_variable_const_i @1096
+    raydium_register_variable_index @1097 DATA
+    raydium_register_variable_name @1098 DATA
+    raydium_register_variable_type @1099 DATA
+    raydium_register_variable_unregister_last @1100
+    raydium_render_displaylists_tag @1101 DATA
+    raydium_render_fps @1102 DATA
+    raydium_render_fps_limit @1103
+    raydium_render_internal_light_previous_step @1104 DATA
+    raydium_render_lightmap_color @1105
+    raydium_render_lightmap_color_4f @1106
+    raydium_render_lightmap_color_value @1107 DATA
+    raydium_render_loading @1108
+    raydium_render_max_fps @1109 DATA
+    raydium_render_rgb_force @1110 DATA
+    raydium_render_rgb_force_tag @1111 DATA
+    raydium_rendering @1112
+    raydium_rendering_displaylists_disable @1113
+    raydium_rendering_displaylists_enable @1114
+    raydium_rendering_finish @1115
+    raydium_rendering_from_to @1116
+    raydium_rendering_from_to_simple @1117
+    raydium_rendering_internal_prepare_texture_render @1118
+    raydium_rendering_internal_restore_render_state @1119
+    raydium_rendering_normal @1120
+    raydium_rendering_prepare_texture_unit @1121
+    raydium_rendering_rgb_force @1122
+    raydium_rendering_rgb_normal @1123
+    raydium_rendering_wireframe @1124
+    raydium_server_accept_new @1125
+    raydium_shader_active @1126 DATA
+    raydium_shader_attach_texture @1127
+    raydium_shader_attach_texture_name @1128
+    raydium_shader_current @1129
+    raydium_shader_current_name @1130
+    raydium_shader_find @1131
+    raydium_shader_infolog @1132
+    raydium_shader_init @1133
+    raydium_shader_internal_vertex_attributes @1134
+    raydium_shader_isvalid @1135
+    raydium_shader_load @1136
+    raydium_shader_shaders @1137 DATA
+    raydium_shader_support @1138 DATA
+    raydium_shader_var_2f @1139
+    raydium_shader_var_2f_name @1140
+    raydium_shader_var_3f @1141
+    raydium_shader_var_3f_name @1142
+    raydium_shader_var_4f @1143
+    raydium_shader_var_4f_name @1144
+    raydium_shader_var_f @1145
+    raydium_shader_var_f_name @1146
+    raydium_shader_var_fv @1147
+    raydium_shader_var_fv_name @1148
+    raydium_shader_var_i @1149
+    raydium_shader_var_i_name @1150
+    raydium_shader_variable @1151
+    raydium_shadow_camerabox_size @1152
+    raydium_shadow_camerabox_size_current @1153 DATA
+    raydium_shadow_disable @1154
+    raydium_shadow_enable @1155
+    raydium_shadow_ground_center_factor_x @1156 DATA
+    raydium_shadow_ground_center_factor_y @1157 DATA
+    raydium_shadow_ground_change @1158
+    raydium_shadow_ground_mesh @1159 DATA
+    raydium_shadow_ground_modelsize @1160 DATA
+    raydium_shadow_init @1161
+    raydium_shadow_isenabled @1162
+    raydium_shadow_light @1163 DATA
+    raydium_shadow_light_main @1164
+    raydium_shadow_map_generate @1165
+    raydium_shadow_map_render @1166
+    raydium_shadow_map_size @1167 DATA
+    raydium_shadow_mode @1168
+    raydium_shadow_mode_current @1169 DATA
+    raydium_shadow_object_draw @1170
+    raydium_shadow_rendering @1171 DATA
+    raydium_shadow_tag @1172 DATA
+    raydium_shadow_texture @1173 DATA
+    raydium_signal_handler @1174
+    raydium_signal_install_trap @1175
+    raydium_sky_atmosphere_check @1176
+    raydium_sky_atmosphere_disable @1177
+    raydium_sky_atmosphere_enable @1178
+    raydium_sky_atmosphere_enable_tag @1179 DATA
+    raydium_sky_atmosphere_render @1180
+    raydium_sky_box_cache @1181
+    raydium_sky_box_name @1182
+    raydium_sky_box_render @1183
+    raydium_sky_check @1184
+    raydium_sky_disable @1185
+    raydium_sky_enable @1186
+    raydium_sky_enabled @1187 DATA
+    raydium_sky_force @1188 DATA
+    raydium_sky_prefix_defined @1189 DATA
+    raydium_sky_sphere_angle_orbit_u @1190 DATA
+    raydium_sky_sphere_angle_orbit_v @1191 DATA
+    raydium_sky_sphere_generated @1192 DATA
+    raydium_sky_sphere_heigth @1193 DATA
+    raydium_sky_sphere_quality @1194 DATA
+    raydium_sky_sphere_render @1195
+    raydium_sky_sphere_x_pos @1196 DATA
+    raydium_sky_sphere_x_vel @1197 DATA
+    raydium_sky_sphere_y_pos @1198 DATA
+    raydium_sky_sphere_y_vel @1199 DATA
+    raydium_sky_texture_skybox_back @1200 DATA
+    raydium_sky_texture_skybox_bottom @1201 DATA
+    raydium_sky_texture_skybox_front @1202 DATA
+    raydium_sky_texture_skybox_left @1203 DATA
+    raydium_sky_texture_skybox_right @1204 DATA
+    raydium_sky_texture_skybox_top @1205 DATA
+    raydium_sound @1206 DATA
+    raydium_sound_Array3IsValid @1207
+    raydium_sound_DefaultReferenceDistance @1208 DATA
+    raydium_sound_GetListenerOr @1209
+    raydium_sound_GetListenerPos @1210
+    raydium_sound_GetListenerVel @1211
+    raydium_sound_GetSourceDir @1212
+    raydium_sound_GetSourceGain @1213
+    raydium_sound_GetSourcePitch @1214
+    raydium_sound_GetSourcePos @1215
+    raydium_sound_GetSourceVel @1216
+    raydium_sound_InitSource @1217
+    raydium_sound_IsPlaying @1218
+    raydium_sound_LoadWav @1219
+    raydium_sound_SetListenerOr @1220
+    raydium_sound_SetListenerPos @1221
+    raydium_sound_SetListenerVel @1222
+    raydium_sound_SetSourceDir @1223
+    raydium_sound_SetSourceGain @1224
+    raydium_sound_SetSourceLoop @1225
+    raydium_sound_SetSourcePitch @1226
+    raydium_sound_SetSourcePos @1227
+    raydium_sound_SetSourcePosCamera @1228
+    raydium_sound_SetSourceRefDist @1229
+    raydium_sound_SetSourceVel @1230
+    raydium_sound_SourcePause @1231
+    raydium_sound_SourcePlay @1232
+    raydium_sound_SourceStop @1233
+    raydium_sound_SourceUnpause @1234
+    raydium_sound_SourceVerify @1235
+    raydium_sound_buffer @1236 DATA
+    raydium_sound_callback @1237
+    raydium_sound_close @1238
+    raydium_sound_init @1239
+    raydium_sound_internal_cleanstreambuffs @1240
+    raydium_sound_load_music @1241
+    raydium_sound_music_buf @1242 DATA
+    raydium_sound_music_callback @1243
+    raydium_sound_music_changed_callback @1244 DATA
+    raydium_sound_music_eof_callback @1245 DATA
+    raydium_sound_music_file @1246 DATA
+    raydium_sound_music_info @1247 DATA
+    raydium_sound_music_info_init @1248
+    raydium_sound_music_info_refresh @1249
+    raydium_sound_ogginfo @1250 DATA
+    raydium_sound_source @1251 DATA
+    raydium_sound_source_fade @1252
+    raydium_sound_source_fade_factor @1253 DATA
+    raydium_sound_source_fade_to @1254
+    raydium_sound_source_fade_tofile @1255 DATA
+    raydium_sound_top_buffer @1256 DATA
+    raydium_sound_verify @1257
+    raydium_sound_vf @1258 DATA
+    raydium_sprite_billboard @1259
+    raydium_sprite_change_sprite_time @1260
+    raydium_sprite_change_sprite_time_relative @1261
+    raydium_sprite_check_available @1262
+    raydium_sprite_collision_box @1263 DATA
+    raydium_sprite_collision_box_id @1264 DATA
+    raydium_sprite_collision_element_id @1265 DATA
+    raydium_sprite_coords @1266 DATA
+    raydium_sprite_current_frame @1267 DATA
+    raydium_sprite_display @1268
+    raydium_sprite_dump_info @1269
+    raydium_sprite_find @1270
+    raydium_sprite_frames @1271 DATA
+    raydium_sprite_free @1272
+    raydium_sprite_free_name @1273
+    raydium_sprite_get_current_frame @1274
+    raydium_sprite_get_current_group @1275
+    raydium_sprite_get_id_from_element @1276
+    raydium_sprite_get_name_from_object @1277
+    raydium_sprite_get_pos @1278
+    raydium_sprite_group_change @1279
+    raydium_sprite_group_current @1280 DATA
+    raydium_sprite_group_frame @1281 DATA
+    raydium_sprite_group_jump @1282 DATA
+    raydium_sprite_group_start_frame @1283 DATA
+    raydium_sprite_is_stopped @1284
+    raydium_sprite_load @1285
+    raydium_sprite_move @1286
+    raydium_sprite_move_relative @1287
+    raydium_sprite_name @1288 DATA
+    raydium_sprite_object_get @1289
+    raydium_sprite_pos @1290 DATA
+    raydium_sprite_set_name @1291
+    raydium_sprite_set_type @1292
+    raydium_sprite_size @1293 DATA
+    raydium_sprite_status @1294 DATA
+    raydium_sprite_stopped @1295 DATA
+    raydium_sprite_textureid @1296 DATA
+    raydium_sprite_time @1297 DATA
+    raydium_sprite_timer @1298 DATA
+    raydium_sprite_total_frames @1299 DATA
+    raydium_sprite_type @1300 DATA
+    raydium_sprite_used @1301 DATA
+    raydium_texture_blended @1302 DATA
+    raydium_texture_compression @1303
+    raydium_texture_compression_available @1304 DATA
+    raydium_texture_compression_enabled @1305 DATA
+    raydium_texture_current_env @1306 DATA
+    raydium_texture_current_main @1307 DATA
+    raydium_texture_current_multi @1308 DATA
+    raydium_texture_current_multi_u @1309 DATA
+    raydium_texture_current_multi_v @1310 DATA
+    raydium_texture_current_set @1311
+    raydium_texture_current_set_name @1312
+    raydium_texture_env @1313 DATA
+    raydium_texture_exists @1314
+    raydium_texture_filter @1315 DATA
+    raydium_texture_filter_aniso_levels @1316 DATA
+    raydium_texture_filter_change @1317
+    raydium_texture_find_by_name @1318
+    raydium_texture_free @1319
+    raydium_texture_free_name @1320
+    raydium_texture_get_next_free_slot_internal @1321
+    raydium_texture_hdr @1322 DATA
+    raydium_texture_index @1323 DATA
+    raydium_texture_is_slot_used @1324
+    raydium_texture_islightmap @1325 DATA
+    raydium_texture_load @1326
+    raydium_texture_load_erase @1327
+    raydium_texture_load_internal @1328
+    raydium_texture_memory @1329 DATA
+    raydium_texture_name @1330 DATA
+    raydium_texture_nolight @1331 DATA
+    raydium_texture_npot_disable @1332
+    raydium_texture_npot_enable @1333
+    raydium_texture_rgb @1334 DATA
+    raydium_texture_shader @1335 DATA
+    raydium_texture_size_is_correct @1336
+    raydium_texture_size_max @1337 DATA
+    raydium_texture_to_replace @1338 DATA
+    raydium_texture_units @1339 DATA
+    raydium_texture_use_npot_textures @1340 DATA
+    raydium_texture_used @1341 DATA
+    raydium_texture_used_memory @1342 DATA
+    raydium_timecall_add @1343
+    raydium_timecall_callback @1344
+    raydium_timecall_clock @1345
+    raydium_timecall_clocks_per_sec @1346 DATA
+    raydium_timecall_debug_movie @1347 DATA
+    raydium_timecall_detect_frequency @1348
+    raydium_timecall_devrtc_clock @1349
+    raydium_timecall_devrtc_clocks @1350 DATA
+    raydium_timecall_devrtc_close @1351
+    raydium_timecall_devrtc_handle @1352 DATA
+    raydium_timecall_devrtc_init @1353
+    raydium_timecall_devrtc_rate_change @1354
+    raydium_timecall_freq_change @1355
+    raydium_timecall_funct @1356 DATA
+    raydium_timecall_index @1357 DATA
+    raydium_timecall_init @1358
+    raydium_timecall_internal_w32_detect_modulo @1359
+    raydium_timecall_internal_w32_divmodulo_find @1360
+    raydium_timecall_interval @1361 DATA
+    raydium_timecall_max_frequency @1362 DATA
+    raydium_timecall_method @1363 DATA
+    raydium_timecall_next @1364 DATA
+    raydium_timecall_offset @1365 DATA
+    raydium_timecall_raydium @1366
+    raydium_timecall_soft_call @1367 DATA
+    raydium_timecall_start @1368
+    raydium_timecall_stop @1369
+    raydium_timecall_stopped_stamp @1370 DATA
+    raydium_timecall_w32_divmodulo @1371 DATA
+    raydium_version @1372
+    raydium_vertex_add @1373
+    raydium_vertex_arr @1374 DATA
+    raydium_vertex_counter @1375 DATA
+    raydium_vertex_index @1376 DATA
+    raydium_vertex_normal_arr @1377 DATA
+    raydium_vertex_normal_visu_arr @1378 DATA
+    raydium_vertex_offset_triangle @1379 DATA
+    raydium_vertex_tag @1380 DATA
+    raydium_vertex_tangent_arr @1381 DATA
+    raydium_vertex_texture @1382 DATA
+    raydium_vertex_texture_env @1383 DATA
+    raydium_vertex_texture_multi @1384 DATA
+    raydium_vertex_texture_multi_uv_arr @1385 DATA
+    raydium_vertex_texture_uv_arr @1386 DATA
+    raydium_vertex_uv_add @1387
+    raydium_vertex_uv_normals_add @1388
+    raydium_video_callback @1389
+    raydium_video_callback_video @1390
+    raydium_video_current_with_sound @1391 DATA
+    raydium_video_delete @1392
+    raydium_video_delete_name @1393
+    raydium_video_duration @1394
+    raydium_video_duration_name @1395
+    raydium_video_elapsed @1396
+    raydium_video_elapsed_name @1397
+    raydium_video_find @1398
+    raydium_video_find_free @1399
+    raydium_video_fps_change @1400
+    raydium_video_fps_change_name @1401
+    raydium_video_init @1402
+    raydium_video_isplaying @1403
+    raydium_video_isplaying_name @1404
+    raydium_video_isvalid @1405
+    raydium_video_jpeg_decompress @1406
+    raydium_video_loop @1407
+    raydium_video_loop_name @1408
+    raydium_video_open @1409
+    raydium_video_open_with_sound @1410
+    raydium_video_seek @1411
+    raydium_video_seek_name @1412
+    raydium_video_seek_rel @1413
+    raydium_video_seek_rel_name @1414
+    raydium_video_sound_callback @1415
+    raydium_video_video @1416 DATA
+    raydium_viewport @1417 DATA
+    raydium_viewport_create @1418
+    raydium_viewport_direct_close @1419
+    raydium_viewport_direct_open @1420
+    raydium_viewport_direct_open_4f @1421
+    raydium_viewport_direct_values @1422 DATA
+    raydium_viewport_draw @1423
+    raydium_viewport_enable @1424
+    raydium_viewport_init @1425
+    raydium_viewport_nb @1426 DATA
+    raydium_viewport_save @1427
+    raydium_viewport_saved_camera_pos @1428 DATA
+    raydium_viewport_saved_context @1429 DATA
+    raydium_viewport_saved_modelview_data @1430 DATA
+    raydium_viewport_use @1431 DATA
+    raydium_web_active @1432 DATA
+    raydium_web_answer @1433
+    raydium_web_body_default @1434 DATA
+    raydium_web_callback @1435
+    raydium_web_client_get @1436
+    raydium_web_extension_add @1437
+    raydium_web_extension_count @1438 DATA
+    raydium_web_extensions @1439 DATA
+    raydium_web_footer @1440 DATA
+    raydium_web_header @1441 DATA
+    raydium_web_init @1442
+    raydium_web_listenfd @1443 DATA
+    raydium_web_request @1444
+    raydium_web_serv_addr @1445 DATA
+    raydium_web_start @1446
+    raydium_web_title @1447 DATA
+    raydium_window_close @1448
+    raydium_window_create @1449
+    raydium_window_mode @1450 DATA
+    raydium_window_projection_update @1451
+    raydium_window_ratio @1452 DATA
+    raydium_window_resize_callback @1453
+    raydium_window_tx @1454 DATA
+    raydium_window_ty @1455 DATA
+    raydium_window_view_perspective @1456
+    raydium_window_view_update @1457
+    read_vertex_from @1458
+    sprite_render_frame @1459

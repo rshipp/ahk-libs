@@ -15,6 +15,7 @@ So far, the included libs are (in no particular order):
   ParallelPort
   QuotedStringReplace
   RangeOverlap
+  Raydium-AHK (game engine wrapper)
   SingleCharArray
   Speech (tts lib)
   TriangleCollisionDetection
