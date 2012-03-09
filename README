@@ -35,6 +35,8 @@ So far, the included libs are (in no particular order):
   ITaskbarList
   AeroThumbnail
 - hoppfrosch's cTable class
+- HotKeyIt's _Struct libs for AHK v2 and _H
+- RaptorX's scintilla-wrapper and cURL-Wrapper libs
 
 The "Sources" file contains a list of the git repos cloned and included here. 
 

@@ -1,0 +1,38 @@
+; Selection and information [General]
+
+/*
+    Function: _WordEndPosition
+    <http://www.scintilla.org/ScintillaDoc.html#SCI_WORDENDPOSITION>
+    
+    Returns the end of words using the same definition of words as used internally within Scintilla.
+    You can set your own list of characters that count as words with <_SetWordChars>.
+    
+    Parameters:
+    >SCI_WordEndPosition(pos, owcMode)
+    
+    pos     -   position for where to start the search, , which is forwards when searching for the end 
+                and backwards when searching for the start.
+    owcMode -   the Only Word Characters stop the search at the first non-word character in the search direction if 
+                is set to True. If owcMode is False , the first character in the search direction sets the type of 
+                the search as word or non-word and the search stops at the first non-matching character. 
+                Searches are also terminated by the start or end of the document.
+                
+    Returns:
+    pos     -   position of the end of the current word.
+    
+    (Start Code)
+    Note:
+    If "w" represents word characters and "." represents non-word characters and "|" represents the position and true or false is the state of onlyWordCharacters:
+    
+    Initial state 	  end, true 	 end, false
+    ..ww..|..ww.. 	..ww..|..ww.. 	..ww....|ww..
+    ....ww|ww.... 	....wwww|.... 	....wwww|....
+    ..ww|....ww.. 	..ww|....ww.. 	..ww....|ww..
+    ..ww....|ww.. 	..ww....ww|.. 	..ww....ww|..
+    (End)
+    
+    Examples:
+    >SCI_WordEndPosition(pos, True)
+*/
+
+
