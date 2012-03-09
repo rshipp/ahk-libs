@@ -34,6 +34,7 @@ So far, the included libs are (in no particular order):
   FormsFramework
   ITaskbarList
   AeroThumbnail
+- hoppfrosch's cTable class
 
 The "Sources" file contains a list of the git repos cloned and included here. 
 
