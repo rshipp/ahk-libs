@@ -1,0 +1,854 @@
+#AllowSameLineComments	docs/commands/_AllowSameLineComments.htm
+#ClipboardTimeout	docs/commands/_ClipboardTimeout.htm
+#CommentFlag	docs/commands/_CommentFlag.htm
+#Delimiter	docs/commands/_EscapeChar.htm#Delimiter
+#DerefChar	docs/commands/_EscapeChar.htm#DerefChar
+#ErrorStdOut	docs/commands/_ErrorStdOut.htm
+#EscapeChar	docs/commands/_EscapeChar.htm
+#HotkeyInterval	docs/commands/_HotkeyInterval.htm
+#HotkeyModifierTimeout	docs/commands/_HotkeyModifierTimeout.htm
+#Hotstring	docs/commands/_Hotstring.htm
+#If	docs/commands/_If.htm
+#IfTimeout	docs/commands/_IfTimeout.htm
+#IfWinActive	docs/commands/_IfWinActive.htm
+#IfWinExist	docs/commands/_IfWinActive.htm
+#Include	docs/commands/_Include.htm
+#IncludeAgain	docs/commands/_Include.htm
+#InstallKeybdHook	docs/commands/_InstallKeybdHook.htm
+#InstallMouseHook	docs/commands/_InstallMouseHook.htm
+#KeyHistory	docs/commands/_KeyHistory.htm
+#LTrim	docs/Scripts.htm#LTrim
+#MaxHotkeysPerInterval	docs/commands/_MaxHotkeysPerInterval.htm
+#MaxMem	docs/commands/_MaxMem.htm
+#MaxThreads	docs/commands/_MaxThreads.htm
+#MaxThreadsBuffer	docs/commands/_MaxThreadsBuffer.htm
+#MaxThreadsPerHotkey	docs/commands/_MaxThreadsPerHotkey.htm
+#MenuMaskKey	docs/commands/_MenuMaskKey.htm
+#NoEnv	docs/commands/_NoEnv.htm
+#NoTrayIcon	docs/commands/_NoTrayIcon.htm
+#Persistent	docs/commands/_Persistent.htm
+#SingleInstance	docs/commands/_SingleInstance.htm
+#UseHook	docs/commands/_UseHook.htm
+#Warn	http://www.autohotkey.net/~Lexikos/AutoHotkey_L/docs/commands/_Warn.htm
+#WinActivateForce	docs/commands/_WinActivateForce.htm
+:=	docs/commands/SetExpression.htm
+A_AhkPath	docs/Variables.htm#AhkPath
+A_AhkVersion	docs/Variables.htm#AhkVersion
+A_AppData	docs/Variables.htm#AppData
+A_AppDataCommon	docs/Variables.htm#AppDataCommon
+A_AutoTrim	docs/Variables.htm#AutoTrim
+A_BatchLines	docs/Variables.htm#BatchLines
+A_CaretX	docs/Variables.htm#Caret
+A_CaretY	docs/Variables.htm#Caret
+A_ComputerName	docs/Variables.htm#ComputerName
+A_ControlDelay	docs/Variables.htm#ControlDelay
+A_Cursor	docs/Variables.htm#Cursor
+A_DD	docs/Variables.htm#DD
+A_DDD	docs/Variables.htm#DDDD
+A_DDDD	docs/Variables.htm#DDDD
+A_DefaultMouseSpeed	docs/Variables.htm#DefaultMouseSpeed
+A_Desktop	docs/Variables.htm#Desktop
+A_DesktopCommon	docs/Variables.htm#DesktopCommon
+A_DetectHiddenText	docs/Variables.htm#DetectHiddenText
+A_DetectHiddenWindows	docs/Variables.htm#DetectHiddenWindows
+A_EndChar	docs/Variables.htm#EndChar
+A_EventInfo	docs/Variables.htm#EventInfo
+A_ExitReason	docs/Variables.htm#ExitReason
+A_FileEncoding	docs/Variables.htm#FileEncoding
+A_FormatFloat	docs/Variables.htm#FormatFloat
+A_FormatInteger	docs/Variables.htm#FormatInteger
+A_Gui	docs/Variables.htm#Gui
+A_GuiControl	docs/Variables.htm#GuiControl
+A_GuiControlEvent	docs/Variables.htm#GuiControlEvent
+A_GuiEvent	docs/Variables.htm#GuiEvent
+A_GuiHeight	docs/Variables.htm#GuiWidth
+A_GuiWidth	docs/Variables.htm#GuiWidth
+A_GuiX	docs/Variables.htm#GuiX
+A_GuiY	docs/Variables.htm#GuiY
+A_Hour	docs/Variables.htm#Hour
+A_IconFile	docs/Variables.htm#IconFile
+A_IconHidden	docs/Variables.htm#IconHidden
+A_IconNumber	docs/Variables.htm#IconNumber
+A_IconTip	docs/Variables.htm#IconTip
+A_Index	docs/commands/Loop.htm
+A_IPAddress1 through 4	docs/Variables.htm#IPAddress
+A_IsAdmin	docs/Variables.htm#IsAdmin
+A_IsCompiled	docs/Variables.htm#IsCompiled
+A_IsCritical	docs/Variables.htm#IsCritical
+A_IsPaused	docs/Variables.htm#IsPaused
+A_IsSuspended	docs/Variables.htm#IsSuspended
+A_IsUnicode	docs/Variables.htm#IsUnicode
+A_KeyDelay	docs/Variables.htm#KeyDelay
+A_Language	docs/Variables.htm#Language
+A_Language Values	docs/misc/Languages.htm
+A_LastError	docs/Variables.htm#LastError
+A_LineFile	docs/Variables.htm#LineFile
+A_LineNumber	docs/Variables.htm#LineNumber
+A_LoopField	docs/commands/LoopParse.htm#LoopField
+A_LoopFileAttrib	docs/commands/LoopFile.htm#LoopFileAttrib
+A_LoopFileDir	docs/commands/LoopFile.htm#LoopFileDir
+A_LoopFileExt	docs/commands/LoopFile.htm#LoopFileExt
+A_LoopFileFullPath	docs/commands/LoopFile.htm#LoopFileFullPath
+A_LoopFileLongPath	docs/commands/LoopFile.htm#LoopFileLongPath
+A_LoopFileName	docs/commands/LoopFile.htm#LoopFileName
+A_LoopFileShortName	docs/commands/LoopFile.htm#LoopFileShortName
+A_LoopFileShortPath	docs/commands/LoopFile.htm#LoopFileShortPath
+A_LoopFileSize	docs/commands/LoopFile.htm#LoopFileSize
+A_LoopFileSizeKB	docs/commands/LoopFile.htm#LoopFileSizeKB
+A_LoopFileSizeMB	docs/commands/LoopFile.htm#LoopFileSizeMB
+A_LoopFileTimeAccessed	docs/commands/LoopFile.htm#LoopFileTimeAccessed
+A_LoopFileTimeCreated	docs/commands/LoopFile.htm#LoopFileTimeCreated
+A_LoopFileTimeModified	docs/commands/LoopFile.htm#LoopFileTimeModified
+A_LoopReadLine	docs/commands/LoopReadFile.htm#LoopReadLine
+A_LoopRegKey	docs/commands/LoopReg.htm
+A_LoopRegName	docs/commands/LoopReg.htm
+A_LoopRegSubKey	docs/commands/LoopReg.htm
+A_LoopRegTimeModified	docs/commands/LoopReg.htm
+A_LoopRegType	docs/commands/LoopReg.htm
+A_MDay	docs/Variables.htm#DD
+A_Min	docs/Variables.htm#Min
+A_MM	docs/Variables.htm#MM
+A_MMM	docs/Variables.htm#MMM
+A_MMMM	docs/Variables.htm#MMMM
+A_Mon	docs/Variables.htm#MM
+A_MouseDelay	docs/Variables.htm#MouseDelay
+A_MSec	docs/Variables.htm#MSec
+A_MyDocuments	docs/Variables.htm#MyDocuments
+A_Now	docs/Variables.htm#Now
+A_NowUTC	docs/Variables.htm#NowUTC
+A_NumBatchLines	docs/Variables.htm#BatchLines
+A_OSType	docs/Variables.htm#OSType
+A_OSVersion	docs/Variables.htm#OSVersion
+A_PriorHotkey	docs/Variables.htm#PriorHotkey
+A_PriorKey	docs/Variables.htm#PriorKey
+A_ProgramFiles	docs/Variables.htm#ProgramFiles
+A_Programs	docs/Variables.htm#Programs
+A_ProgramsCommon	docs/Variables.htm#ProgramsCommon
+A_PtrSize	docs/Variables.htm#PtrSize
+A_ScreenHeight	docs/Variables.htm#Screen
+A_ScreenWidth	docs/Variables.htm#Screen
+A_ScriptDir	docs/Variables.htm#ScriptDir
+A_ScriptFullPath	docs/Variables.htm#ScriptFullPath
+A_ScriptHwnd	docs/Variables.htm#ScriptHwnd
+A_ScriptName	docs/Variables.htm#ScriptName
+A_Sec	docs/Variables.htm#Sec
+A_Space	docs/Variables.htm#Space
+A_StartMenu	docs/Variables.htm#StartMenu
+A_StartMenuCommon	docs/Variables.htm#StartMenuCommon
+A_Startup	docs/Variables.htm#Startup
+A_StartupCommon	docs/Variables.htm#StartupCommon
+A_StringCaseSense	docs/Variables.htm#StringCaseSense
+A_Tab	docs/Variables.htm#Tab
+A_Temp	docs/Variables.htm#Temp
+A_ThisFunc	docs/Variables.htm#ThisFunc
+A_ThisHotkey	docs/Variables.htm#ThisHotkey
+A_ThisLabel	docs/Variables.htm#ThisLabel
+A_ThisMenu	docs/Variables.htm#ThisMenu
+A_ThisMenuItem	docs/Variables.htm#ThisMenuItem
+A_ThisMenuItemPos	docs/Variables.htm#ThisMenuItemPos
+A_TickCount	docs/Variables.htm#TickCount
+A_TimeIdle	docs/Variables.htm#TimeIdle
+A_TimeIdlePhysical	docs/Variables.htm#TimeIdlePhysical
+A_TimeSincePriorHotkey	docs/Variables.htm#TimeSincePriorHotkey
+A_TimeSinceThisHotkey	docs/Variables.htm#TimeSinceThisHotkey
+A_TitleMatchMode	docs/Variables.htm#TitleMatchMode
+A_TitleMatchModeSpeed	docs/Variables.htm#TitleMatchModeSpeed
+A_UserName	docs/Variables.htm#UserName
+A_WDay	docs/Variables.htm#WDay
+A_WinDelay	docs/Variables.htm#WinDelay
+A_WinDir	docs/Variables.htm#WinDir
+A_WorkingDir	docs/Variables.htm#WorkingDir
+A_YDay	docs/Variables.htm#YDay
+A_Year	docs/Variables.htm#YYYY
+A_YWeek	docs/Variables.htm#YWeek
+A_YYYY	docs/Variables.htm#YYYY
+abbreviation expansion	docs/Hotstrings.htm
+Abs()	docs/Functions.htm#Abs
+absolute value, abs()	docs/Functions.htm#Abs
+Acknowledgements	docs/misc/acknowledgements.htm
+ACos()	docs/Functions.htm#ACos
+activate a window	docs/commands/WinActivate.htm
+add	docs/commands/EnvAdd.htm
+Address of a variable	docs/Variables.htm#amp
+administrator privileges for scripts	docs/Variables.htm#RequireAdmin
+ahk2exe	docs/Scripts.htm#ahk2exe
+ahk_class	docs/LastFoundWindow.htm#class
+ahk_exe	docs/LastFoundWindow.htm#exe
+ahk_group	docs/LastFoundWindow.htm#group
+ahk_id	docs/LastFoundWindow.htm#id
+ahk_pid	docs/LastFoundWindow.htm#pid
+AllowSameLineComments	docs/commands/_AllowSameLineComments.htm
+alnum	docs/commands/IfIs.htm
+alpha	docs/commands/IfIs.htm
+AltGr	docs/Hotkeys.htm#AltGr
+AltTab	docs/Hotkeys.htm#alttab
+AlwaysOnTop (WinSet)	docs/commands/WinSet.htm
+append to file	docs/commands/FileAppend.htm
+Arrays	docs/misc/Arrays.htm
+Asc()	docs/Functions.htm#Asc
+ASCII conversion	docs/commands/Transform.htm
+ASin()	docs/Functions.htm#ASin
+assigning values to variables	docs/Variables.htm#AssignOp
+ATan()	docs/Functions.htm#ATan
+attributes of files and folders	docs/commands/FileGetAttrib.htm
+auto-execute section	docs/Scripts.htm
+auto-replace text as you type it	docs/Hotstrings.htm
+AutoTrim	docs/commands/AutoTrim.htm
+balloon tip	docs/commands/TrayTip.htm
+base (Objects)	docs/Objects.htm#Custom_Objects
+beep the PC speaker	docs/commands/SoundBeep.htm
+between (check if var between two values)	docs/commands/IfBetween.htm
+bitwise operations	docs/Variables.htm#bitwise
+blind-mode Send	docs/commands/Send.htm#blind
+BlockInput	docs/commands/BlockInput.htm
+blocks (lines enclosed in braces)	docs/commands/Block.htm
+Break	docs/commands/Break.htm
+buffering	docs/commands/_MaxThreadsBuffer.htm
+built-in functions	docs/Functions.htm#BuiltIn
+built-in variables	docs/Variables.htm#BuiltIn
+Button controls (GUI)	docs/commands/GuiControls.htm#Button
+button list (mouse and joystick)	docs/KeyList.htm
+button state	docs/commands/GetKeyState.htm
+ByRef	docs/Functions.htm#ByRef
+callbacks	docs/commands/RegisterCallback.htm
+case sensitive strings	docs/commands/StringCaseSense.htm
+Ceil()	docs/Functions.htm#Ceil
+Changelog	docs/AHKL_ChangeLog.htm
+Checkbox controls (GUI)	docs/commands/GuiControls.htm#Checkbox
+choose file	docs/commands/FileSelectFile.htm
+choose folder	docs/commands/FileSelectFolder.htm
+Chr()	docs/Functions.htm#Chr
+class (Objects)	docs/Objects.htm#Custom_Classes
+class name of a window	docs/commands/WinGetClass.htm
+Click a mouse button	docs/commands/Click.htm
+Clipboard	docs/misc/Clipboard.htm
+ClipboardAll	docs/misc/Clipboard.htm#ClipboardAll
+ClipWait	docs/commands/ClipWait.htm
+Clone()	docs/objects/Object.htm#Clone
+close a window	docs/commands/WinClose.htm
+CLSID List (My Computer, etc.)	docs/misc/CLSID-List.htm
+color names, RGB/HTML	docs/commands/Progress.htm#colors
+color of pixels	docs/commands/PixelSearch.htm
+COM	docs/commands/ComObjCreate.htm
+ComboBox controls (GUI)	docs/commands/GuiControls.htm#ComboBox
+comma operator (multi-statement)	docs/Variables.htm#comma
+command line parameters	docs/Scripts.htm#cmd
+commands, alphabetical list	docs/commands/index.htm
+CommentFlag	docs/commands/_CommentFlag.htm
+comments in scripts	docs/Scripts.htm
+ComObj...()	docs/commands/ComObjActive.htm
+ComObjArray()	docs/commands/ComObjArray.htm
+ComObjConnect()	docs/commands/ComObjConnect.htm
+ComObjCreate()	docs/commands/ComObjCreate.htm
+ComObjError()	docs/commands/ComObjError.htm
+ComObjFlags()	docs/commands/ComObjFlags.htm
+ComObjGet()	docs/commands/ComObjGet.htm
+ComObjQuery()	docs/commands/ComObjQuery.htm
+ComObjType()	docs/commands/ComObjType.htm
+ComObjValue()	docs/commands/ComObjValue.htm
+Compatibility	docs/Compat.htm
+compile a script	docs/Scripts.htm#ahk2exe
+ComSpec	docs/Variables.htm#ComSpec
+concatenate, in expressions	docs/Variables.htm#concat
+concatenate, script lines	docs/Scripts.htm#continuation
+context menu (GUI)	docs/commands/Gui.htm#GuiContextMenu
+continuation sections	docs/Scripts.htm#continuation
+Continue	docs/commands/Continue.htm
+Control	docs/commands/Control.htm
+ControlClick	docs/commands/ControlClick.htm
+ControlFocus	docs/commands/ControlFocus.htm
+ControlGet	docs/commands/ControlGet.htm
+ControlGetFocus	docs/commands/ControlGetFocus.htm
+ControlGetPos	docs/commands/ControlGetPos.htm
+ControlGetText	docs/commands/ControlGetText.htm
+ControlMove	docs/commands/ControlMove.htm
+ControlSend	docs/commands/ControlSend.htm
+ControlSendRaw	docs/commands/ControlSend.htm
+ControlSetText	docs/commands/ControlSetText.htm
+convert a script to an EXE	docs/Scripts.htm#ahk2exe
+coordinates	docs/commands/CoordMode.htm
+CoordMode	docs/commands/CoordMode.htm
+copy file	docs/commands/FileCopy.htm
+copy folder/directory	docs/commands/FileCopyDir.htm
+Cos()	docs/Functions.htm#Cos
+create file	docs/commands/FileAppend.htm
+create folder/directory	docs/commands/FileCreateDir.htm
+Critical	docs/commands/Critical.htm
+current directory	docs/commands/SetWorkingDir.htm
+current thread	docs/misc/Threads.htm
+cursor shape	docs/Variables.htm#Cursor
+dates and times (compare)	docs/commands/EnvSub.htm
+dates and times (math)	docs/commands/EnvAdd.htm
+dates and times (of files)	docs/commands/FileSetTime.htm
+DateTime controls (GUI)	docs/commands/GuiControls.htm#DateTime
+debugger	docs/commands/OutputDebug.htm
+debugging a script	docs/Scripts.htm#debug
+decimal places	docs/commands/SetFormat.htm
+delete files	docs/commands/FileDelete.htm
+delete folder/directory	docs/commands/FileRemoveDir.htm
+Delimiter	docs/commands/_EscapeChar.htm
+DerefChar	docs/commands/_EscapeChar.htm
+DetectHiddenText	docs/commands/DetectHiddenText.htm
+DetectHiddenWindows	docs/commands/DetectHiddenWindows.htm
+dialog FileSelectFile	docs/commands/FileSelectFile.htm
+dialog FileSelectFolder	docs/commands/FileSelectFolder.htm
+dialog InputBox	docs/commands/InputBox.htm
+dialog MsgBox	docs/commands/MsgBox.htm
+digit	docs/commands/IfIs.htm
+disk space	docs/commands/DriveSpaceFree.htm
+divide (math)	docs/Variables.htm#divide
+DllCall()	docs/commands/DllCall.htm
+download a file	docs/commands/URLDownloadToFile.htm
+drag and drop (GUI windows)	docs/commands/Gui.htm#GuiDropFiles
+drag the mouse	docs/commands/MouseClickDrag.htm
+Drive	docs/commands/Drive.htm
+DriveGet	docs/commands/DriveGet.htm
+DriveSpaceFree	docs/commands/DriveSpaceFree.htm
+DropDownList controls (GUI)	docs/commands/GuiControls.htm#DropDownList
+Edit	docs/commands/Edit.htm
+Edit controls (GUI)	docs/commands/GuiControls.htm#Edit
+Else	docs/commands/Else.htm
+EnvAdd	docs/commands/EnvAdd.htm
+EnvDiv	docs/commands/EnvDiv.htm
+EnvGet	docs/commands/EnvGet.htm
+environment variables	docs/Variables.htm#env
+environment variables (change them)	docs/commands/EnvSet.htm
+EnvMult	docs/commands/EnvMult.htm
+EnvSet	docs/commands/EnvSet.htm
+EnvSub	docs/commands/EnvSub.htm
+EnvUpdate	docs/commands/EnvUpdate.htm
+ErrorLevel	docs/misc/ErrorLevel.htm
+ErrorStdOut	docs/commands/_ErrorStdOut.htm
+escape sequence	docs/commands/_EscapeChar.htm
+EscapeChar	docs/commands/_EscapeChar.htm
+Exit	docs/commands/Exit.htm
+ExitApp	docs/commands/ExitApp.htm
+Exp()	docs/Functions.htm#Exp
+expressions	docs/Variables.htm#Expressions
+ExtractInteger -&gt; NumGet()	docs/Functions.htm#NumGet
+FAQ (Frequently Asked Questions)	docs/FAQ.htm
+file attributes	docs/commands/FileSetAttrib.htm
+File object	docs/objects/File.htm
+file or folder (does it exist)	docs/commands/IfExist.htm
+file pattern	docs/commands/LoopFile.htm
+file, creating	docs/commands/FileAppend.htm
+file, reading	docs/commands/LoopReadFile.htm
+file, writing/appending	docs/commands/FileAppend.htm
+FileAppend	docs/commands/FileAppend.htm
+FileCopy	docs/commands/FileCopy.htm
+FileCopyDir	docs/commands/FileCopyDir.htm
+FileCreateDir	docs/commands/FileCreateDir.htm
+FileCreateShortcut	docs/commands/FileCreateShortcut.htm
+FileDelete	docs/commands/FileDelete.htm
+FileEncoding	docs/commands/FileEncoding.htm
+FileExist()	docs/Functions.htm#FileExist
+FileGetAttrib	docs/commands/FileGetAttrib.htm
+FileGetShortcut	docs/commands/FileGetShortcut.htm
+FileGetSize	docs/commands/FileGetSize.htm
+FileGetTime	docs/commands/FileGetTime.htm
+FileGetVersion	docs/commands/FileGetVersion.htm
+FileInstall	docs/commands/FileInstall.htm
+FileMove	docs/commands/FileMove.htm
+FileMoveDir	docs/commands/FileMoveDir.htm
+FileOpen	docs/commands/FileOpen.htm
+FileRead	docs/commands/FileRead.htm
+FileReadLine	docs/commands/FileReadLine.htm
+FileRecycle	docs/commands/FileRecycle.htm
+FileRecycleEmpty	docs/commands/FileRecycleEmpty.htm
+FileRemoveDir	docs/commands/FileRemoveDir.htm
+FileSelectFile	docs/commands/FileSelectFile.htm
+FileSelectFolder	docs/commands/FileSelectFolder.htm
+FileSetAttrib	docs/commands/FileSetAttrib.htm
+FileSetTime	docs/commands/FileSetTime.htm
+find a file	docs/commands/IfExist.htm
+find a string	docs/commands/StringGetPos.htm
+find a window	docs/commands/IfWinExist.htm
+floating point (check if it is one)	docs/commands/IfIs.htm
+floating point (SetFormat)	docs/commands/SetFormat.htm
+Floor()	docs/Functions.htm#Floor
+focus	docs/commands/ControlFocus.htm
+folder/directory copy	docs/commands/FileCopyDir.htm
+folder/directory create	docs/commands/FileCreateDir.htm
+folder/directory move	docs/commands/FileMoveDir.htm
+folder/directory remove	docs/commands/FileRemoveDir.htm
+folder/directory select	docs/commands/FileSelectFolder.htm
+Fonts	docs/misc/FontsStandard.htm
+For-loop	docs/commands/For.htm
+format, numbers	docs/commands/SetFormat.htm
+FormatTime	docs/commands/FormatTime.htm
+free space	docs/commands/DriveSpaceFree.htm
+FTP uploading example	docs/commands/FileAppend.htm#FTP
+functions (defining and calling)	docs/Functions.htm
+Functions (libraries)	docs/Functions.htm#lib
+Func()	docs/Objects.htm#Function_References
+g-label (responding to GUI events)	docs/commands/Gui.htm#label
+game automation	docs/commands/PixelSearch.htm
+GetAddress()	http://www.autohotkey.net/~Lexikos/AutoHotkey_L/docs/objects/Object.htm#GetAddress
+GetCapacity()	docs/objects/Object.htm#GetCapacity
+GetKeyName()	docs/Functions.htm#GetKeyName
+GetKeySC()	docs/Functions.htm#GetKeyName
+GetKeyState	docs/commands/GetKeyState.htm
+GetKeyState()	docs/Functions.htm#GetKeyState
+GetKeyVK()	docs/Functions.htm#GetKeyName
+global variables in functions	docs/Functions.htm#Global
+Gosub	docs/commands/Gosub.htm
+Goto	docs/commands/Goto.htm
+GroupActivate	docs/commands/GroupActivate.htm
+GroupAdd	docs/commands/GroupAdd.htm
+GroupBox controls (GUI)	docs/commands/GuiControls.htm#GroupBox
+GroupClose	docs/commands/GroupClose.htm
+GroupDeactivate	docs/commands/GroupDeactivate.htm
+Gui	docs/commands/Gui.htm
+Gui control types	docs/commands/GuiControls.htm
+Gui styles reference	docs/misc/Styles.htm
+GuiClose (label)	docs/commands/Gui.htm#GuiClose
+GuiContextMenu (label)	docs/commands/Gui.htm#GuiContextMenu
+GuiControl	docs/commands/GuiControl.htm
+GuiControlGet	docs/commands/GuiControlGet.htm
+GuiDropFiles (label)	docs/commands/Gui.htm#GuiDropFiles
+GuiEscape (label)	docs/commands/Gui.htm#GuiEscape
+GuiSize (label)	docs/commands/Gui.htm#GuiSize
+HasKey()	docs/objects/Object.htm#HasKey
+hexadecimal format	docs/commands/SetFormat.htm
+hibernate or suspend	docs/commands/Shutdown.htm#Suspend
+hidden text	docs/commands/DetectHiddenText.htm
+hidden windows	docs/commands/DetectHiddenWindows.htm
+HKEY_CLASSES_ROOT	docs/commands/RegRead.htm
+HKEY_CURRENT_CONFIG	docs/commands/RegRead.htm
+HKEY_CURRENT_USER	docs/commands/RegRead.htm
+HKEY_LOCAL_MACHINE	docs/commands/RegRead.htm
+HKEY_USERS	docs/commands/RegRead.htm
+hook	docs/commands/_InstallKeybdHook.htm
+Hotkey	docs/Hotkeys.htm
+Hotkeys	docs/Hotkeys.htm
+Hotkey command	docs/commands/Hotkey.htm
+Hotkey controls (GUI)	docs/commands/GuiControls.htm#Hotkey
+Hotkey, ListHotkeys	docs/commands/ListHotkeys.htm
+Hotkey, other features	docs/HotkeyFeatures.htm
+HotkeyInterval	docs/commands/_HotkeyInterval.htm
+HotkeyModifierTimeout	docs/commands/_HotkeyModifierTimeout.htm
+hotstrings and auto-replace	docs/Hotstrings.htm
+HTML color names	docs/commands/Progress.htm#colors
+HWND (of a control)	docs/commands/ControlGet.htm#Hwnd
+HWND (of a window)	docs/LastFoundWindow.htm#id
+icon, changing	docs/commands/Menu.htm#Icon
+ID number for a window	docs/commands/WinGet.htm
+If	docs/commands/IfEqual.htm
+If (expression)	docs/commands/IfExpression.htm
+If var [not] between Low and High	docs/commands/IfBetween.htm
+If var [not] in/contains MatchList	docs/commands/IfIn.htm
+If var is [not] type	docs/commands/IfIs.htm
+IfEqual	docs/commands/IfEqual.htm
+IfExist	docs/commands/IfExist.htm
+IfGreater	docs/commands/IfEqual.htm
+IfGreaterOrEqual	docs/commands/IfEqual.htm
+IfInString	docs/commands/IfInString.htm
+IfLess	docs/commands/IfEqual.htm
+IfLessOrEqual	docs/commands/IfEqual.htm
+IfMsgBox	docs/commands/IfMsgBox.htm
+IfNotEqual	docs/commands/IfEqual.htm
+IfNotExist	docs/commands/IfExist.htm
+IfNotInString	docs/commands/IfInString.htm
+IfWinActive	docs/commands/IfWinActive.htm
+IfWinExist	docs/commands/IfWinExist.htm
+IfWinNotActive	docs/commands/IfWinActive.htm
+IfWinNotExist	docs/commands/IfWinExist.htm
+IL_Add()	docs/commands/ListView.htm#IL_Add
+IL_Create()	docs/commands/ListView.htm#IL_Create
+IL_Destroy()	docs/commands/ListView.htm#IL_Destroy
+Image Lists (GUI)	docs/commands/ListView.htm#IL
+ImageSearch	docs/commands/ImageSearch.htm
+Include	docs/commands/_Include.htm
+infrared remote controls	docs/scripts/WinLIRC.htm
+IniDelete	docs/commands/IniDelete.htm
+IniRead	docs/commands/IniRead.htm
+IniWrite	docs/commands/IniWrite.htm
+Input	docs/commands/Input.htm
+InputBox	docs/commands/InputBox.htm
+Insert()	docs/objects/Object.htm#Insert
+InsertInteger -&gt; NumPut()	docs/Functions.htm#NumPut
+Install	docs/commands/FileInstall.htm
+Installer Options	docs/Scripts.htm#install
+InstallKeybdHook	docs/commands/_InstallKeybdHook.htm
+InstallMouseHook	docs/commands/_InstallMouseHook.htm
+InStr()	docs/Functions.htm#InStr
+integer (check if it is one)	docs/commands/IfIs.htm
+integer (SetFormat)	docs/commands/SetFormat.htm
+Interrupt	docs/commands/Thread.htm
+IsByRef()	docs/Functions.htm#IsByRef
+IsFunc()	docs/Functions.htm#IsFunc
+IsLabel()	docs/Functions.htm#IsLabel
+IsObject()	docs/Objects.htm
+Join (continuation sections)	docs/Scripts.htm#Join
+Joystick	docs/KeyList.htm
+JScript, embedded/inline	docs/commands/DllCall.htm#COM
+key list (keyboard, mouse, joystick)	docs/KeyList.htm
+key state	docs/commands/GetKeyState.htm
+keyboard hook	docs/commands/_InstallKeybdHook.htm
+KeyHistory	docs/commands/KeyHistory.htm
+keystrokes, sending	docs/commands/Send.htm
+KeyWait	docs/commands/KeyWait.htm
+labels	docs/commands/Gosub.htm
+last found window	docs/LastFoundWindow.htm
+LeftClick	docs/commands/Click.htm
+LeftClickDrag	docs/commands/MouseClickDrag.htm
+length of a string	docs/commands/StringLen.htm
+libraries of functions	docs/Functions.htm#lib
+license	docs/license.htm
+line continuation	docs/Scripts.htm#continuation
+ListBox controls (GUI)	docs/commands/GuiControls.htm#ListBox
+ListHotkeys	docs/commands/ListHotkeys.htm
+ListLines	docs/commands/ListLines.htm
+ListVars	docs/commands/ListVars.htm
+ListView controls (GUI)	docs/commands/ListView.htm
+ListView, getting text from	docs/commands/ControlGet.htm#List
+Ln()	docs/Functions.htm#Ln
+lnk (link/shortcut) file	docs/commands/FileCreateShortcut.htm
+local variables	docs/Functions.htm#Locals
+Locale	docs/commands/StringCaseSense.htm#Locale
+Log()	docs/Functions.htm#Log
+logarithm, log()	docs/Functions.htm#Log
+logoff	docs/commands/Shutdown.htm
+long file name (converting to)	docs/commands/LoopFile.htm#LoopFileLongPath
+Loop	docs/commands/Loop.htm
+Loop (registry)	docs/commands/LoopReg.htm
+Loop (until)	http://www.autohotkey.net/~Lexikos/AutoHotkey_L/docs/commands/Until.htm
+Loop (while)	docs/commands/While.htm
+Loop, FilePattern	docs/commands/LoopFile.htm
+Loop, Parse a string	docs/commands/LoopParse.htm
+Loop, Read file contents	docs/commands/LoopReadFile.htm
+lParam	docs/commands/PostMessage.htm
+LTrim (continuation sections)	docs/Scripts.htm#LTrim
+LTrim()	docs/commands/Trim.htm
+LV_Add()	docs/commands/ListView.htm#LV_Add
+LV_Delete()	docs/commands/ListView.htm#LV_Delete
+LV_DeleteCol()	docs/commands/ListView.htm#LV_DeleteCol
+LV_GetCount()	docs/commands/ListView.htm#LV_GetCount
+LV_GetNext()	docs/commands/ListView.htm#LV_GetNext
+LV_GetText()	docs/commands/ListView.htm#LV_GetText
+LV_Insert()	docs/commands/ListView.htm#LV_Insert
+LV_InsertCol()	docs/commands/ListView.htm#LV_InsertCol
+LV_Modify()	docs/commands/ListView.htm#LV_Modify
+LV_ModifyCol()	docs/commands/ListView.htm#LV_ModifyCol
+LV_SetImageList()	docs/commands/ListView.htm#LV_SetImageList
+macro	docs/misc/Macros.htm
+math operations (expressions)	docs/Variables.htm#Expressions
+MaxHotkeysPerInterval	docs/commands/_MaxHotkeysPerInterval.htm
+MaxIndex()	docs/objects/Object.htm#MinMaxIndex
+MaxThreads	docs/commands/_MaxThreads.htm
+MaxThreadsBuffer	docs/commands/_MaxThreadsBuffer.htm
+MaxThreadsPerHotkey	docs/commands/_MaxThreadsPerHotkey.htm
+Menu	docs/commands/Menu.htm
+Menu Bar (GUI)	docs/commands/Gui.htm#Menu
+Menu Icon	docs/commands/Menu.htm#MenuIcon
+message list (WM_*)	docs/misc/SendMessageList.htm
+messages, receiving	docs/commands/OnMessage.htm
+messages, sending	docs/commands/PostMessage.htm
+meta-functions (Objects)	docs/Objects.htm#Meta_Functions
+MinIndex()	docs/objects/Object.htm#MinMaxIndex
+Mod()	docs/Functions.htm#Mod
+modal (always on top)	docs/commands/MsgBox.htm
+modulo, mod()	docs/Functions.htm#Mod
+MonthCal controls (GUI)	docs/commands/GuiControls.htm#MonthCal
+mouse hook	docs/commands/_InstallMouseHook.htm
+mouse speed	docs/commands/SetDefaultMouseSpeed.htm
+mouse wheel	docs/commands/Click.htm
+MouseClick	docs/commands/MouseClick.htm
+MouseClickDrag	docs/commands/MouseClickDrag.htm
+MouseGetPos	docs/commands/MouseGetPos.htm
+MouseMove	docs/commands/MouseMove.htm
+move a window	docs/commands/WinMove.htm
+move file	docs/commands/FileMove.htm
+move folder/directory	docs/commands/FileMoveDir.htm
+MsgBox	docs/commands/MsgBox.htm
+multiply	docs/commands/EnvMult.htm
+mute (changing it)	docs/commands/SoundSet.htm
+NewEnum()	docs/objects/Object.htm#NewEnum
+NoTimers	docs/commands/Thread.htm
+NoTrayIcon	docs/commands/_NoTrayIcon.htm
+number	docs/commands/IfIs.htm
+number format	docs/commands/SetFormat.htm
+NumGet	docs/Functions.htm#NumGet
+NumPut	docs/Functions.htm#NumPut
+Objects (general information)	docs/Objects.htm
+Object functions and methods	docs/objects/Object.htm
+ObjClone()	docs/objects/Object.htm#Clone
+ObjGetAddress()	docs/objects/Object.htm#GetAddress
+ObjGetCapacity()	docs/objects/Object.htm#GetCapacity
+ObjHasKey()	docs/objects/Object.htm#HasKey
+ObjInsert()	docs/objects/Object.htm#Insert
+ObjMaxIndex()	docs/objects/Object.htm#MinMaxIndex
+ObjMinIndex()	docs/objects/Object.htm#MinMaxIndex
+ObjNewEnum()	docs/objects/Object.htm#NewEnum
+ObjRemove()	docs/objects/Object.htm#Remove
+ObjSetCapacity()	docs/objects/Object.htm#SetCapacity
+OnClipboardChange (label)	docs/misc/Clipboard.htm#OnClipboardChange
+OnExit	docs/commands/OnExit.htm
+OnMessage()	docs/commands/OnMessage.htm
+open file	docs/commands/FileReadLine.htm
+operators in expressions	docs/Variables.htm#Operators
+OutputDebug	docs/commands/OutputDebug.htm
+OwnDialogs (GUI)	docs/commands/Gui.htm#OwnDialogs
+Owner of a GUI window	docs/commands/Gui.htm#Owner
+parameters passed into a script	docs/Scripts.htm#cmd
+parse a string (Loop)	docs/commands/LoopParse.htm
+parse a string (StringSplit)	docs/commands/StringSplit.htm
+Pause	docs/commands/Pause.htm
+performance of scripts	docs/misc/Performance.htm
+Picture controls (GUI)	docs/commands/GuiControls.htm#Picture
+PID (Process ID)	docs/commands/Process.htm
+PixelGetColor	docs/commands/PixelGetColor.htm
+PixelSearch	docs/commands/PixelSearch.htm
+play a sound or video file	docs/commands/SoundPlay.htm
+PostMessage	docs/commands/PostMessage.htm
+power (exponentiation)	docs/Variables.htm#pow
+prefix and suffix keys	docs/Hotkeys.htm
+print a file	docs/commands/Run.htm
+priority of a process	docs/commands/Process.htm
+priority of a thread	docs/commands/Thread.htm
+Process	docs/commands/Process.htm
+ProgramFiles	docs/Variables.htm#ProgramFiles
+Progress	docs/commands/Progress.htm
+Progress controls (GUI)	docs/commands/GuiControls.htm#Progress
+properties of a file or folder	docs/commands/Run.htm
+quit script	docs/commands/ExitApp.htm
+Radio controls (GUI)	docs/commands/GuiControls.htm#Radio
+Random	docs/commands/Random.htm
+read file	docs/commands/FileReadLine.htm
+READONLY	docs/commands/FileGetAttrib.htm
+reboot	docs/commands/Shutdown.htm
+Reference-Counting	docs/Objects.htm#Refs
+REG_BINARY	docs/commands/RegRead.htm
+REG_DWORD	docs/commands/RegRead.htm
+REG_EXPAND_SZ	docs/commands/RegRead.htm
+REG_MULTI_SZ	docs/commands/RegRead.htm
+REG_SZ	docs/commands/RegRead.htm
+RegDelete	docs/commands/RegDelete.htm
+RegEx: Quick Reference	docs/misc/RegEx-QuickRef.htm
+RegEx: Callouts	docs/misc/RegExCallout.htm
+RegEx: SetTitleMatchMode RegEx	docs/commands/SetTitleMatchMode.htm#RegEx
+RegExMatch()	docs/commands/RegExMatch.htm
+RegExReplace()	docs/commands/RegExReplace.htm
+RegisterCallback()	docs/commands/RegisterCallback.htm
+registry loop	docs/commands/LoopReg.htm
+RegRead	docs/commands/RegRead.htm
+Regular Expression Callouts	docs/misc/RegExCallout.htm
+regular expressions: Quick Reference	docs/misc/RegEx-QuickRef.htm
+regular expressions: RegExMatch()	docs/commands/RegExMatch.htm
+regular expressions: RegExReplace()	docs/commands/RegExReplace.htm
+regular expressions: SetTitleMatchMode RegEx	docs/commands/SetTitleMatchMode.htm#RegEx
+RegWrite	docs/commands/RegWrite.htm
+Reload	docs/commands/Reload.htm
+remap joystick	docs/misc/RemapJoystick.htm
+remap keys or mouse buttons	docs/misc/Remap.htm
+remote controls, hand-held	docs/scripts/WinLIRC.htm
+remove folder/directory	docs/commands/FileRemoveDir.htm
+Remove()	docs/objects/Object.htm#Remove
+rename file	docs/commands/FileMove.htm
+resize a window	docs/commands/WinMove.htm
+restart the computer	docs/commands/Shutdown.htm
+Return	docs/commands/Return.htm
+RGB color names	docs/commands/Progress.htm#colors
+RGB colors	docs/commands/PixelGetColor.htm
+RightClick	docs/commands/Click.htm
+RightClickDrag	docs/commands/MouseClickDrag.htm
+Round()	docs/Functions.htm#Round
+rounding a number	docs/Functions.htm#Round
+RTrim()	docs/commands/Trim.htm
+Run	docs/commands/Run.htm
+RunAs	docs/commands/RunAs.htm
+RunWait	docs/commands/Run.htm
+SB_SetIcon()	docs/commands/GuiControls.htm#SB_SetIcon
+SB_SetParts()	docs/commands/GuiControls.htm#SB_SetParts
+SB_SetText()	docs/commands/GuiControls.htm#SB_SetText
+scan code	docs/commands/Send.htm#vk
+scientific notation	docs/commands/SetFormat.htm#sci
+Script Showcase	docs/scripts/index.htm
+Scripts	docs/Scripts.htm
+select file	docs/commands/FileSelectFile.htm
+select folder	docs/commands/FileSelectFolder.htm
+Send	docs/commands/Send.htm
+SendEvent	docs/commands/Send.htm#SendEvent
+sending data between scripts	docs/commands/OnMessage.htm#SendString
+SendInput	docs/commands/Send.htm#SendInputDetail
+SendMessage	docs/commands/PostMessage.htm
+SendMode	docs/commands/SendMode.htm
+SendPlay	docs/commands/Send.htm#SendPlayDetail
+SendRaw	docs/commands/Send.htm
+SetBatchLines	docs/commands/SetBatchLines.htm
+SetCapacity()	docs/objects/Object.htm#SetCapacity
+SetCapsLockState	docs/commands/SetNumScrollCapsLockState.htm
+SetControlDelay	docs/commands/SetControlDelay.htm
+SetDefaultMouseSpeed	docs/commands/SetDefaultMouseSpeed.htm
+SetEnv	docs/commands/SetEnv.htm
+SetFormat	docs/commands/SetFormat.htm
+SetKeyDelay	docs/commands/SetKeyDelay.htm
+SetMouseDelay	docs/commands/SetMouseDelay.htm
+SetNumLockState	docs/commands/SetNumScrollCapsLockState.htm
+SetScrollLockState	docs/commands/SetNumScrollCapsLockState.htm
+SetStoreCapslockMode	docs/commands/SetStoreCapslockMode.htm
+SetTimer	docs/commands/SetTimer.htm
+SetTitleMatchMode	docs/commands/SetTitleMatchMode.htm
+SetWinDelay	docs/commands/SetWinDelay.htm
+SetWorkingDir	docs/commands/SetWorkingDir.htm
+short file name (8.3 format)	docs/commands/LoopFile.htm#LoopFileShortPath
+short-circuit boolean evaluation	docs/Functions.htm#ShortCircuit
+shortcut file	docs/commands/FileCreateShortcut.htm
+Shutdown	docs/commands/Shutdown.htm
+Silent Install/Uninstall	docs/Scripts.htm#install
+Sin()	docs/Functions.htm#Sin
+SingleInstance	docs/commands/_SingleInstance.htm
+size of a file/folder	docs/commands/FileGetSize.htm
+size of a window	docs/commands/WinGetPos.htm
+Sleep	docs/commands/Sleep.htm
+Slider controls (GUI)	docs/commands/GuiControls.htm#Slider
+Sort	docs/commands/Sort.htm
+SoundBeep	docs/commands/SoundBeep.htm
+SoundGet	docs/commands/SoundGet.htm
+SoundGetWaveVolume	docs/commands/SoundGetWaveVolume.htm
+SoundPlay	docs/commands/SoundPlay.htm
+SoundSet	docs/commands/SoundSet.htm
+SoundSetWaveVolume	docs/commands/SoundSetWaveVolume.htm
+space	docs/commands/IfIs.htm
+speed of a script	docs/commands/SetBatchLines.htm
+spinner control (GUI)	docs/commands/GuiControls.htm#UpDown
+SplashImage	docs/commands/Progress.htm
+SplashTextOff	docs/commands/SplashTextOn.htm
+SplashTextOn	docs/commands/SplashTextOn.htm
+SplitPath	docs/commands/SplitPath.htm
+splitting long lines	docs/Scripts.htm#continuation
+Sqrt()	docs/Functions.htm#Sqrt
+standard library	docs/Functions.htm#lib
+standard output (stdout)	docs/commands/FileAppend.htm
+static variables	docs/Functions.htm#static
+StatusBar controls (GUI)	docs/commands/GuiControls.htm#StatusBar
+StatusBarGetText	docs/commands/StatusBarGetText.htm
+StatusBarWait	docs/commands/StatusBarWait.htm
+StrGet	docs/commands/StrPutGet.htm
+string (search for)	docs/Functions.htm#InStr
+string: InStr()	docs/Functions.htm#InStr
+string: SubStr()	docs/Functions.htm#SubStr
+StringCaseSense	docs/commands/StringCaseSense.htm
+StringGetPos	docs/commands/StringGetPos.htm
+StringLeft	docs/commands/StringLeft.htm
+StringLen	docs/commands/StringLen.htm
+StringLower	docs/commands/StringLower.htm
+StringMid	docs/commands/StringMid.htm
+StringReplace	docs/commands/StringReplace.htm
+StringRight	docs/commands/StringLeft.htm
+StringSplit	docs/commands/StringSplit.htm
+StringTrimLeft	docs/commands/StringTrimLeft.htm
+StringTrimRight	docs/commands/StringTrimLeft.htm
+StringUpper	docs/commands/StringLower.htm
+StrLen()	docs/Functions.htm#StrLen
+StrPut()	docs/commands/StrPutGet.htm
+structures, via DllCall	docs/commands/DllCall.htm#struct
+styles for GUI command	docs/misc/Styles.htm
+SubStr()	docs/Functions.htm#SubStr
+subtract	docs/commands/EnvSub.htm
+Suspend	docs/commands/Suspend.htm
+suspend or hibernate	docs/commands/Shutdown.htm#Suspend
+SysGet()	docs/commands/SysGet.htm
+Tab controls (GUI)	docs/commands/GuiControls.htm#Tab
+Tan()	docs/Functions.htm#Tan
+terminate a window	docs/commands/WinKill.htm
+terminate script	docs/commands/ExitApp.htm
+ternary operator (?:)	docs/Variables.htm#ternary
+Text controls (GUI)	docs/commands/GuiControls.htm#Text
+Thread	docs/commands/Thread.htm
+threads	docs/misc/Threads.htm
+time	docs/commands/IfIs.htm
+Timer (timed subroutines)	docs/commands/SetTimer.htm
+times and dates (compare)	docs/commands/EnvSub.htm
+times and dates (math)	docs/commands/EnvAdd.htm
+times and dates (of files)	docs/commands/FileSetTime.htm
+title of a window	docs/commands/WinSetTitle.htm
+ToolTip	docs/commands/ToolTip.htm
+Transform	docs/commands/Transform.htm
+transparency of a window	docs/commands/WinSet.htm
+tray icon	docs/commands/_NoTrayIcon.htm
+tray menu (customizing)	docs/commands/Menu.htm
+TrayTip	docs/commands/TrayTip.htm
+TreeView controls (GUI)	docs/commands/TreeView.htm
+Trim	docs/commands/AutoTrim.htm
+Trim()	docs/commands/Trim.htm
+Tutorial	docs/Tutorial.htm
+TV_Add()	docs/commands/TreeView.htm#TV_Add
+TV_Delete()	docs/commands/TreeView.htm#TV_Delete
+TV_Get()	docs/commands/TreeView.htm#TV_Get
+TV_GetChild()	docs/commands/TreeView.htm#TV_GetChild
+TV_GetCount()	docs/commands/TreeView.htm#TV_GetCount
+TV_GetNext()	docs/commands/TreeView.htm#TV_GetNext
+TV_GetParent()	docs/commands/TreeView.htm#TV_GetParent
+TV_GetPrev()	docs/commands/TreeView.htm#TV_GetPrev
+TV_GetSelection()	docs/commands/TreeView.htm#TV_GetSelection
+TV_GetText()	docs/commands/TreeView.htm#TV_GetText
+TV_Modify()	docs/commands/TreeView.htm#TV_Modify
+Unicode text and clipboard	docs/commands/Transform.htm
+UpDown controls (GUI)	docs/commands/GuiControls.htm#UpDown
+URLDownloadToFile	docs/commands/URLDownloadToFile.htm
+UseHook	docs/commands/_UseHook.htm
+user (run as a different user)	docs/commands/RunAs.htm
+user library	docs/Functions.htm#lib
+variables, assigning to	docs/commands/SetEnv.htm
+variables, built-in	docs/Variables.htm#BuiltIn
+variables, comparing them	docs/commands/IfEqual.htm
+variables, ListVars	docs/commands/ListVars.htm
+variables, MAIN	docs/Variables.htm
+variables, type of data	docs/commands/IfIs.htm
+variadic functions	http://www.autohotkey.net/~Lexikos/AutoHotkey_L/docs/Functions.htm#Variadic
+variants (duplicate hotkeys and hotstrings)	http://www.autohotkey.net/~Lexikos/AutoHotkey_L/docs/commands/_IfWinActive.htm#variant
+VarSetCapacity()	docs/commands/VarSetCapacity.htm
+VBScript, embedded/inline	docs/commands/DllCall.htm#COM
+version of a file	docs/commands/FileGetVersion.htm
+virtual key	docs/commands/Send.htm#vk
+volume (changing it)	docs/commands/SoundSet.htm
+wait (sleep)	docs/commands/Sleep.htm
+wait for a key to be released or pressed	docs/commands/KeyWait.htm
+Wheel hotkeys for mouse	docs/Hotkeys.htm#Wheel
+Wheel, simulating rotation	docs/commands/Click.htm
+While-loop	docs/commands/While.htm
+whitespace	docs/commands/AutoTrim.htm
+wildcards (for files &amp; folders)	docs/commands/LoopFile.htm
+WinActivate	docs/commands/WinActivate.htm
+WinActivateBottom	docs/commands/WinActivateBottom.htm
+WinActivateForce	docs/commands/_WinActivateForce.htm
+WinActive()	docs/Functions.htm#WinActive
+Winamp automation	docs/misc/Winamp.htm
+WinClose	docs/commands/WinClose.htm
+Windows Messages	docs/misc/SendMessageList.htm
+WinExist()	docs/Functions.htm#WinExist
+WinGet	docs/commands/WinGet.htm
+WinGetActiveStats	docs/commands/WinGetActiveStats.htm
+WinGetActiveTitle	docs/commands/WinGetActiveTitle.htm
+WinGetClass	docs/commands/WinGetClass.htm
+WinGetPos	docs/commands/WinGetPos.htm
+WinGetText	docs/commands/WinGetText.htm
+WinGetTitle	docs/commands/WinGetTitle.htm
+WinHide	docs/commands/WinHide.htm
+WinKill	docs/commands/WinKill.htm
+WinLIRC, connecting to	docs/scripts/WinLIRC.htm
+WinMaximize	docs/commands/WinMaximize.htm
+WinMenuSelectItem	docs/commands/WinMenuSelectItem.htm
+WinMinimize	docs/commands/WinMinimize.htm
+WinMinimizeAll	docs/commands/WinMinimizeAll.htm
+WinMinimizeAllUndo	docs/commands/WinMinimizeAll.htm
+WinMove	docs/commands/WinMove.htm
+WinRestore	docs/commands/WinRestore.htm
+WinSet	docs/commands/WinSet.htm
+WinSetTitle	docs/commands/WinSetTitle.htm
+WinShow	docs/commands/WinShow.htm
+WinSize (via WinMove)	docs/commands/WinMove.htm
+WinWait	docs/commands/WinWait.htm
+WinWaitActive	docs/commands/WinWaitActive.htm
+WinWaitClose	docs/commands/WinWaitClose.htm
+WinWaitNotActive	docs/commands/WinWaitActive.htm
+WM_* (Windows messages)	docs/misc/SendMessageList.htm
+WM_COPYDATA	docs/commands/OnMessage.htm#SendString
+working directory	docs/commands/SetWorkingDir.htm
+wParam	docs/commands/PostMessage.htm
+write file	docs/commands/FileAppend.htm
+WS_* (GUI styles)	docs/misc/Styles.htm
+XButton	docs/commands/Click.htm
+YYYYMMDDHH24MISS	docs/commands/FileSetTime.htm#YYYYMMDD
+{Blind}	docs/commands/Send.htm#blind

@@ -1,0 +1,3 @@
+AHKLink is a series of functions (plus a wrapper) which allows for easy searching of the AutoHotkey website and documentation.
+It is StdLib compliant. Pop AHKLink.ahk in your StdLib and try out tests/AHKLink.ahk
+Generally, only AHKLink() should be used, although custom behavior is possible using the other functions individually
