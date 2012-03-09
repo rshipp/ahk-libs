@@ -31,7 +31,6 @@ So far, the included libs are (in no particular order):
 - polyethene's AutoHotkey-Scripts (https://github.com/polyethene/AutoHotkey-Scripts)
 - Several of maul-esel's libs (https://github.com/maul-esel/), including:
   COM-Classes
-  ComGenerator
   FormsFramework
   ITaskbarList
   AeroThumbnail
