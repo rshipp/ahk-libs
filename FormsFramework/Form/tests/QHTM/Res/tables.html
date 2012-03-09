@@ -1,0 +1,103 @@
+<!-- #include virtual="RES\header.HTML"-->
+	<table border=1 cellpadding=0 cellspacing=0 bgcolortop="white" bgcolorbottom="gray" align=right width=100><tr><td bgcolorcenter="255, 255, 255" bgcolorbottom="199,211,247" align=center><font size="1"><b>Tip</b></font></td></tr><tr><td align=center><font size="1">Right-aligned tables, like right-aligned images, allow text to wrap around them.</font></td></table>
+	<h4>Tables</h4>
+	Tables are a very powerful way to layout HTML content and QHTM allows for a wide variety of control over them.
+	<h5>Tables can occupy 100% of the width</h5>
+	<table width="100%" border=1>
+	<tr><td>column1</td><td>column2</td></tr>
+	</table>
+
+	<h5>Or just 50%</h5>
+	<table width="50%" border=1>
+	<tr><td>column1</td><td>column2</td></tr>
+	</table>
+
+	<h5>We can align tables..on the right</h5>
+	<table align=right width="50%" border=1>
+	<tr><td>column1</td><td>column2</td></tr>
+	</table>
+
+	<h5>...or in the middle</h5>
+	<table align=center width="50%" border=1>
+	<tr><td >column1</td><td>column2</td></tr>
+	</table>
+
+
+	<h5>We can have tables in tables</h5>
+	<table width="50%" border=1>
+	<tr>
+	<td>
+		<table width="50%" border=1>
+			<tr><td>column1</td><td >column2</td></tr>
+		</table></td><td>column2</td></tr>
+	</table>
+
+	<h5>...and we can add some colour</h5>
+	<table width="50%" border=1>
+	<tr>
+	<td bgcolor="yellow">
+		<table width="50%" border=1>
+			<tr><td bgcolor="yellow">column1</td><td bgcolor="Teal">column2</td></tr>
+		</table></td><td bgcolor="Teal">column2</td></tr>
+	</table>
+
+	<h5>More interesting ways to fill a table</h5>
+	<p>We can use more interesting table/body backgrounds such as gradients or tiled images;
+	<table bgcolorleft="red" bgcolorright="99, 117, 214" border=1 width=100% cellspacing=10>
+		<tr>
+			<td colspan=2>...We can use gradients as table backgrounds too</td>
+		</tr>
+
+		<tr bgcolorleft="lightblue" bgcolorright="lightgreen">
+			<td  >whole row of cells, blue to green</td>
+			<td  >...or in entire rows...</td>
+		</tr>
+
+		<tr>
+			<td bgcolortop="white" bgcolorbottom="gray">...or in a single cell...</td>
+			<td>Not this one though</td>
+		</tr>
+
+		<tr>
+			<td>Not this one though</td>
+			<td background="RES\background.bmp">or a tiled image</td>
+		</tr>
+	</table>
+
+	<h5>Tables can have lots of content</h5>
+	<table width="75%" border=1>
+	<tr>
+		<td><img src="RES\CIRCLE.BMP" align=right>This table occupies 75% of the page width. As you can see the text is wrapped within the table cell and it behaves as you would expect. No surprises can sometimes be a surprise.</td>
+		<td>column2</td>
+	</tr>
+	<tr>
+		<td>column1</td>
+		<td><img src="RES\CIRCLE.BMP" align=left>This table occupies 75% of the page width. As you can see the text is wrapped within the table cell and it behaves as you would expect. No surprises can sometimes be a surprise.</td>
+	</tr>
+	<tr>
+		<td colspan=2>column1, but spanning 2</td>
+	</tr>
+	</table>
+
+	<h5>...and tables can be serious</h5>
+	<table border=1 bgcolor=white align=center cellspacing=10>
+		<tr>
+			<td><b>Job</b></td>
+			<td nowrap><b>Time Spent</b></td>
+		</tr>
+		<tr>
+			<td nowrap>Writing new parser</td>
+			<td>14 hours</td>
+		</tr>
+		<tr>
+			<td nowrap>Getting more coffee</td>
+			<td>25 mins</td>
+		</tr>
+		<tr>
+			<td nowrap>Playing Quake</td>
+			<td>6 hours</td>
+		</tr>
+		<tr>
+			<td colspan=2nowrap>Grand total of; <b>Too much to do</td></td>
+		</tr>
+<!-- #include virtual="RES\footer.HTML"-->

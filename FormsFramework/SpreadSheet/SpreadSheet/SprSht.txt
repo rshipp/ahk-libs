@@ -1,0 +1,227 @@
+
+Calculating functions.
+----------------------
+
+Type						Example						Description
+---------------------------------------------------------------------------------------------------
+And, Or, Xor				AA1>=0 And AA2<=0			Logical operators
+<, <=, =, >=, >, <>			AA1>=5.5					Compare operators
++, -, *, /					((AA1+AA2)/2-3.5)*4			Basic math operators
+x^y							AA1^3.5						x to the power of y
+Sum(r1:r2)					Sum(AA1:AC6)				Sum of all cells in an area
+Cnt(r1:r2)					Cnt(AA1:AA5)				Number of cells in an area
+														that contains a value
+Avg(r1:r2)					Avg(AB1:AB6)				Average value of an area
+Min(r1:r2)					Min(AA1:AA7)				Returns smallest number in an area
+Max(r1:r2)					Max(AA1:AB3)				Returns largest number in an area
+Var(r1:r2)					Var(AB1:AC6)				The variance of an area
+Std(r1:r2)					Std(AB1:AB6)				The standard deviation of an area
+Sqt(num)					Sqt(AA1+AA2)				Sqear root
+Sin(num)					Sin(AA5)					Sine of an angle in radians
+Cos(num)					Cos(PI()/8)					Cosine of an angle in radians
+Tan(num)					Tan(Rad(45))				Tangent of an angle in radians
+Rad(num)					Rad(45)						Converts grades to radians
+PI()						PI()/4						Returns PI (3.14........)
+IIf(Cnd,TP,FP)				IIf(AA1=0,AA2,AA3)			IIf(Condition,TruePart,FalsePart)
+On(val,num[,num[,num...]])	On(AA1,AA2,AA3,AA4)			Depending on val, return num
+														If val<=0, return first num
+														If val>=number of num, return last num
+Abs(num)					Abs(AA5-7)					Absolute. Returns absolute value of num
+Sgn(num)					Sgn(AA5)					Sign. Returns -1, 0 or +1
+Int(num)					Int(AA5)					Integer. Returns integer value of num
+Log(num)					Log(AA5)					Logarithm to base 10
+Ln(num)						Ln(e())						Natural Logarithm
+e()							e()^AA5						Returns e (2.71........)
+Asin(num)					Asin(AA4)					Inverse Sine
+Acos(num)					Acos(AA3)					Inverse Cosine
+Atan(num)					Atan(AA1)					Inverse Tangent
+Grd(num)					Grd(PI()/4)					Converts radians to grades
+Rgb(num,num,num)			Rgb(255,0,0)				Converts red, green, blue to color
+x()							Sin(x())					x value used in calculating graphs fx()
+														math functions
+@(rc,rr)					@(-1,2)						Relative cell reference
+CDate(str)					CDate("2008-01-01")			Converts a date string to days
+														since 1601-01-01
+---------------------------------------------------------------------------------------------------
+
+Cell error conditions.
+----------------------
+
+Type						Dscription
+---------------------------------------------------------------------------------------------------
+####Ref						Circular reference or reference to cell with error condition
+####Err						Meaning depends on function
+####Div						Division by zero
+####Ovf						Overflow
+####Unf						Underflow
+---------------------------------------------------------------------------------------------------
+
+Graph drawing functions.
+------------------------
+
+The graph function, Grp(), has several items:
+
+Text
+----
+T(xp,yp,Orientation,Color,"Text")
+
+There can be max 16 text items.
+
+X-Axis
+------
+X(xMin,xMax,xOrigo,xStep,Color[,Show Tick val],"Text")
+
+There can be only one x-axis item.
+
+Y-Axis
+------
+Y(yMin,yMax,yOrigo,yStep,Color[,Show Tick val],"Text")
+
+There can be only one y-axis item.
+
+Graph from math function
+------------------------
+fx(function,xStep,Color,"Text")
+
+There can be max 16 graph math function items.
+
+Graph from cell values
+----------------------
+gx(r1:r2,Color,"Text")
+
+There can be max 16 graph cell value items.
+
+Cell type combinations.
+-----------------------
+TPE_BUTTON can be combined with TPE_TEXT or TPE_TEXTMULTILINE
+TPE_WIDEBUTTON can be combined with TPE_TEXT or TPE_TEXTMULTILINE
+TPE_FORCETYPE can be combined with TPE_TEXT, TPE_INTEGER, TPE_FLOAT, TPE_TEXTMULTILINE, TPE_BUTTON, TPE_WIDEBUTTON or TPE_HYPERLINK
+TPE_FIXEDSIZE can be combined with TPE_BUTTON, TPE_CHECKBOX or TPE_COMBOBOX
+
+Known bugs.
+-----------
+
+1. Cell cursor disapears in expanded cells.
+2. Multiselect scrolling by mouse is too fast.
+3. Scroll-locked area does not work well with splitts.
+4. Float to ascii does not work on numbers > 1e+4000 or < 1e-4000
+
+To do.
+------
+
+1. More graph options and design control.
+   It's way to complicated to enter a graph by hand.
+   A graph design tool is needed.
+2. String functions.
+3. Date / time functions.
+4. Speed optimizing.
+5. Documentation.
+
+Whats new since 0.0.0.1
+-----------------------
+
+0.0.0.2
+- Fixed a few bugs
+- Improved formula parser
+- Compare (<, <=, =, >=, >, <>) and logical (And, Or, Xor) operators
+- Conditional functions (IIf(), On())
+- New functions (Abs(), Sgn(), Int(), Log(), Ln(), e())
+- Better cell error messages
+- Locked and hidden cells
+- Split sizeing
+- Sizeing enabled window styles
+0.0.0.3
+- Callbacks (WM_NOTIFY)
+- New functions (Asin(), Acos(), Atan(), Grd(), Rgb(), x())
+- New formula parser. It should be impossible to add a buggy formula.
+- Insert / delete row / column works on expanded cells.
+- Fixed buffer overrun bug on formula decompile.
+- Graph drawing functions.
+0.0.0.4
+- Removed large stringspace allocation on stack.
+0.0.0.5
+- Fixed cell calculation bug.
+0.0.0.6
+- Can now be used on dialogs.
+0.0.0.7
+- Changed the way notifications are canceled.
+0.0.0.8
+- Added relative cell referencing.
+- NOT compatible with previously saved sheets.
+0.0.0.9
+- Added hyperlink cell type.
+0.0.1.0
+- Added CheckBox and ComboBox cell types.
+- Added Button cell type.
+0.0.1.1
+- CheckBox and ComboBox cells returns an integer value.
+- Added SPRN_BUTTONCLICK notification message.
+0.0.1.2
+- Changed internal structures to make it more friendly to VB and C.
+- IMPORTANT: You must rebuild your project with the new structure definitions.
+0.0.1.3
+- Changed how memory are managed. This made filling a sheet rowvise twice as fast
+  and columnvise 100 times faster.
+- Memory allocation are now dynamic.
+0.0.1.4
+- Fixed font bug. Bold was not set.
+- SPRM_SPLITTHOR and SPRM_SPLITTVER now checks to see if you attemt to split a window that is not the last window.
+- Fixed bug with SPRN_SELCHANGE notification.
+- CheckBox and ComboBox cells now sends SPRN_BEFOREUPDATE and SPRN_AFTERUPDATE notifications.
+- SPRM_EXPANDCELL now checks to see if it will create overlapping expansions.
+- Fixed bug where hidden scrollbar could cause scrollbar area not painted.
+- Added SPRIF_DOUBLE. Converts to / from double when used with SPRM_GETCELLDATA and SPRM_SETCELLDATA
+- Added SPRIF_SINGLE. Converts to / from single when used with SPRM_GETCELLDATA and SPRM_SETCELLDATA
+- Added TPE_FORCETYPE. The cell will preserve its type when edited.
+  To be combined with TPE_TEXT, TPE_INTEGER, TPE_FLOAT, TPE_TEXTMULTILINE, TPE_BUTTON, TPE_WIDEBUTTON or TPE_HYPERLINK
+  If conditions are not met on TPE_INTEGER and TPE_FLOAT, cell data will not be updated.
+- Added TPE_FIXEDSIZE. Will force a 15 by 15 pixel image. To be combined with TPE_BUTTON, TPE_CHECKBOX or TPE_COMBOBOX
+- SPRN_BUTTONCLICK will now be sendt only if you click on button.
+- CheckBox cell will now only change if you click on checkmark.
+- TPE_BUTTON now has '...' as caption.
+- Some speed optimalization on large number of rows.
+0.0.1.5
+- Improved combobox cell handling.
+- wParam of SPRM_CREATECOMBO can now have the height of the combobox.
+0.0.1.6
+- Created library.
+- Speed optimized. Can now handle up to the max (65000) rows on a modern computer.
+- Hold Ctrl key to scroll horizontaly with mouse wheel.
+- Fixed some minor bugs.
+0.0.1.7
+- Added option to display graph tick values. The optional number given is the number of decimals.
+- Fixed bug introduced in 0.0.1.6 where saved sheets could not be loaded.
+- Fixed bug where formatting with zero decimals could show wrong result.
+0.0.1.8
+- Added SPRM_DELETECELL, Deletes a cell.
+0.0.1.9
+- Added TPE_DATE cell type. To be combined with TPE_INTEGER
+- Added SPRM_GETDATEFORMAT and SPRM_SETDATEFORMAT. Use it to change default date format string (yyyy-MM-dd).
+- Added CDate function. Converts a date string to days since 1601-01-01.
+0.0.2.0
+- Fixed bug with SPRN_BUTTONCLICK. Did not return row and column.
+- Fixed bug with SPRN_HYPRLINKCLICK. Did not return row and column.
+0.0.2.1
+- Single click on CheckBox cell changes checked state.
+- Enter or space in a CheckBox cell changes checked state.
+- Single click on ComboBox button shows combolist.
+- Enter or space in a ComboBox cell shows combolist.
+- Enter in a combolist selects the item.
+- Escape in a combolist hides the list.
+- Enter or space in a Button cell that has the STATE_LOCKED state sends a SPRN_BUTTONCLICK notification.
+- Column headers are now multiline.
+- Fixed bug with hyperlink coloring.
+
+NOTE
+----
+
+Expanded cells can not overlap each other.
+Splitts can only be created in the last window.
+
+WARNING
+-------
+
+Sheets are saved in native binary format.
+Don't expect saved sheets to work in the next version.
+
+KetilO

@@ -1,0 +1,3 @@
+#include <Res\SprTestDlg.rc>
+#include "Res/SprTestVer.rc"
+#include "Res/SprTestRes.rc"

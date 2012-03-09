@@ -1,0 +1,4 @@
+LIBRARY ..\SprSht.dll
+EXPORTS
+	GetDef
+	GetDefEx

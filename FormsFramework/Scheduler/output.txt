@@ -1,0 +1,52 @@
+Computer="HostName"
+,Name="TaskName"
+,NextRun="Next Run Time"
+,Status="Status"
+,LogonMode="Logon Mode"
+,LastRun="Last Run Time"
+,LastResult="Last Result"
+,User="Creator"
+,Run="Task To Run"
+,State="Scheduled Task State"
+,Type="Scheduled Type"
+,Time="Start Time",
+,StartDate="Start Date"
+,EndTate="End Date"
+,IdleTime="Idle Time"
+,Modifier="Repeat: Every"	
+
+"Days","Months","Run As User","Delete Task If Not Rescheduled","Stop Task If Runs X Hours and X Mins","Repeat: Every","Repeat: Until: Time","Repeat: Until: Duration","Repeat: Stop If Still Running","Power Management"
+
+
+Computer = "HostName"
+Name = "TaskName"                                  
+Next Run Time:                             
+Status:                                    
+Last Run Time:                             
+Last Result:                               
+Creator:                                   
+Schedule:                                  
+Run = "Task To Run:"
+Start In:                                  
+Comment:                                   
+Scheduled Task State:                      
+Scheduled Type:                            
+Modifier:                                  
+Start Time:                                
+Start Date:                                
+End Date:                                  
+Days:                                      
+Months:                                    
+Run As User:                               
+Delete Task If Not Rescheduled:            
+Stop Task If Runs X Hours and X Mins:      
+Repeat: Until Time:                        
+Repeat: Duration:                          
+Repeat: Stop If Still Running:             
+Idle: Start Time(For IDLE Scheduled Type): 
+Idle: Only Start If Idle for X Minutes:    
+Idle: If Not Idle Retry For X Minutes:     
+Idle: Stop Task If Idle State End:         
+Power Mgmt: No Start On Batteries:         
+Power Mgmt: Stop On Battery Mode:          
+

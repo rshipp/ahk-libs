@@ -1,0 +1,3 @@
+#include <Res\GrdDemoDlg.rc>
+#include <Res\GrdDemoMnu.rc>
+#include "Res/GrdDemoVer.rc"

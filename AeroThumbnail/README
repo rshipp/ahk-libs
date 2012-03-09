@@ -1,0 +1,9 @@
+Thumbnail README:
+
+This wrapper contains a library and a class that enable you to add Aero Thumbnails to AHK GUIs
+and to control them.
+
+NOTE: The class is the prefered form, library support might be dropped.
+
+Documentation: http://maul-esel.github.com/AeroThumbnail/lib/docs/Thumbnail (library)
+			   http://maul-esel.github.com/AeroThumbnail/class/docs/Thumbnail (class)

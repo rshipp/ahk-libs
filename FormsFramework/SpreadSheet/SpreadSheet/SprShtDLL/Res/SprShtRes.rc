@@ -1,0 +1,6 @@
+#define IDB_BMP							100
+#define IDR_HSPLIT						101
+#define IDR_VSPLIT						102
+IDB_BMP					BITMAP   DISCARDABLE "Res/BUTTON.bmp"
+IDR_HSPLIT				CURSOR   DISCARDABLE "Res/SplitH.cur"
+IDR_VSPLIT				CURSOR   DISCARDABLE "Res/SplitV.cur"

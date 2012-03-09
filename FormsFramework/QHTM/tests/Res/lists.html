@@ -1,0 +1,129 @@
+<!-- #include virtual="RES\header.HTML"-->
+<h4>Lists</h4>
+QHTM supports ordered and unordered lists, as well as definition lists.
+	<h5>Ordered list</h5>
+	<ol>
+		<li>First</li>
+		<li>Second</li>
+		<li>third</li>
+	</ol>
+	<h6>...and the compact version</h6>
+	<ol compact>
+		<li>First</li>
+		<li>Second</li>
+		<li>third</li>
+	</ol>
+
+	<h5>Unordered list</h5>
+	<ul>
+		<li>First</li>
+		<li>Second</li>
+		<li>third</li>
+	</ul>
+	<h6>...and the compact version</h6>
+	<ul compact>
+		<li>First</li>
+		<li>Second</li>
+		<li>third</li>
+	</ul>
+
+	<h5>Ordered list with value setting</h5>
+	<ol>
+		<li>First</li>
+		<li value="30">Second, this is number 30</li>
+		<li>third</li>
+	</ol>
+
+	<h5>We can also add different order representations</h5>
+	<table>
+		<tr>
+			<td>
+				<p align=center><b><sub>Roman numerals</sub></b>
+				<ol type='I'>
+					<li >First</li>
+					<li >Second</li>
+					<li>third</li>
+				</ol>
+			</td>
+			<td>
+				<p align=center><b><sub>Alpha</sub></b>
+				<ol type='A'>
+					<li >First</li>
+					<li >Second</li>
+					<li>third</li>
+				</ol>
+			</td>
+			<td>
+				<p align=center><b><sub>Lowercase roman numerals</sub></b>
+				<ol type='i'>
+					<li >First</li>
+					<li >Second</li>
+					<li>third</li>
+				</ol>
+			</td>
+			<td>
+				<p align=center><b><sub>Lowercase Alpha</sub></b>
+				<ol type='a'>
+					<li >First</li>
+					<li >Second</li>
+					<li>third</li>
+				</ol>
+			</td>
+		</tr>
+	</table>
+
+	<h5>And different unordered bullets</h5>
+	<table>
+		<tr>
+			<td>
+				<p align=center><b><sub>Circle</sub></b>
+				<ul type='circle'>
+					<li >First</li>
+					<li >Second</li>
+					<li>third</li>
+				</ul>
+			</td>
+			<td>
+				<p align=center><b><sub>square</sub></b>
+				<ul type='square'>
+					<li >First</li>
+					<li >Second</li>
+					<li>third</li>
+				</ul>
+			</td>
+			<td>
+				<p align=center><b><sub>disc</sub></b>
+				<ul type='disc'>
+					<li >First</li>
+					<li >Second</li>
+					<li>third</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+
+	<h4>Unordered list, with an ordered list within it</h4>
+	<ul>
+		<li>First
+			<ol>
+				<li>First embedded ordered list item</li>
+				<li>Second embedded ordered list item</li>
+				<li>third embedded ordered list item</li>
+			</ol>
+		</li>
+		<li>Second</li>
+		<li>third</li>
+	</ul>
+	<h5>Definition lists</h5>
+	<DL>
+	  <DT>Dweeb
+	  <DD>young excitable person who may mature
+		into a <EM>Nerd</EM> or <EM>Geek</EM>
+
+	  <DT>Hacker
+	  <DD>a clever programmer
+
+	  <DT>Nerd
+	  <DD>technically bright but socially inept person
+	</DL>
+<!-- #include virtual="RES\footer.HTML"-->

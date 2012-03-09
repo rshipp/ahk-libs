@@ -29,6 +29,12 @@ So far, the included libs are (in no particular order):
 - ChrisS85's CGUI and WorkerThread libs (https://github.com/ChrisS85)
 - camerb's AHK libs (https://github.com/camerb/AHKs)
 - polyethene's AutoHotkey-Scripts (https://github.com/polyethene/AutoHotkey-Scripts)
+- Several of maul-esel's libs (https://github.com/maul-esel/), including:
+  COM-Classes
+  ComGenerator
+  FormsFramework
+  ITaskbarList
+  AeroThumbnail
 
 The "Sources" file contains a list of the git repos cloned and included here. 
 

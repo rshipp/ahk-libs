@@ -1,0 +1,147 @@
+<!-- #include virtual="RES\header.HTML"-->
+	<h4>Image Support</h4>
+	<p>QHTM Supports the following images formats:
+	<ul>
+	<li>BMP
+	<li>MNG
+	<li>PCX
+	<li>JPEG
+	<li>ICO
+	<li>GIF <sup><font size="8pt">You'll need a licence for GIF though</font></sup>
+	<li>Anything else. QHTM has an image callback mechanism!
+	</ul>
+	<p>QHTM uses a custom library called ImgLib, which means you get the full source code to ImgLib too. ImgLib is a powerful and flexible tool for loading and displaying images and it can be used in your applications directly.</p>
+
+	<h5>What can we display...</h5>
+	The same bitmap is displayed for all of the images below. First we just display it, then we make white transparent, then we make blue transparent. We do the same again but with a border, and then a border of 5 pixels.
+	<table cellpadding=10>
+		<tr>
+			<td>
+				<img src="RES\CIRCLE.BMP">
+			</td>
+			<td>
+				<img src="RES\CIRCLE.BMP" transparent-color='white'>
+			</td>
+			<td>
+				<img src="RES\CIRCLE.BMP" transparent-color='blue'>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<img src="RES\CIRCLE.BMP" border=1>
+			</td>
+			<td>
+				<img src="RES\CIRCLE.BMP" transparent-color='white' border=1>
+			</td>
+			<td>
+				<img src="RES\CIRCLE.BMP" transparent-color='blue' border=1>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<img src="RES\CIRCLE.BMP" border=5>
+			</td>
+			<td>
+				<img src="RES\CIRCLE.BMP" transparent-color='white' border=5>
+			</td>
+			<td>
+				<img src="RES\CIRCLE.BMP" transparent-color='blue' border=5>
+			</td>
+		</tr>
+	</table>
+	<h5>What else...</h5>
+	We could do the same with any image type. Not just BMP format images. This include JPG's and PNG. PNG supports native transparency so QHTM will also use that.
+	<p>We can have animations using MNG or GIF<br>
+	<img border=0 src="RES\Animation.mng"><br>
+	<p>And animations using MNG can have an alpha channel so they blend with the background:
+	<table>
+		<tr background="RES\background.bmp">
+			<td>
+				<img border=0 src="RES\AlphaAnimation.mng"> ... and <img border=0 src="RES\Animation.mng"><br>
+				A tiled image background and an MNG with an alpha channel on top. View the source to see how simple it is.
+			</td>
+		</tr>
+	</table>
+
+	
+	<p>We can align images to the top<img src="RES\CIRCLE.BMP" align=top>, middle <img src="RES\CIRCLE.BMP" align=middle> or bottom <img src="RES\CIRCLE.BMP" align=bottom>
+	<p><img src="RES\CIRCLE.BMP" align=right>We can also align images to the left, center or right. Left and right alignment means that really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, long paragraphs will wrap around the image nicely.
+	
+	<h5>PNG Images</h5>
+	<p>PNG images natively support transparency and alpha channels. This gives us much more scope to be creative and to make our images blend with the background.
+	
+	<p>With an alpha channel:<br> <img src="RES\AlphaEdge.png"> <img src="RES\AlphaBall.png">
+	<table border=1 >
+		<tr>
+			<td bgcolor="white">
+				<img src="RES\AlphaEdge.png"> <img src="RES\AlphaBall.png"> - white background
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="blue">
+				<img src="RES\AlphaEdge.png"> <img src="RES\AlphaBall.png"> - blue background
+			</td>
+		<tr>
+			<td bgcolor="green">
+				<img src="RES\AlphaEdge.png"> <img src="RES\AlphaBall.png"> - green background
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="red">
+				<img src="RES\AlphaEdge.png"> <img src="RES\AlphaBall.png"> - red background
+			</td>
+		</tr>
+		<tr background="RES\background.bmp">
+			<td>
+				<img src="RES\AlphaEdge.png"> <img src="RES\AlphaBall.png"> - a tiled image background
+			</td>
+		</tr>
+		<tr>
+			<td bgcolorleft="red" bgcolorright="white">
+				<img src="RES\AlphaEdge.png"> <img src="RES\AlphaBall.png"> - red to white gradient background
+			</td>
+		</tr>
+	</table>
+	
+	<p>Below is a simple table with a border. The same image is used in all instances, but we're using a PNG with an alpha channel so the image seemlessly blends with the background:
+	<table cellspacing=0 cellpadding=10 >
+		<tr bgcolor="white">
+			<td>
+				<img align=middle src="RES\QHTM_DEMO_LOGO.PNG" alt="This image uses an alpha channel so the shadow will blend with any background<br>It's a simple PNG image created with Paint Shop Pro so no special tools are needed.">
+			</td>
+			<td>White background</td>
+		</tr>
+		<tr bgcolor="blue">
+			<td >
+				<img src="RES\QHTM_DEMO_LOGO.PNG" alt="This image uses an alpha channel so the shadow will blend with any background<br>It's a simple PNG image created with Paint Shop Pro so no special tools are needed.">
+			</td>
+			<td>Blue background</td>
+		<tr bgcolor="green">
+			<td>
+				<img src="RES\QHTM_DEMO_LOGO.PNG" alt="This image uses an alpha channel so the shadow will blend with any background<br>It's a simple PNG image created with Paint Shop Pro so no special tools are needed.">
+			</td>
+			<td>Green background</td>
+		</tr>
+		<tr bgcolor="red">
+			<td>
+				<img src="RES\QHTM_DEMO_LOGO.PNG" alt="This image uses an alpha channel so the shadow will blend with any background<br>It's a simple PNG image created with Paint Shop Pro so no special tools are needed.">
+			</td>
+			<td>Red background</td>
+		</tr>
+		<tr background="RES\background.bmp">
+			<td>
+				<img src="RES\QHTM_DEMO_LOGO.PNG" alt="This image uses an alpha channel so the shadow will blend with any background<br>It's a simple PNG image created with Paint Shop Pro so no special tools are needed.">
+			</td>
+			<td>A tiled image background</td>
+		</tr>
+		<tr bgcolorleft="red" bgcolorright="white">
+			<td>
+				<img src="RES\QHTM_DEMO_LOGO.PNG" alt="This image uses an alpha channel so the shadow will blend with any background<br>It's a simple PNG image created with Paint Shop Pro so no special tools are needed.">
+			</td>
+			<td>Red to white gradient background</td>
+		</tr>
+	</table>
+
+	<h5>And finally...</h5>
+	QHTM allows you to handle image loading and optionally handle the display. This is very powerful and incredibly flexible. It means you are free to decide how you want QHTM to acquire the images.
+<!-- #include virtual="RES\footer.HTML"-->
