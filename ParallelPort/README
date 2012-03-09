@@ -1,1 +1,2 @@
 See http://www.autohotkey.com/forum/topic63778.html
+This lib depends on inpout32.dll, which you can find in the "inpout32.zip" file in this directory. 
