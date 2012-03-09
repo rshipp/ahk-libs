@@ -1,8 +1,34 @@
 All the (redistributable) AHK libs I can find...
 Licenses are scattered around in there somewhere.
 
-So far, the included libs are:
-Those specified in the "Sources" file, which were cloned
-directly from other git repos, 
-the 'ahkstdlib' collection, in its entirety,
-some of @Uberi's libs
+So far, the included libs are (in no particular order):
+- The 'ahkstdlib' collection, in its entirety (see http://www.autohotkey.com/forum/viewtopic.php?t=54996)
+- Several of Uberi's libs, including: 
+  AHK-DB (sqlite3 database functions)
+  AssociativeArrays
+  AveragingFunctions
+  BarGrapher
+  DeltaCompression
+  ExprEval()
+  Geolocation
+  ListCompare
+  ParallelPort
+  QuotedStringReplace
+  RangeOverlap
+  SingleCharArray
+  Speech (tts lib)
+  TriangleCollisionDetection
+- Rseding91's "Fast ini library", basic and advanced versions
+- Several of infogulch's libs, incuding:
+  WinHttpRequest
+  Map
+  AsyncHttp
+  Zip
+  LSON
+- nimdAHK's AHKLink lib (https://github.com/nimdahk/AHKLink)
+- ChrisS85's CGUI and WorkerThread libs (https://github.com/ChrisS85)
+- camerb's AHK libs (https://github.com/camerb/AHKs)
+- polyethene's AutoHotkey-Scripts (https://github.com/polyethene/AutoHotkey-Scripts)
+
+The "Sources" file contains a list of the git repos cloned and included here. 
+
