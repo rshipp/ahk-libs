@@ -50,7 +50,7 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 			DetectHiddenWindows, On
 			if(Name = "SelectedItem")
 			{
-				SendMessage, this.Type = "ComboBox" ? 0x147 : 0x188, 0, 0,,% "ahk_id " this.hwnd ;CB_GETCURSEL : LB_GETCURSEL
+				SendMessage, this.Type != "ListBox" ? 0x147 : 0x188, 0, 0,,% "ahk_id " this.hwnd ;CB_GETCURSEL : LB_GETCURSEL
 				ErrorLevel := (ErrorLevel > 0x7FFFFFFF ? -(~ErrorLevel) - 1 : ErrorLevel)
 				if(ErrorLevel >= 0)
 					Value := this._.Items[ErrorLevel + 1]
@@ -59,7 +59,7 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 				ControlGet, Value, Choice,,,% "ahk_id " this.hwnd
 			else if(Name = "SelectedIndex")
 			{
-				SendMessage, this.Type = "ComboBox" ? 0x147 : 0x188, 0, 0,,% "ahk_id " this.hwnd
+				SendMessage, this.Type != "ListBox" ? 0x147 : 0x188, 0, 0,,% "ahk_id " this.hwnd
 				ErrorLevel := (ErrorLevel > 0x7FFFFFFF ? -(~ErrorLevel) - 1 : ErrorLevel)
 				if(ErrorLevel >= 0)
 					Value := ErrorLevel + 1
