@@ -13,7 +13,7 @@
 > hotstrings("\bcolou?r", "rgb(128, 255, 0);") ; '\b' prevents matching with anything before the word, e.g. 'multicololoured'
 
 	License:
-		- Version 2.57 <http://www.autohotkey.net/~polyethene/#hotstrings>
+		- Version 2.59 <http://www.autohotkey.net/~polyethene/#hotstrings>
 		- Dedicated to the public domain (CC0 1.0) <http://creativecommons.org/publicdomain/zero/1.0/>
 */
 
@@ -24,8 +24,6 @@ hotstrings(k, a = "")
 	If z = ; init
 	{
 		RegRead, sd, HKCU, Control Panel\International, sDecimal
-		If sd not in .,,,
-			sd = .
 		Loop, 94
 		{
 			c := Chr(A_Index + 32)
@@ -60,11 +58,9 @@ hotstrings(k, a = "")
 				q := "`n"
 			Else If (RegExMatch(q, "Numpad(.+)", n))
 			{
-				nl := GetKeyState("Numlock", "T")
-				If nl
-					If n1 is digit
-						q = %n1%
-				q := n == "Div" ? "/" : n == "Mult" ? "*" : n == "Add" ? "+" : n == "Sub" ? "-" : n == "Dot" and nl ? "." : ""
+				q := n1 == "Div" ? "/" : n1 == "Mult" ? "*" : n1 == "Add" ? "+" : n1 == "Sub" ? "-" : n1 == "Dot" ? sd : ""
+				If n1 is digit
+					q = %n1%
 			}
 			Else If (StrLen(q) != 1)
 				q = {%q%}
