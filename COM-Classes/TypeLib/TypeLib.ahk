@@ -193,10 +193,10 @@ class TypeLib extends Unknown
 	Remarks:
 		If -1 is passed as index, the documentation for the library itself is returned.
 	*/
-	GetDocumentation(id, byRef name := "", byRef doc := "", byRef context := "", byRef helpfile := "")
+	GetDocumentation(index, byRef name := "", byRef doc := "", byRef context := "", byRef helpfile := "")
 	{
 		local bool, pName, pDoc, pHelpfile
-		bool := this._Error(DllCall(NumGet(this.vt+09*A_PtrSize), "ptr", this.ptr, "Int", id, "ptr*", pName, "ptr*", pDoc, "UInt*", context, "ptr*", pHelpfile))
+		bool := this._Error(DllCall(NumGet(this.vt+09*A_PtrSize), "ptr", this.ptr, "Int", index, "ptr*", pName, "ptr*", pDoc, "UInt*", context, "ptr*", pHelpfile))
 		name := StrGet(pName), doc := StrGet(pDoc), helpfile := StrGet(pHelpfile)
 		return bool
 	}

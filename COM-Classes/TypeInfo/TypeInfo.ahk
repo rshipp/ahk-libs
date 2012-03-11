@@ -47,7 +47,7 @@ class TypeInfo extends Unknown
 	{
 		local out
 		this._Error(DllCall(NumGet(this.vt+03*A_PtrSize), "ptr", this.ptr, "ptr*", out))
-		return TYPEATTR.FromStructPtr(out, false)
+		return IsObject(TYPEATTR) ? TYPEATTR.FromStructPtr(out, false) : out
 	}
 
 	/*
