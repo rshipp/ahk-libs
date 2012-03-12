@@ -1,0 +1,18 @@
+ViewObj( obj, seps:="" ) {
+    array := True
+    sep := seps._maxindex() ? seps.remove(1) : ", "
+    for k,v in obj
+    {
+        if k == "base"
+            continue
+        v := (IsObject(v) && !IsFunc(v) ? ViewObj(v, seps) : v+0 != "" ? v : "`"" RegExReplace(v,"`"","``$0") "`"") sep
+        retObj .= k ": " v
+        if array := array AND !(k + 0 == "") AND (k == Abs(k)) AND (k == Floor(k))
+            retArr .= v
+    }
+    if array
+        ret := "[" (StrLen(sep) ? SubStr(retArr, 1, -StrLen(sep)) : retArr) "]"
+    else
+        ret := "{" (StrLen(sep) ? SubStr(retObj, 1, -StrLen(sep)) : retObj) "}"
+    return ret
+}

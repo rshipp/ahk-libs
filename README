@@ -26,6 +26,9 @@ So far, the included libs are (in no particular order):
   AsyncHttp
   Zip
   LSON
+  ahk2-bigint
+  CaseSensitiveObject
+  ahk-OpenGL
 - nimdAHK's AHKLink lib (https://github.com/nimdahk/AHKLink)
 - ChrisS85's CGUI and WorkerThread libs (https://github.com/ChrisS85)
 - camerb's AHK libs (https://github.com/camerb/AHKs)
