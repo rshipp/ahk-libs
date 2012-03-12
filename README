@@ -1,6 +1,8 @@
 All the (redistributable) AHK libs I can find...
 Licenses are scattered around in there somewhere.
 
+Tip: Press "t" to search through the libs by filename. 
+
 So far, the included libs are (in no particular order):
 - The 'ahkstdlib' collection, in its entirety (see http://www.autohotkey.com/forum/viewtopic.php?t=54996)
 - Several of Uberi's libs, including: 
