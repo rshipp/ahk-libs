@@ -20,7 +20,7 @@ So far, the included libs are (in no particular order):
   Speech (tts lib)
   TriangleCollisionDetection
 - Rseding91's "Fast ini library", basic and advanced versions
-- Several of infogulch's libs, incuding:
+- Several of infogulch's libs, including:
   WinHttpRequest
   Map
   AsyncHttp
