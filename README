@@ -35,6 +35,7 @@ So far, the included libs are (in no particular order):
   FormsFramework
   ITaskbarList
   AeroThumbnail
+  ImportTypeLib
 - hoppfrosch's cTable class
 - HotKeyIt's _Struct libs for AHK v2 and _H
 - RaptorX's scintilla-wrapper and cURL-Wrapper libs
