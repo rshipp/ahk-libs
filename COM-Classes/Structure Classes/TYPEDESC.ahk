@@ -83,7 +83,7 @@ class TYPEDESC extends StructBase
 		{
 			NumPut(this.hreftype,	1*ptr,	00,	"UInt")
 		}
-		NumPut(this.vt,		1*ptr,	A_PtrSize,	"UInt")
+		NumPut(this.vt,		1*ptr,	A_PtrSize,	"UShort")
 
 		return ptr
 	}
@@ -104,7 +104,7 @@ class TYPEDESC extends StructBase
 		local instance := new TYPEDESC()
 		instance.SetOriginalPointer(ptr, own)
 
-		instance.vt := NumGet(1*ptr, A_PtrSize, "UInt")
+		instance.vt := NumGet(1*ptr, A_PtrSize, "UShort")
 		if (instance.vt == VARENUM.PTR || instance.vt == VARENUM.ARRAY)
 		{
 			instance.lptdesc := TYPEDESC.FromStructPtr(NumGet(1*ptr, 00, "UPtr"))
@@ -137,6 +137,7 @@ class TYPEDESC extends StructBase
 	*/
 	GetRequiredSize(data := "")
 	{
-		return A_PtrSize + 4
+		static padding := A_PtrSize - 2
+		return A_PtrSize + 2 + padding
 	}
 }

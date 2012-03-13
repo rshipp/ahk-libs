@@ -106,6 +106,7 @@ class PARAMDESC extends StructBase
 	*/
 	GetRequiredSize(data := "")
 	{
-		return A_PtrSize + 2
+		static padding := A_PtrSize - 2
+		return A_PtrSize + 2 + padding
 	}
 }

@@ -96,7 +96,8 @@ class VARDESC extends StructBase
 			NumPut(variant := CCFramework.CreateVARIANT(this.lpvarValue).ref, 04 + A_PtrSize, "Ptr"), CCFramework.FreeMemory(variant)
 		IsObject(this.elemdescVar) ? this.elemdescVar.ToStructPtr(ptr + 04 + 2 * A_PtrSize) : CCFramework.CopyMemory(this.elemdescVar, ptr + 04 + 2 * A_PtrSize, ed_size)
 		NumPut(this.wVarFlags, 1*ptr, 04 + 2 * A_PtrSize + ed_size, "UShort")
-		NumPut(this.varkind, 1*ptr, 06 + 2 * A_PtrSize + ed_size, "UInt")
+		; < 2 bytes padding >
+		NumPut(this.varkind, 1*ptr, 08 + 2 * A_PtrSize + ed_size, "UInt")
 
 		return ptr
 	}
@@ -121,7 +122,7 @@ class VARDESC extends StructBase
 
 		instance.memid := NumGet(1*ptr, 00, "UInt")
 		, instance.lpstrSchema := StrGet(NumGet(1*ptr, 04, "Ptr"))
-		, instance.varkind := NumGet(1*ptr, 06 + 2 * A_PtrSize + ed_size, "UInt")
+		, instance.varkind := NumGet(1*ptr, 08 + 2 * A_PtrSize + ed_size, "UInt")
 		if (instance.varkind == 0)
 			instance.oInst := NumGet(1*ptr, 04 + A_PtrSize, "UInt")
 		else if (instance.varkind == 2)
@@ -148,6 +149,6 @@ class VARDESC extends StructBase
 	*/
 	GetRequiredSize(data := "")
 	{
-		return 10 + 2 * A_PtrSize + ELEMDESC.GetRequiredSize()
+		return 12 + 2 * A_PtrSize + ELEMDESC.GetRequiredSize()
 	}
 }
