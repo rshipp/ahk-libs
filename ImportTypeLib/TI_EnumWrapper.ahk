@@ -3,7 +3,6 @@ class TI_EnumWrapper extends TI_Wrapper.TI_WrapperBaseClass
 	__New(typeInfo, lib)
 	{
 		local Base
-		static VARKIND_CONST := 2
 
 		if (this != TI_Wrapper.TI_EnumWrapper)
 		{

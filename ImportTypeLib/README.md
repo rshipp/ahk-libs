@@ -6,16 +6,21 @@ Sounds complicated? Here is how it will look:
 
 ```ahk
 UIAutomation := ImportTypeLib(A_WinDir "\System32\UIAutomationCore.dll")
-automation := new UIAutomation.CUIAutomation()
+automation := new UIAutomation.IUIAutomation(new UIAutomation.CUIAutomation())
 
-MsgBox % "Retrieved condition: " automation.ControlViewCondition
-automation.RemoveAllEventHandlers()
+list := ""
+for field, value in UIAutomation.TreeScope
+	list .= "TreeScope." field " = " value "`n"
+list .= "`n"
+for field, value in UIAutomation.OrientationType
+	list .= "OrientationType." field " = " value "`n"
+MsgBox % list
 
 desktop := new UIAutomation.IUIAutomationElement(automation.GetRootElement())
 MsgBox % "Desktop process PID: " desktop.CurrentProcessId
-desktop.SetFocus()
+MsgBox % "Desktop class: " desktop.CurrentClassName
 
-MsgBox % "The desktop has " . (desktop.CurrentOrientation == UIAutomation.OrientationType.Horizontal ? "horizontal" : "vertical") . " orientation."
+MsgBox % "The desktop has " . (desktop.CurrentOrientation == UIAutomation.OrientationType.Horizontal ? "horizontal" : (desktop.CurrentOrientation == UIAutomation.OrientationType.Vertical ? "vertical" : "no")) . " orientation."
 ```
 
 This will work for all COM interfaces for which a "type library" is available (in the example above, it is in `%A_WinDir%\System32\UIAutomationCore.dll`).

@@ -6,18 +6,20 @@ SetBatchLines -1
 ListLines Off
 #include ImportTypeLib.ahk
 
-UIAutomation := ImportTypeLib(A_WinDir "\System32\UIAutomationCore.dll\1")
+UIAutomation := ImportTypeLib(A_WinDir "\System32\UIAutomationCore.dll")
 
-ptr := new UIAutomation.CUIAutomation()
-MsgBox % "UIAutomation: " ptr
-automation := new UIAutomation.IUIAutomation(ptr)
+list := ""
+for field, value in UIAutomation.TreeScope
+	list .= "TreeScope." field " = " value "`n"
+list .= "`n"
+for field, value in UIAutomation.OrientationType
+	list .= "OrientationType." field " = " value "`n"
+MsgBox % list
 
-ptr := automation.GetRootElement()
-MsgBox % "desktop: " ptr
-desktop := new UIAutomation.IUIAutomationElement(ptr)
+automation := new UIAutomation.IUIAutomation(new UIAutomation.CUIAutomation())
+desktop := new UIAutomation.IUIAutomationElement(automation.GetRootElement())
 
-MsgBox % "Process: " desktop.CurrentProcessId
-MsgBox % desktop.SetFocus()
-
-ListVars
-MsgBox
+MsgBox % "Desktop process: " desktop.CurrentProcessId
+MsgBox % "Desktop name: " desktop.CurrentName
+MsgBox % "Desktop class: " desktop.CurrentClassName
+MsgBox % "The desktop has " . (desktop.CurrentOrientation == UIAutomation.OrientationType.Horizontal ? "horizontal" : (desktop.CurrentOrientation == UIAutomation.OrientationType.Vertical ? "vertical" : "no")) . " orientation."
