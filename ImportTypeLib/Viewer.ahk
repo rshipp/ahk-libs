@@ -4,10 +4,11 @@
 ListLines Off
 SetBatchLines -1
 
-libFolder := ""
+libFile := ""
 
-Menu, ViewMenu, Add, Open Folder, openFolderLibs
-Menu, ViewMenu, Add, Open registry, openRegLibs
+Menu ViewMenu, Add, Open registry, openRegLibs
+Menu ViewMenu, Add, Open Folder, openFolderLibs
+Menu ViewMenu, Add, Open file, openFileLibs
 
 Menu GuiMenu, Add, View, :ViewMenu
 
@@ -26,13 +27,19 @@ viewGuiClose:
 return
 
 openFolderLibs:
-	FileSelectFolder libFolder, C:\, 2, Select the folder holding the type libraries
+	FileSelectFolder libFile, C:\, 2, Select the folder holding the type libraries
+	if !ErrorLevel
+		gosub UpdateLibs
+return
+
+openFileLibs:
+	FileSelectFile libFile, 3, C:\, Select the file holding the type library, Type Libraries (*.dll; *.olb; *.exe; *.tlb)
 	if !ErrorLevel
 		gosub UpdateLibs
 return
 
 openRegLibs:
-	libFolder := ""
+	libFile := ""
 	gosub UpdateLibs
 return
 
@@ -41,13 +48,16 @@ UpdateLibs:
 	Gui view: Default
 	LV_Delete()
 
-	if (!libFolder)
+	if (!libFile)
 	{
 		libs := LoadLibsFromReg()
 	}
 	else
 	{
-		libs := LoadLibsFromFolder(libFolder)
+		if (InStr(FileExist(libFile), "D"))
+			libs := LoadLibsFromFolder(libFile)
+		else
+			libs := LoadLibsFromFile(libFile)
 	}
 
 	for each, lib in libs
@@ -104,8 +114,7 @@ LoadLibsFromReg()
 
 LoadLibsFromFolder(folder)
 {
-	static proc := RegisterCallback("ResourceEnumCallback")
-	libs := []
+	local libs := [], ext := "", each := 0, obj := ""
 
 	Loop %folder%\*.*,0,1
 	{
@@ -113,39 +122,53 @@ LoadLibsFromFolder(folder)
 		if ext not in exe,dll,old,tlb
 			continue
 
-		if (ext = "tlb")
+		for each, obj in LoadLibsFromFile(A_LoopFileLongPath)
+			libs.Insert(obj)
+	}
+	return libs
+}
+
+LoadLibsFromFile(file)
+{
+	static proc := RegisterCallback("ResourceEnumCallback")
+	local libs := [], ext := "", hr := 0x00, obj := "", lib := 0, module := 0, currentLibs := "", each := 0, resource := ""
+
+	SplitPath, file, , , ext
+	if ext not in exe,dll,old,tlb
+		return
+
+	if (ext = "tlb")
+	{
+		hr := LoadTypeLib(file, lib)
+		if (FAILED(hr))
 		{
-			hr := LoadTypeLib(A_LoopFileLongPath, lib)
+			return
+		}
+
+		obj := CreateInfoObject(lib), obj["Path"] := file
+		libs.Insert(obj)
+		ObjRelease(lib)
+	}
+	else
+	{
+		currentLibs := []
+
+		module := DllCall("LoadLibrary", "Str", file, "Ptr")
+		DllCall("EnumResourceNames", "Ptr", module, "Str", "TYPELIB", "Ptr", proc, "Ptr", Object(currentLibs))
+
+		for each, resource in currentLibs
+		{
+			hr := LoadTypeLib(file "\" resource, lib)
 			if (FAILED(hr))
 			{
 				continue
 			}
-
-			obj := CreateInfoObject(lib), obj["Path"] := A_LoopFileLongPath
+			obj := CreateInfoObject(lib), obj["Path"] := file "\" resource
 			libs.Insert(obj)
-			ObjRelease(lib)
+			ObjRelease(lib), currentLibs[lib] := 0
 		}
-		else
-		{
-			currentLibs := []
 
-			module := DllCall("LoadLibrary", "Str", A_LoopFileLongPath, "Ptr")
-			DllCall("EnumResourceNames", "Ptr", module, "Str", "TYPELIB", "Ptr", proc, "Ptr", Object(currentLibs))
-
-			for each, resource in currentLibs
-			{
-				hr := LoadTypeLib(A_LoopFileLongPath "\" resource, lib)
-				if (FAILED(hr))
-				{
-					continue
-				}
-				obj := CreateInfoObject(lib), obj["Path"] := A_LoopFileLongPath "\" resource
-				libs.Insert(obj)
-				ObjRelease(lib), currentLibs[lib] := 0
-			}
-
-			DllCall("FreeLibrary", "Ptr", module)
-		}
+		DllCall("FreeLibrary", "Ptr", module)
 	}
 	return libs
 }

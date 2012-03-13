@@ -1,3 +1,13 @@
+/*
+Function: ImportTypeLib
+loads a type library and returns a wrapper object
+
+Parameters:
+	lib - either the path to the library or the GUID if it is registered within the system.
+		If the path passed points to a file (e.g. a DLL) containing the type library, but it is not the first resource, append the index like so:
+		> ImportTypeLib("C:\Path\to\Lib.dll\2")
+	[opt] version - if a GUID is passed, specify the type library version here. Defaults to "1.0" (use exactly that format!).
+*/
 ImportTypeLib(lib, version = "1.0")
 {
 	local verMajor, verMinor, libid, hr

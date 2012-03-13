@@ -2,13 +2,13 @@ class TI_WrapperBaseClass
 {
 	__New(typeInfo, lib)
 	{
-		local hr, name := 0
+		local hr, name := 0, typeInfo2
+		static IID_ITypeInfo2 := "{00020412-0000-0000-C000-000000000046}"
 
 		if (this != TI_Wrapper.TI_WrapperBaseClass)
 		{
 			ObjInsert(this, "internal://data-storage", {})
 			this["internal://typelib-object"] := lib, ObjAddRef(lib)
-			this["internal://typeinfo-instance"] := typeInfo
 
 			hr := DllCall(NumGet(NumGet(typeInfo+0), 12*A_PtrSize, "Ptr"), "Ptr", typeInfo, "Int", -1, "Ptr*", name, "Ptr*", 0, "UInt*", 0, "Ptr*", 0, "Int")
 			if (FAILED(hr) || !name)
@@ -17,12 +17,18 @@ class TI_WrapperBaseClass
 			}
 
 			this["internal://typeinfo-name"] := StrGet(name, "UTF-16")
+
+			typeInfo2 := ComObjQuery(typeInfo, IID_ITypeInfo2)
+			if (!typeInfo2)
+				throw Exception("QueryInterface() failed.", -1)
+			this["internal://typeinfo-instance"] := typeInfo2, ObjAddRef(typeInfo2)
 		}
 	}
 
 	__Delete()
 	{
 		ObjRelease(this["internal://typelib-object"])
+		, ObjRelease(this["internal://typeinfo-instance"])
 	}
 
 	__Set(property, value)
