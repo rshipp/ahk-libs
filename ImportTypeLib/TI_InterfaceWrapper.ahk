@@ -58,7 +58,7 @@ class TI_InterfaceWrapper extends TI_Wrapper.TI_WrapperBaseClass
 				}
 			}
 			*/
-			throw Exception("GetIDsOfNames for """ method """ failed.", -1, TI_FormatError(hr))
+			throw Exception("GetIDsOfNames for """ method """ failed.", -1, FormatError(hr))
 		}
 
 		hr := DllCall(NumGet(NumGet(info+0), 11*A_PtrSize, "Ptr"), "Ptr", info, "Ptr", instance, "UInt", dispid, "UShort", DISPATCH_METHOD, "Ptr", &dispparams, "Ptr", &result, "Ptr", &excepInfo, "Ptr", 0, "Int") ; ITypeInfo::Invoke()
@@ -78,7 +78,7 @@ class TI_InterfaceWrapper extends TI_Wrapper.TI_WrapperBaseClass
 				}
 			}
 			*/
-			throw Exception("""" method """ could not be called.", -1, TI_FormatError(hr))
+			throw Exception("""" method """ could not be called.", -1, FormatError(hr))
 		}
 		return VARIANT_GetValue(&result)
 	}
@@ -107,13 +107,13 @@ class TI_InterfaceWrapper extends TI_Wrapper.TI_WrapperBaseClass
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", property, "UInt", 1, "UInt*", dispid, "Int") ; ITypeInfo::GetIDsOfNames()
 			if (FAILED(hr) || dispid == DISPID_UNKNOWN)
 			{
-				throw Exception("GetIDsOfNames for """ property """ failed.", -1, TI_FormatError(hr))
+				throw Exception("GetIDsOfNames for """ property """ failed.", -1, FormatError(hr))
 			}
 
 			hr := DllCall(NumGet(NumGet(info+0), 11*A_PtrSize, "Ptr"), "Ptr", info, "Ptr", instance, "UInt", dispid, "UShort", DISPATCH_METHOD | DISPATCH_PROPERTYGET, "Ptr", &dispparams, "Ptr", &result, "Ptr", &excepInfo, "Ptr", 0, "Int") ; ITypeInfo::Invoke()
 			if (FAILED(hr))
 			{
-				throw Exception("""" property """ could not be retrieved.", -1, TI_FormatError(hr))
+				throw Exception("""" property """ could not be retrieved.", -1, FormatError(hr))
 			}
 			return VARIANT_GetValue(&result)
 		}
@@ -150,7 +150,7 @@ class TI_InterfaceWrapper extends TI_Wrapper.TI_WrapperBaseClass
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", property, "UInt", 1, "UInt*", dispid, "Int") ; ITypeInfo::GetIDsOfNames()
 			if (FAILED(hr) || dispid == DISPID_UNKNOWN)
 			{
-				throw Exception("GetIDsOfNames failed.", -1, TI_FormatError(hr))
+				throw Exception("GetIDsOfNames failed.", -1, FormatError(hr))
 			}
 
 			vt := NumGet(1*variant, 00, "UShort")
@@ -161,14 +161,14 @@ class TI_InterfaceWrapper extends TI_Wrapper.TI_WrapperBaseClass
 					return value
 				else if (hr != DISP_E_MEMBERNOTFOUND) ; if member not found, retry below with DISPATCH_PROPERTYPUT
 				{
-					throw Exception("""" property """ could not be set.", -1, TI_FormatError(hr)) ; otherwise an error occured
+					throw Exception("""" property """ could not be set.", -1, FormatError(hr)) ; otherwise an error occured
 				}
 			}
 
 			hr := DllCall(NumGet(NumGet(info+0), 11*A_PtrSize, "Ptr"), "Ptr", info, "Ptr", instance, "UInt", dispid, "UShort", DISPATCH_PROPERTYPUT, "Ptr", &dispparams, "Ptr*", 0, "Ptr", &excepInfo, "UInt*", err_index, "Int") ; ITypeInfo::Invoke()
 			if (FAILED(hr))
 			{
-				throw Exception("""" property """ could not be set.", -1, TI_FormatError(hr))
+				throw Exception("""" property """ could not be set.", -1, FormatError(hr))
 			}
 			return value
 		}

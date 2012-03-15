@@ -95,7 +95,7 @@ LoadLibsFromReg()
 		hr := GUID_FromString(A_LoopRegName, guid)
 		if (FAILED(hr))
 		{
-			MsgBox % Ti_FormatError(hr)
+			MsgBox % FormatError(hr)
 			continue
 		}
 		hr := DllCall("OleAut32\LoadRegTypeLib", "Ptr", &guid, "UShort", version1, "UShort", version2, "UInt", 0, "Ptr*", lib)
@@ -190,7 +190,7 @@ CreateInfoObject(lib)
 	hr := DllCall(NumGet(NumGet(lib+0), 09*A_PtrSize, "Ptr"), "Ptr", lib, "Int", -1, "Ptr*", pName, "Ptr*", pDoc, "UInt*", 0, "Ptr", 0, "Int")
 	if (FAILED(hr))
 	{
-		MsgBox % Ti_FormatError(hr)
+		MsgBox % FormatError(hr)
 		return
 	}
 	return { "Name": StrGet(pName), "Doc" : StrGet(pDoc) }

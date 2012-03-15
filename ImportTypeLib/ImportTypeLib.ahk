@@ -10,11 +10,11 @@ Parameters:
 */
 ImportTypeLib(lib, version = "1.0")
 {
-	local verMajor, verMinor, libid, hr
+	local ver, verMajor, verMinor, libid, hr
 
 	if (GUID_IsGUIDString(lib))
 	{
-		if (!TI_GetVersion(version, verMajor, verMinor))
+		if (!RegExMatch(lib, "^(?P<Major>\d+)\.(?P<Minor>\d+)$", ver))
 		{
 			throw Exception("Invalid version specified: """ version """.", -1)
 		}
@@ -22,7 +22,7 @@ ImportTypeLib(lib, version = "1.0")
 		hr := GUID_FromString(lib, libid)
 		if (FAILED(hr))
 		{
-			throw Exception("LIBID could not be converted: """ lib """.", -1, TI_FormatError(hr))
+			throw Exception("LIBID could not be converted: """ lib """.", -1, FormatError(hr))
 		}
 
 		hr := DllCall("OleAut32\LoadRegTypeLib", "Ptr", &libid, "UShort", verMajor, "UShort", verMinor, "Ptr*", lib, "Int") ; error handling is done below
@@ -36,7 +36,7 @@ ImportTypeLib(lib, version = "1.0")
 
 	if (FAILED(hr))
 	{
-		throw Exception("Loading of type library failed.", -1, TI_FormatError(hr))
+		throw Exception("Loading of type library failed.", -1, FormatError(hr))
 	}
 	return new TI_Wrapper.TI_TypeLibWrapper(lib)
 }
