@@ -4,6 +4,8 @@
 ListLines Off
 SetBatchLines -1
 
+#include Lib\ITL_GUID.ahk
+
 libFile := ""
 
 Menu ViewMenu, Add, Open registry, openRegLibs
@@ -92,16 +94,16 @@ LoadLibsFromReg()
 			version := A_LoopRegName
 		}
 		StringSplit version, version, .
-		hr := GUID_FromString(A_LoopRegName, guid)
-		if (FAILED(hr))
+		hr := ITL_GUID_FromString(A_LoopRegName, guid)
+		if (ITL_FAILED(hr))
 		{
-			MsgBox % FormatError(hr)
+			MsgBox % ITL_FormatError(hr)
 			continue
 		}
 		hr := DllCall("OleAut32\LoadRegTypeLib", "Ptr", &guid, "UShort", version1, "UShort", version2, "UInt", 0, "Ptr*", lib)
-		if (FAILED(hr))
+		if (ITL_FAILED(hr))
 		{
-			;MsgBox % Ti_FormatError(hr)
+			;MsgBox % ITL_FormatError(hr)
 			continue
 		}
 		StringUpper, guid, A_LoopRegName
@@ -140,7 +142,7 @@ LoadLibsFromFile(file)
 	if (ext = "tlb")
 	{
 		hr := LoadTypeLib(file, lib)
-		if (FAILED(hr))
+		if (ITL_FAILED(hr))
 		{
 			return
 		}
@@ -159,7 +161,7 @@ LoadLibsFromFile(file)
 		for each, resource in currentLibs
 		{
 			hr := LoadTypeLib(file "\" resource, lib)
-			if (FAILED(hr))
+			if (ITL_FAILED(hr))
 			{
 				continue
 			}
@@ -188,9 +190,9 @@ ResourceEnumCallback(module, type, name, custom)
 CreateInfoObject(lib)
 {
 	hr := DllCall(NumGet(NumGet(lib+0), 09*A_PtrSize, "Ptr"), "Ptr", lib, "Int", -1, "Ptr*", pName, "Ptr*", pDoc, "UInt*", 0, "Ptr", 0, "Int")
-	if (FAILED(hr))
+	if (ITL_FAILED(hr))
 	{
-		MsgBox % FormatError(hr)
+		MsgBox % ITL_FormatError(hr)
 		return
 	}
 	return { "Name": StrGet(pName), "Doc" : StrGet(pDoc) }
