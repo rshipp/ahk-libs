@@ -89,15 +89,16 @@ class VARDESC extends StructBase
 		}
 
 		NumPut(this.memid, 1*ptr, 00, "UInt")
-		NumPut(this.lpstrSchema, 1*ptr, 04, "Ptr")
+		; < A_PtrSize - 4 bytes padding >
+		NumPut(this.lpstrSchema, 1*ptr, A_PtrSize, "Ptr")
 		if (this.varkind == 0)
-			NumPut(this.oInst, 1*ptr, 04 + A_PtrSize, "UInt")
+			NumPut(this.oInst, 1*ptr, 2 * A_PtrSize, "UInt")
 		else if (this.varkind == 2)
-			NumPut(variant := CCFramework.CreateVARIANT(this.lpvarValue).ref, 04 + A_PtrSize, "Ptr"), CCFramework.FreeMemory(variant)
-		IsObject(this.elemdescVar) ? this.elemdescVar.ToStructPtr(ptr + 04 + 2 * A_PtrSize) : CCFramework.CopyMemory(this.elemdescVar, ptr + 04 + 2 * A_PtrSize, ed_size)
-		NumPut(this.wVarFlags, 1*ptr, 04 + 2 * A_PtrSize + ed_size, "UShort")
+			NumPut(variant := CCFramework.CreateVARIANT(this.lpvarValue).ref, 2 * A_PtrSize, "Ptr"), CCFramework.FreeMemory(variant)
+		IsObject(this.elemdescVar) ? this.elemdescVar.ToStructPtr(ptr + 3 * A_PtrSize) : CCFramework.CopyMemory(this.elemdescVar, ptr + 3 * A_PtrSize, ed_size)
+		NumPut(this.wVarFlags, 1*ptr, 3 * A_PtrSize + ed_size, "UShort")
 		; < 2 bytes padding >
-		NumPut(this.varkind, 1*ptr, 08 + 2 * A_PtrSize + ed_size, "UInt")
+		NumPut(this.varkind, 1*ptr, 3 * A_PtrSize + ed_size + 4, "UInt")
 
 		return ptr
 	}
@@ -121,14 +122,16 @@ class VARDESC extends StructBase
 		instance.SetOriginalPointer(ptr, own)
 
 		instance.memid := NumGet(1*ptr, 00, "UInt")
-		, instance.lpstrSchema := StrGet(NumGet(1*ptr, 04, "Ptr"))
-		, instance.varkind := NumGet(1*ptr, 08 + 2 * A_PtrSize + ed_size, "UInt")
+		; < A_PtrSize - 4 bytes padding >
+		, instance.lpstrSchema := StrGet(NumGet(1*ptr, A_PtrSize, "Ptr"))
+		, instance.varkind := NumGet(1*ptr, 3 * A_PtrSize + ed_size + 4, "UInt")
 		if (instance.varkind == 0)
-			instance.oInst := NumGet(1*ptr, 04 + A_PtrSize, "UInt")
+			instance.oInst := NumGet(1*ptr, 2 * A_PtrSize, "UInt")
 		else if (instance.varkind == 2)
-			instance.lpvarValue := CCFramework.BuildVARIANT(NumGet(1*ptr, 04 + A_PtrSize, "Ptr"))
-		instance.elemdescVar := ELEMDESC.FromStructPtr(ptr + 04 + 2 * A_PtrSize, false)
-		, instance.wVarFlags := NumGet(1*ptr, 04 + 2 * A_PtrSize + ed_size, "UShort")
+			instance.lpvarValue := CCFramework.BuildVARIANT(NumGet(1*ptr, 2 * A_PtrSize, "Ptr"))
+		instance.elemdescVar := ELEMDESC.FromStructPtr(ptr + 3 * A_PtrSize, false)
+		; < 2 bytes padding >
+		, instance.wVarFlags := NumGet(1*ptr, 3 * A_PtrSize + ed_size, "UShort")
 
 		return instance
 	}
