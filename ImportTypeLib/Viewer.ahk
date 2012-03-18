@@ -11,21 +11,25 @@ libFile := ""
 Menu ViewMenu, Add, Open registry, openRegLibs
 Menu ViewMenu, Add, Open Folder, openFolderLibs
 Menu ViewMenu, Add, Open file, openFileLibs
+Menu ViewMenu, Add, Copy selected row, CopySelected
 
 Menu GuiMenu, Add, View, :ViewMenu
 
 Gui view: Menu, GuiMenu
 Gui view: +Resize
-Gui view: Add, Listview, x5 y5 w1200 h800, Name|Description|GUID/Path|Version
-Gui view: Add, Button, x5 y810 w100 h50 gCopySelected, Copy selected row
+Gui view: Add, Listview, vLVr x0 y0 w800 h600, Name|Description|GUID/Path|Version
 
 gosub UpdateLibs
 
-Gui Show, w1210 h870, Type Library Viewer
+Gui Show, w800 h600, Type Library Viewer
 return
 
 viewGuiClose:
 	ExitApp
+return
+
+viewGuiSize:
+GuiControl view:Move, LVr, w%A_GuiWidth% h%A_GuiHeight%
 return
 
 openFolderLibs:

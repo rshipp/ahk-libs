@@ -76,6 +76,7 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL_Wrapper.ITL_WrapperBaseClas
 	; allows the object to be used within a for-loop
 	_NewEnum()
 	{
+		static VARKIND_CONST := 2
 		local hr, typeName, info, obj, attr := 0, varCount, varDesc := 0, varID, pVarName := 0, varValue
 
 		; only loop through the members once, since the constant values won't change
