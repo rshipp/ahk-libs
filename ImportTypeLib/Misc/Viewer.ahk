@@ -4,7 +4,8 @@
 ListLines Off
 SetBatchLines -1
 
-#include Lib\ITL_GUID.ahk
+#include ..\
+#include ImportTypeLib.ahk
 
 libFile := ""
 
