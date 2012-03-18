@@ -689,37 +689,37 @@ Class CListViewControl Extends CControl
 				this._.IconNumber := IconNumberOrTransparencyColor
 			}
 			/*
-		Function: Modify
-		Modifies a row.
-		
-		Parameters:
-			Options - Options for the modified row. See AHK documentation on LV_Modify().
-			Fields - Any additional parameters are used as cell text.
-		*/
-		Modify(Options, Fields*)
-		{
-			GUI := CGUI.GUIList[this._.GUINum]
-			if(GUI.IsDestroyed)
-				return
-			Control := GUI.Controls[this._.hwnd]
-			Gui, % Control.GUINum ":Default"
-			Gui, ListView, % Control.ClassNN
-			SortedIndex := Control.IndependentSorting ? this.GetSortedIndex(this._.RowNumber, Control.hwnd) : this._.RowNumber ;If independent sorting is off, the RowNumber parameter of this function is interpreted as sorted index
-			LV_Modify(SortedIndex, Options, Fields*)
-			if(InStr(Options, "Select"))
+			Function: Modify
+			Modifies a row.
+			
+			Parameters:
+				Options - Options for the modified row. See AHK documentation on LV_Modify().
+				Fields - Any additional parameters are used as cell text.
+			*/
+			Modify(Options, Fields*)
 			{
-				if(LV_GetCount("Selected") = 1)
+				GUI := CGUI.GUIList[this._.GUINum]
+				if(GUI.IsDestroyed)
+					return
+				Control := GUI.Controls[this._.hwnd]
+				Gui, % Control.GUINum ":Default"
+				Gui, ListView, % Control.ClassNN
+				SortedIndex := Control.IndependentSorting ? this.GetSortedIndex(this._.RowNumber, Control.hwnd) : this._.RowNumber ;If independent sorting is off, the RowNumber parameter of this function is interpreted as sorted index
+				LV_Modify(SortedIndex, Options, Fields*)
+				if(InStr(Options, "Select"))
 				{
-					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, Control.SelectedItem)
-					Control._.PreviouslySelectedItem := Control.SelectedItem
-				}
-				else
-				{
-					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, "")
-					Control._.PreviouslySelectedItem := ""
+					if(LV_GetCount("Selected") = 1)
+					{
+						Control.ProcessSubControlState(Control._.PreviouslySelectedItem, Control.SelectedItem)
+						Control._.PreviouslySelectedItem := Control.SelectedItem
+					}
+					else
+					{
+						Control.ProcessSubControlState(Control._.PreviouslySelectedItem, "")
+						Control._.PreviouslySelectedItem := ""
+					}
 				}
 			}
-		}
 			/*
 			Property: 1,2,3,4,...
 			Columns can be accessed by their index, e.g. this.ListView.Items[1][2] accesses the text of the first row and second column.
@@ -812,8 +812,9 @@ Class CListViewControl Extends CControl
 						LV_Modify(this.GetSortedIndex(this._.RowNumber, Control.hwnd), "Col" 1, Value)
 						return Value
 					}
-					else if(Key := {Checked : "Check", Focused : "Focus", "Selected" : ""}[Name])
+					else if((Key := {Checked : "Check", Focused : "Focus", "Selected" : ""}).HasKey[Name])
 					{
+						Key := Key[Name]
 						Gui, % Control.GUINum ":Default"
 						Gui, ListView, % Control.hwnd
 						LV_Modify(this.GetSortedIndex(this._.RowNumber, Control.hwnd), (Value = 0 ? "-" : "") Key)
