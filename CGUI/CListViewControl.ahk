@@ -812,7 +812,7 @@ Class CListViewControl Extends CControl
 						LV_Modify(this.GetSortedIndex(this._.RowNumber, Control.hwnd), "Col" 1, Value)
 						return Value
 					}
-					else if((Key := {Checked : "Check", Focused : "Focus", "Selected" : ""}).HasKey[Name])
+					else if((Key := {Checked : "Check", Focused : "Focus", Selected : "Select"}).HasKey(Name))
 					{
 						Key := Key[Name]
 						Gui, % Control.GUINum ":Default"
