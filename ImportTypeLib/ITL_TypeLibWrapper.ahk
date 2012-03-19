@@ -8,7 +8,7 @@ class ITL_TypeLibWrapper
 		if (!IsObject(valid_typekinds)) ; init static field
 		{
 			 valid_typekinds := { (TYPEKIND_ENUM)		: ITL_Wrapper.ITL_EnumWrapper
-								, (TYPEKIND_RECORD)		: ITL_Wrapper.ITL_StructureWrapper
+								;, (TYPEKIND_RECORD)		: ITL_Wrapper.ITL_StructureWrapper
 								, (TYPEKIND_MODULE)		: ITL_Wrapper.ITL_ModuleWrapper
 								, (TYPEKIND_INTERFACE)	: ITL_Wrapper.ITL_InterfaceWrapper
 								, (TYPEKIND_COCLASS)	: ITL_Wrapper.ITL_CoClassWrapper }
