@@ -131,6 +131,24 @@ Class CListViewControl Extends CControl
 	Property: FocusedIndex
 	Contains the index of the focused row.
 	
+	Property: List
+	Set to true to use the List view mode.
+	
+	Property: Report
+	Set to true to use the Report view mode.
+	
+	Property: Icon
+	Set to true to use the Icon view mode.
+	
+	Property: IconSmall
+	Set to true to use the IconSmall view mode.
+	
+	Property: Tile
+	Set to true to use the Tile view mode.
+	
+	Property: LargeIcons
+	True if this control should display large icons. Only used in List and Report view modes.
+	
 	Property: IndependentSorting
 	This setting is off by default. In this case, indexing the rows behaves like AHK ListViews usually do.
 	If it is enabled however, the row indexing will be independent of the current sorting.
@@ -183,6 +201,10 @@ Class CListViewControl Extends CControl
 			}
 			else if(Name = "PreviouslySelectedItem")
 				Value := this._.PreviouslySelectedItem
+			else if(Name = "List" || Name = "Report" || Name = "Icon" || Name = "IconSmall" || Name = "Tile")
+				Value := this._[Name]
+			else if(Name = "LargeIcons")
+				Value := this._.ImageListManager.LargeIcons
 			Loop % Params.MaxIndex()
 				if(IsObject(Value)) ;Fix unlucky multi parameter __GET
 					Value := Value[Params[A_Index]]
@@ -286,8 +308,20 @@ Class CListViewControl Extends CControl
 			}
 			else if(Name = "Items")
 				Value := 0
+			else if((Properties := {List : "List", Report : "Report", IconSmall : "IconSmall", Icon : "Icon", Tile : "Tile"})[Name])
+			{
+				for k, v in Properties
+					this._[k] := false
+				this._[Name] := true
+				;Other views use the "large" image list anyway where appropriate.
+				if(Name != "Report")
+					this.LargeIcons := false
+				GuiControl, % this.GUINum ":+" Name, this.hwnd
+			}
 			else if(Name = "Redraw")
 				GuiControl, % this.GUINum ":" (Value = true ? "+" : "-") "Redraw" , this.hwnd
+			else if(Name = "LargeIcons")
+				this._.ImageListManager.LargeIcons := Value = 1
 			else
 				Handled := false
 			if(!DetectHidden)

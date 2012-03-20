@@ -511,6 +511,25 @@ Class CControl ;Never created directly
 			this._.hwnd := hwnd
 			this._.IconList := {}
 		}
+		__set(Name, Value)
+		{
+			GUI := CGUI.GUIList[this._.GUINum]
+			Control := GUI.Controls[this._.hwnd]
+			if(Name = "LargeIcons" &&  Control.Type = "ListView")
+			{
+				GUI, % this._.GUINum ":Default"
+				if(Control.Type = "ListView")
+					GUI, ListView, % Control.ClassNN
+				LV_SetImageList(this._.IconList.LargeIL_ID, Value = 1)
+				this._.LargeIcons := Value = 1
+				return Value = 1
+			}
+		}
+		__get(Name)
+		{
+			if(Name = "LargeIcons")
+				return this._.LargeIcons
+		}
 		SetIcon(ID, PathOrhBitmap, IconNumber)
 		{
 			GUI := CGUI.GUIList[this._.GUINum]
@@ -525,10 +544,10 @@ Class CControl ;Never created directly
 				if(Control.Type = "ListView") ;Listview also has large icons
 				{
 					this._.IconList.LargeIL_ID := IL_Create(5,5,1)
-					LV_SetImageList(this._.IconList.LargeIL_ID)
+					LV_SetImageList(this._.IconList.LargeIL_ID, this._.LargeIcons = 1)
 				}
 				this._.IconList.SmallIL_ID := IL_Create(5,5,0)
-				if(Control.Type = "ListView")
+				if(Control.Type = "ListView" && !this._.LargeIcons)
 					LV_SetImageList(this._.IconList.SmallIL_ID)
 				else if(Control.Type = "TreeView")
 				{
