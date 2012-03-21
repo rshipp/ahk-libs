@@ -38,7 +38,7 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 
 	__Get(field)
 	{
-		static sizeof_VARIANT := 16
+		static sizeof_VARIANT := 8 + 2 * A_PtrSize
 		local hr, ptr, variant := 0, rcinfo
 
 		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)

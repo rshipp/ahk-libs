@@ -1,6 +1,6 @@
 ﻿ITL_VARIANT_Create(value, byRef buffer)
 {
-	static VT_VARIANT := 0xC, sizeof_VARIANT := 16
+	static VT_VARIANT := 0xC, sizeof_VARIANT := 8 + 2 * A_PtrSize
 	local arr_data := 0, array := ComObjArray(VT_VARIANT, 1)
 
 	array[0] := value
