@@ -2,17 +2,23 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 {
 	__New(typeInfo, lib)
 	{
-		local Base, hr, rcinfo := 0
+		local Base, hr := 0x00, rcinfo := 0
 
 		if (this != ITL_Wrapper.ITL_StructureWrapper)
 		{
 			Base.__New(typeInfo, lib)
 
+			name := this["internal://typeinfo-name"]
+			MsgBox hr: %hr%`ntype: %typeInfo%`nrecord: %rcinfo%`nname: %name%
 			hr := DllCall("OleAut32\GetRecordInfoFromTypeInfo", "Ptr", typeInfo, "Ptr*", rcinfo, "Int")
+			MsgBox hr: %hr%`ntype: %typeInfo%`nrecord: %rcinfo%
 			if (ITL_FAILED(hr) || !rcinfo)
 			{
-				throw Exception("GetRecordInfoFromTypeInfo() failed.", -1, ITL_FormatError(hr))
+				;throw Exception("GetRecordInfoFromTypeInfo() failed.", -1, ITL_FormatError(hr))
+				MsgBox % "GetRecordInfoFromTypeInfo() for " name " failed:`n" ITL_FormatError(hr)
 			}
+			else
+				MsgBox 64, test, GetRecordInfoFromTypeInfo() succeeded for %name%!
 			this["internal://rcinfo-instance"] := rcinfo
 
 			ObjInsert(this, "__New", Func("ITL_StructureConstructor"))
