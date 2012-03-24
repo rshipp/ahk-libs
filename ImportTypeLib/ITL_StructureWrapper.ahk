@@ -2,23 +2,41 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 {
 	__New(typeInfo, lib)
 	{
-		local Base, hr := 0x00, rcinfo := 0
+		static GUID_NULL := "{00000000-0000-0000-0000-000000000000}", IID_ICreateTypeInfo := "{00020405-0000-0000-C000-000000000046}"
+		local Base, hr := 0x00, rcinfo := 0, guid:= 0
 
 		if (this != ITL_Wrapper.ITL_StructureWrapper)
 		{
 			Base.__New(typeInfo, lib)
 
-			name := this["internal://typeinfo-name"]
-			MsgBox hr: %hr%`ntype: %typeInfo%`nrecord: %rcinfo%`nname: %name%
-			hr := DllCall("OleAut32\GetRecordInfoFromTypeInfo", "Ptr", typeInfo, "Ptr*", rcinfo, "Int")
-			MsgBox hr: %hr%`ntype: %typeInfo%`nrecord: %rcinfo%
+			; If there's no GUID specified, this would cause GetRecordInfoFromTypeInfo() to fail
+			; So we're trying to add a random-generated GUID just to keep it satisfied.
+			if (lib.GetGUID(typeInfo, false, true) == GUID_NULL)
+			{
+				createInfo := ComObjQuery(typeInfo, IID_ICreateTypeInfo) ; query for the ICreateTypeInfo interface which can be used to modify the type
+				if (!createInfo)
+				{
+					throw Exception("QueryInterface() for ICreateTypeInfo failed.", -1, "This is needed because the type """ this["internal://typeinfo-name"] """ does not have a GUID.")
+				}
+
+				hr := ITL_GUID_Create(guid) ; dynamically create a new GUID
+				if (ITL_FAILED(hr))
+				{
+					throw Exception("Creating a GUID failed.", -1, ITL_FormatError(hr))
+				}
+
+				hr := DllCall(NumGet(NumGet(createInfo+0), 03 * A_PtrSize, "Ptr"), "Ptr", createInfo, "Ptr", &guid, "Int") ; ICreateTypeInfo::SetGuid() - assign a GUID for the type
+				if (ITL_FAILED(hr))
+				{
+					throw Exception("ICreateTypeInfo::SetGUID() failed.", -1, ITL_FormatError(hr))
+				}
+			}
+
+			hr := DllCall("OleAut32\GetRecordInfoFromTypeInfo", "Ptr", typeInfo, "Ptr*", rcinfo, "Int") ; retrieve an IRecordInfo instance for a type
 			if (ITL_FAILED(hr) || !rcinfo)
 			{
-				;throw Exception("GetRecordInfoFromTypeInfo() failed.", -1, ITL_FormatError(hr))
-				MsgBox % "GetRecordInfoFromTypeInfo() for " name " failed:`n" ITL_FormatError(hr)
+				throw Exception("GetRecordInfoFromTypeInfo() failed.", -1, ITL_FormatError(hr))
 			}
-			else
-				MsgBox 64, test, GetRecordInfoFromTypeInfo() succeeded for %name%!
 			this["internal://rcinfo-instance"] := rcinfo
 
 			ObjInsert(this, "__New", Func("ITL_StructureConstructor"))
@@ -67,7 +85,7 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 
 	__Set(field, value)
 	{
-		static INVOKE_PROPERTYPUTREF := 8
+		static INVOKE_PROPERTYPUT := 4
 		local hr, ptr, variant := 0, rcinfo
 
 		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
@@ -76,7 +94,7 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 			, rcinfo := this.base["internal://rcinfo-instance"]
 
 			ITL_VARIANT_Create(value, variant)
-			hr := DllCall(NumGet(NumGet(rcinfo+0), 12*A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt", INVOKE_PROPERTYPUTREF, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::PutField()
+			hr := DllCall(NumGet(NumGet(rcinfo+0), 12*A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt", INVOKE_PROPERTYPUT, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::PutField()
 			if (ITL_FAILED(hr))
 			{
 				throw Exception("PutField() failed.", -1, ITL_FormatError(hr))

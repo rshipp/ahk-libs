@@ -10,6 +10,10 @@ ListLines Off
 
 UIAutomation := ImportTypeLib(A_WinDir "\System32\UIAutomationCore.dll")
 
+struct := new UIAutomation.tagRECT()
+struct.left := 16
+MsgBox % struct.left
+
 list := ""
 for field, value in UIAutomation.TreeScope
 	list .= "TreeScope." field " = " value "`n"
