@@ -15,3 +15,9 @@ GUID_IsGUIDString(str)
 {
 	return RegExMatch(str, "^\{[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\}$")
 }
+
+GUID_Create(byRef guid)
+{
+	VarSetCapacity(guid, 16, 00)
+	return DllCall("Ole32\CoCreateGuid", "Ptr", &guid, "Int")
+}
