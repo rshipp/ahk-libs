@@ -104,6 +104,46 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 		}
 	}
 
+	_NewEnum()
+	{
+		local hr, info, rcinfo, attr := 0, obj, names_array, varCount := -1, name := ""
+
+		obj := this["internal://enumerator-object"]
+		if(!IsObject(obj))
+		{
+			obj := this["internal://enumerator-object"] := {} ; create a storage object
+			rcinfo := this.base["internal://rcinfo-instance"]
+
+			; call GetFieldNames() with a NULL array pointer -> retrieve the total field count through "varCount"
+			hr := DllCall(NumGet(NumGet(rcinfo+0), 14 * A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt*", varCount, "Ptr", 0, "Int") ; IRecordInfo::GetFieldNames()
+			if (ITL_FAILED(hr) || varCount == -1)
+			{
+				throw Exception("IRecordInfo::GetFieldNames() failed.", -1, ITL_FormatError(hr))
+			}
+
+			VarSetCapacity(names_array, varCount * A_PtrSize, 00) ; allocate name array memory
+			; call it again, this time supplying a valid array pointer
+			hr := DllCall(NumGet(NumGet(rcinfo+0), 14 * A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt*", varCount, "Ptr", &names_array, "Int") ; IRecordInfo::GetFieldNames()
+			if (ITL_FAILED(hr))
+			{
+				throw Exception("IRecordInfo::GetFieldNames() failed.", -1, ITL_FormatError(hr))
+			}
+
+			Loop %varCount%
+			{
+				name := StrGet(NumGet(names_array, (A_Index - 1) * A_PtrSize, "Ptr"))
+				obj.Insert(name, this[name])
+			}
+		}
+
+		return ObjNewEnum(obj)
+	}
+
+	NewEnum()
+	{
+		return this._NewEnum()
+	}
+
 	GetSize()
 	{
 		local hr, size := -1, rcinfo := this["internal://rcinfo-instance"]
