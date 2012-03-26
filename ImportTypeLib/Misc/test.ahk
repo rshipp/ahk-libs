@@ -12,7 +12,10 @@ UIAutomation := ImportTypeLib(A_WinDir "\System32\UIAutomationCore.dll")
 
 struct := new UIAutomation.tagRECT()
 struct.left := 16
-MsgBox % "struct.left = " struct.left
+
+rect := struct.Clone()
+rect.bottom := 42
+struct.top := 9
 
 list := "TreeScope:`n"
 for field, value in UIAutomation.TreeScope
@@ -23,6 +26,9 @@ for field, value in UIAutomation.OrientationType
 list .= "`nstruct (tagRECT):`n"
 for field, value in struct
 	list .= "`tstruct." field " = " value "`n"
+list .= "`nrect (tagRECT):`n"
+for field, value in rect
+	list .= "`trect." field " = " value "`n"
 MsgBox % "Enumeration and structure fields:`n`n" list
 
 automation := new UIAutomation.IUIAutomation(new UIAutomation.CUIAutomation())

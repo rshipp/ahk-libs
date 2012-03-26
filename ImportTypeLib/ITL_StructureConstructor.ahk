@@ -1,4 +1,4 @@
-ITL_StructureConstructor(this, ptr = 0)
+ITL_StructureConstructor(this, ptr = 0, noInit = false)
 {
 	local hr, rcinfo := this.base["internal://rcinfo-instance"]
 
@@ -6,7 +6,7 @@ ITL_StructureConstructor(this, ptr = 0)
 	{
 		ptr := DllCall(NumGet(NumGet(rcinfo+0), 16*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr") ; IRecordInfo::RecordCreate()
 	}
-	else
+	else if (!noInit)
 	{
 		hr := DllCall(NumGet(NumGet(rcinfo+0), 03*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordInit()
 		if (ITL_FAILED(hr))

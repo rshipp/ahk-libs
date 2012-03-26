@@ -25,7 +25,7 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 					throw Exception("Creating a GUID failed.", -1, ITL_FormatError(hr))
 				}
 
-				hr := DllCall(NumGet(NumGet(createInfo+0), 03 * A_PtrSize, "Ptr"), "Ptr", createInfo, "Ptr", &guid, "Int") ; ICreateTypeInfo::SetGuid() - assign a GUID for the type
+				hr := DllCall(NumGet(NumGet(createInfo+0), 03*A_PtrSize, "Ptr"), "Ptr", createInfo, "Ptr", &guid, "Int") ; ICreateTypeInfo::SetGuid() - assign a GUID for the type
 				if (ITL_FAILED(hr))
 				{
 					throw Exception("ICreateTypeInfo::SetGUID() failed.", -1, ITL_FormatError(hr))
@@ -35,7 +35,7 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 			hr := DllCall("OleAut32\GetRecordInfoFromTypeInfo", "Ptr", typeInfo, "Ptr*", rcinfo, "Int") ; retrieve an IRecordInfo instance for a type
 			if (ITL_FAILED(hr) || !rcinfo)
 			{
-				throw Exception("GetRecordInfoFromTypeInfo() failed.", -1, ITL_FormatError(hr))
+				throw Exception("GetRecordInfoFromTypeInfo() failed for type """ this["internal://typeinfo-name"] """.", -1, ITL_FormatError(hr))
 			}
 			this["internal://rcinfo-instance"] := rcinfo
 
@@ -45,9 +45,10 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 
 	__Delete()
 	{
-		local hr, ptr, rcinfo := this["internal://rcinfo-instance"]
+		local hr, ptr, rcinfo
 		if (ptr := this["internal://type-instance"])
 		{
+			rcinfo := this.base["internal://rcinfo-instance"]
 			hr := DllCall(NumGet(NumGet(rcinfo+0), 18*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordDestroy()
 			if (ITL_FAILED(hr))
 			{
@@ -56,6 +57,7 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 		}
 		else
 		{
+			rcinfo := this["internal://rcinfo-instance"]
 			ObjRelease(rcinfo)
 		}
 	}
@@ -142,6 +144,27 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 	NewEnum()
 	{
 		return this._NewEnum()
+	}
+
+	_Clone()
+	{
+		local hr, rcinfo := this.base["internal://rcinfo-instance"], ptrNew := 0, ptrOld := this["internal://type-instance"], newObj
+
+		newObj := new this.base()
+		ptrNew := newObj["internal://type-instance"]
+
+		hr := DllCall(NumGet(NumGet(rcinfo+0), 05*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptrOld, "Ptr", ptrNew, "Int") ; IRecordInfo::RecordCopy()
+		if (ITL_FAILED(hr) || !ptrNew)
+		{
+			throw Exception("IRecordInfo::RecordCopy() failed.", -1, ITL_FormatError(hr))
+		}
+
+		return newObj ;new this.base(ptrNew, true)
+	}
+
+	Clone()
+	{
+		return this._Clone()
 	}
 
 	GetSize()
