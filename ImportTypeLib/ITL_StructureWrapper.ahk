@@ -159,7 +159,7 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 			throw Exception("IRecordInfo::RecordCopy() failed.", -1, ITL_FormatError(hr))
 		}
 
-		return newObj ;new this.base(ptrNew, true)
+		return newObj
 	}
 
 	Clone()

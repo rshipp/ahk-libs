@@ -33,12 +33,13 @@ class ITL_WrapperBaseClass
 
 	__Set(property, value)
 	{
-		return this["internal://data-storage"][property] := value
+		if (property != "base" && !RegExMatch(property, "^internal://"))
+			return this["internal://data-storage"][property] := value
 	}
 
 	__Get(property)
 	{
-		if (property != "base" && property != "internal://data-storage")
+		if (property != "base" && !RegExMatch(property, "^internal://"))
 			return this["internal://data-storage"][property]
 	}
 }
