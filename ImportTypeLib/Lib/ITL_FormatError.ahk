@@ -6,5 +6,5 @@
 	size := DllCall("FormatMessageW", "UInt", ALLOCATE_BUFFER|FROM_SYSTEM|IGNORE_INSERTS, "Ptr", 0, "UInt", hr, "UInt", 0, "Ptr*", bufaddr, "UInt", 0, "Ptr", 0)
 	msg := StrGet(bufaddr, size, "UTF-16")
 
-	return hr . " - " . msg
+	return hr . " - " . Trim(msg, " `t`r`n")
 }

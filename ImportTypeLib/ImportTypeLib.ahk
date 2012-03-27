@@ -16,13 +16,15 @@ ImportTypeLib(lib, version = "1.0")
 	{
 		if (!RegExMatch(version, "^(?P<Major>\d+)\.(?P<Minor>\d+)$", ver))
 		{
-			throw Exception("Invalid version specified: """ version """.", -1)
+			;throw Exception("Invalid version specified: """ version """.", -1)
+			throw Exception(ITL_FormatException("An invalid version was specified: """ version """.", "", ErrorLevel)*)
 		}
 
 		hr := ITL_GUID_FromString(lib, libid)
 		if (ITL_FAILED(hr))
 		{
-			throw Exception("LIBID could not be converted: """ lib """.", -1, ITL_FormatError(hr))
+			;throw Exception("LIBID could not be converted: """ lib """.", -1, ITL_FormatError(hr))
+			throw Exception(ITL_FormatException("Failed to load type library.", "LIBID """ lib """ could not be converted.", ErrorLevel, hr)*)
 		}
 
 		hr := DllCall("OleAut32\LoadRegTypeLib", "Ptr", &libid, "UShort", verMajor, "UShort", verMinor, "UInt", 0, "Ptr*", lib, "Int") ; error handling is done below
@@ -36,7 +38,8 @@ ImportTypeLib(lib, version = "1.0")
 
 	if (ITL_FAILED(hr) || !lib)
 	{
-		throw Exception("Loading of type library failed.", -1, ITL_FormatError(hr))
+		;throw Exception("Loading of type library failed.", -1, ITL_FormatError(hr))
+		throw Exception(ITL_FormatException("Failed to load type library.", "", ErrorLevel, hr, !lib, "Invalid ITypeLibrary pointer: " lib)*)
 	}
 	return new ITL_Wrapper.ITL_TypeLibWrapper(lib)
 }
@@ -48,6 +51,7 @@ ImportTypeLib(lib, version = "1.0")
 #include Lib\ITL_Mem.ahk
 #Include Lib\ITL_SUCCEEDED.ahk
 #include Lib\ITL_VARIANT.ahk
+#include Lib\ITL_FormatException.ahk
 
 #include ITL_CoClassConstructor.ahk
 #include ITL_AbstractClassConstructor.ahk

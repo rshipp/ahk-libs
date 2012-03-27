@@ -27,7 +27,11 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL_Wrapper.ITL_WrapperBaseClas
 				}
 				if (ITL_FAILED(hr) || varID == DISPID_UNKNOWN) ; recheck as the above "if" might have changed it
 				{
-					throw Exception("GetIDsOfNames() for """ field """ failed.", -1, ITL_FormatError(hr))
+					;throw Exception("GetIDsOfNames() for """ field """ failed.", -1, ITL_FormatError(hr))
+					throw Exception(ITL_FormatException("Failed to retrieve a constant field."
+													, "ITypeInfo::GetIDsOfNames() failed on """ field """."
+													, ErrorLevel, hr
+													, varID == DISPID_UNKNOWN, "Invalid DISPID: " varID)*)
 				}
 			}
 
@@ -35,20 +39,31 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL_Wrapper.ITL_WrapperBaseClas
 			hr := DllCall(NumGet(NumGet(info+0), 25*A_PtrSize, "Ptr"), "Ptr", info, "UInt", varID, "UInt*", index, "Int") ; ITypeInfo2::GetVarIndexOfMemId()
 			if (ITL_FAILED(hr) || index < 0)
 			{
-				throw Exception("GetVarIndexOfMemId() for """ field """ failed.", -1, ITL_FormatError(hr))
+				;throw Exception("GetVarIndexOfMemId() for """ field """ failed.", -1, ITL_FormatError(hr))
+				throw Exception(ITL_FormatException("Failed to retrieve a constant field."
+												, "ITypeInfo2::GetVarIndexOfMemId() failed on """ field """."
+												, ErrorLevel, hr
+												, index < 0, "Invalid VARDESC index: " index)*)
 			}
 
 			; now use the index to get the VARDESC structure:
 			hr := DllCall(NumGet(NumGet(info+0), 06*A_PtrSize, "Ptr"), "Ptr", info, "UInt", index, "Ptr*", varDesc, "Int") ; ITypeInfo::GetVarDesc()
 			if (ITL_FAILED(hr) || !varDesc)
 			{
-				throw Exception("VARDESC for """ field """ could not be read.", -1, ITL_FormatError(hr))
+				;throw Exception("VARDESC for """ field """ could not be read.", -1, ITL_FormatError(hr))
+				throw Exception(ITL_FormatException("Failed to retrieve a constant field."
+												, "ITypeInfo::GetVarDesc() failed on """ field """."
+												, ErrorLevel, hr
+												, !varDesc, "Invalid VARDESC pointer: " varDesc)*)
 			}
 
 			; check if it is actually a constant we can map (it is very unlikely / impossible that it's something different, yet check to be sure)
 			if (NumGet(1*varDesc, 04 + 7 * A_PtrSize, "UShort") != VARKIND_CONST) ; VARDESC::varkind
 			{
-				throw Exception("Cannot read non-constant member """ field """!", -1)
+				;throw Exception("Cannot read non-constant member """ field """!", -1)
+				throw Exception(ITL_FormatException("Failed to retrieve a constant field."
+												, "Field """ field """ is not constant!"
+												, ErrorLevel)*)
 			}
 
 			; get the VARIANT value out of the structure and get it's real value:
@@ -68,7 +83,10 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL_Wrapper.ITL_WrapperBaseClas
 		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
 			; throw an exception as setting constants is impossible
-			throw Exception("A field must not be set on this class!", -1)
+			;throw Exception("A field must not be set on this class!", -1)
+			throw Exception(ITL_FormatException("Failed to set constant field """ field """."
+											, "By definition, constant field cannot be set."
+											, ErrorLevel)*)
 		}
 	}
 
@@ -91,7 +109,11 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL_Wrapper.ITL_WrapperBaseClas
 			hr := DllCall(NumGet(NumGet(info+0), 03*A_PtrSize, "Ptr"), "Ptr", info, "Ptr*", attr, "Int") ; ITypeInfo::GetTypeAttr()
 			if (ITL_FAILED(hr) || !attr)
 			{
-				throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
+				;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
+				throw Exception(ITL_FormatException("Failed to enumerate constant fields of type """ typeName """."
+												, "ITypeInfo::GetTypeAttr() failed."
+												, ErrorLevel, hr
+												, !attr, "Invalid TYPEATTR pointer: " attr)*)
 			}
 			; get the count of variables from the attribute structure
 			varCount := NumGet(1*attr, 42+1*A_PtrSize, "UShort") ; TYPEATTR::cVars
@@ -105,13 +127,20 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL_Wrapper.ITL_WrapperBaseClas
 				hr := DllCall(NumGet(NumGet(info+0), 06*A_PtrSize, "Ptr"), "Ptr", info, "UInt", A_Index - 1, "Ptr*", varDesc, "Int") ; ITypeInfo::GetVarDesc()
 				if (ITL_FAILED(hr) || !varDesc)
 				{
-					throw Exception("VARDESC no. " A_Index - 1 " could not be read.", -1, ITL_FormatError(hr))
+					;throw Exception("VARDESC no. " A_Index - 1 " could not be read.", -1, ITL_FormatError(hr))
+					throw Exception(ITL_FormatException("Failed to enumerate constant fields of type """ typeName """."
+													, "ITypeInfo::GetVarDesc() failed on index " A_Index - 1 "."
+													, ErrorLevel, hr
+													, !varDesc, "Invalid VARDESC pointer: " varDesc)*)
 				}
 
 				; check if it is actually a constant we can map (it is very unlikely / impossible that it's something different, yet check to be sure)
 				if (NumGet(1*varDesc, 04 + 7 * A_PtrSize, "UShort") != VARKIND_CONST) ; VARDESC::varkind
 				{
-					throw Exception("Cannot read non-constant member """ field """!", -1)
+					;throw Exception("Cannot read non-constant member """ field """!", -1)
+					throw Exception(ITL_FormatException("Failed to enumerate constant fields of type """ typeName """."
+													, "Field  no. " A_Index - 1 " is not constant!"
+													, ErrorLevel)*)
 				}
 
 				; from the structure, get the variable member id:
@@ -121,7 +150,11 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL_Wrapper.ITL_WrapperBaseClas
 				hr := DllCall(NumGet(NumGet(info+0), 12*A_PtrSize, "Ptr"), "Ptr", info, "Int", varID, "Ptr*", pVarName, "Ptr", 0, "UInt", 0, "Ptr", 0, "Int") ; ITypeInfo::GetDocumentation()
 				if (ITL_FAILED(hr) || !pVarName)
 				{
-					throw Exception("GetDocumentation() failed.", -1, ITL_FormatError(hr))
+					;throw Exception("GetDocumentation() failed.", -1, ITL_FormatError(hr))
+					throw Exception(ITL_FormatException("Failed to enumerate constant fields of type """ typeName """."
+													, "ITypeInfo::GetDocumentation() failed on field no. " A_Index - 1 "."
+													, ErrorLevel, hr
+													, !pVarName, "Invalid name pointer: " pVarName)*)
 				}
 
 				; get the VARIANT out of the structure and retrieve its value:
