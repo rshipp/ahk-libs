@@ -214,4 +214,23 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 
 		return size
 	}
+
+	Clear()
+	{
+		local hr, rcinfo := this["internal://rcinfo-instance"], ptr := this["internal://type-instance"]
+		hr := DllCall(NumGet(NumGet(rcinfo+0), 04*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordClear()
+		if (ITL_Failed(hr))
+		{
+			throw Exception(ITL_FormatException("Failed to clear a structure instance."
+											, "IRecordInfo::RecordClear() failed."
+											, ErrorLevel, hr)*)
+		}
+		hr := DllCall(NumGet(NumGet(rcinfo+0), 03*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordInit()
+		if (ITL_Failed(hr))
+		{
+			throw Exception(ITL_FormatException("Failed to clear a structure instance."
+											, "RecordInit::RecordClear() failed."
+											, ErrorLevel, hr)*)
+		}
+	}
 }

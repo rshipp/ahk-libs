@@ -722,7 +722,7 @@ class ITL_InterfaceWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 				vt := NumGet(1*paramArray, (A_Index - 1) * (4*A_PtrSize) + A_PtrSize, "UShort") ; ELEMDESC[A_Index - 1]::tdesc::vt
 
 				ITL_VARIANT_Create(params[A_Index], variant) ; create VARIANT and put it in the array
-				, ITL_Mem_Copy(&variant, &rgvarg + (A_Index - 1) * sizeof_VARIANT, sizeof_VARIANT)
+				, ITL_Mem_Copy(&variant, &rgvarg + (paramCount - A_Index) * sizeof_VARIANT, sizeof_VARIANT)
 			}
 			NumPut(&rgvarg, dispparams, 00, "Ptr") ; DISPPARAMS::rgvarg - the pointer to the VARIANT array
 			NumPut(paramCount, dispparams, 2 * A_PtrSize, "UInt") ; DISPPARAMS::cArgs - the number of arguments passed
@@ -824,7 +824,7 @@ class ITL_InterfaceWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 		, sizeof_DISPPARAMS := 8 + 2 * A_PtrSize, sizeof_EXCEPINFO := 12 + 5 * A_PtrSize
 		, VT_UNKNOWN := 13, VT_DISPATCH := 9
 		, DISP_E_MEMBERNOTFOUND := -2147352573
-		local variant, dispparams, hr, info, dispid := DISPID_UNKNOWN, vt, instance, excepInfo, err_index, variant
+		local variant, dispparams, hr, info, dispid := DISPID_UNKNOWN, vt, instance, excepInfo, err_index := 0, variant
 
 		if (property != "base" && !RegExMatch(property, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
@@ -851,7 +851,7 @@ class ITL_InterfaceWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 			info := this["internal://typeinfo-instance"]
 			instance := this["internal://type-instance"]
 
-			; get MEMBERID for the method to be set:
+			; get MEMBERID for the property to be set:
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", property, "UInt", 1, "UInt*", dispid, "Int") ; ITypeInfo::GetIDsOfNames()
 			if (ITL_FAILED(hr) || dispid == DISPID_UNKNOWN) ; an error code was returned or the ID is invalid
 			{
@@ -868,7 +868,7 @@ class ITL_InterfaceWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 			if (vt == VT_DISPATCH || vt == VT_UNKNOWN)
 			{
 				; as with __Call, excepinfo is not yet used
-				hr := DllCall(NumGet(NumGet(info+0), 11*A_PtrSize, "Ptr"), "Ptr", info, "Ptr", instance, "UInt", dispid, "UShort", DISPATCH_PROPERTYPUTREF, "Ptr", &dispparams, "Ptr*", 0, "Ptr", &excepInfo, "UInt*", err_index, "Int") ; ITypeInfo::Invoke()
+				hr := DllCall(NumGet(NumGet(info+0), 11*A_PtrSize, "Ptr"), "Ptr", info, "Ptr", instance, "UInt", dispid, "UShort", DISPATCH_PROPERTYPUTREF, "Ptr", &dispparams, "Ptr", 0, "Ptr", &excepInfo, "UInt*", err_index, "Int") ; ITypeInfo::Invoke()
 				if (ITL_SUCCEEDED(hr))
 				{
 					return value ; return the original value to allow "a := obj.prop := value" and similar
@@ -1124,6 +1124,25 @@ class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
 		}
 
 		return size
+	}
+
+	Clear()
+	{
+		local hr, rcinfo := this["internal://rcinfo-instance"], ptr := this["internal://type-instance"]
+		hr := DllCall(NumGet(NumGet(rcinfo+0), 04*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordClear()
+		if (ITL_Failed(hr))
+		{
+			throw Exception(ITL_FormatException("Failed to clear a structure instance."
+											, "IRecordInfo::RecordClear() failed."
+											, ErrorLevel, hr)*)
+		}
+		hr := DllCall(NumGet(NumGet(rcinfo+0), 03*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordInit()
+		if (ITL_Failed(hr))
+		{
+			throw Exception(ITL_FormatException("Failed to clear a structure instance."
+											, "RecordInit::RecordClear() failed."
+											, ErrorLevel, hr)*)
+		}
 	}
 }
 class ITL_ModuleWrapper extends ITL_Wrapper.ITL_ConstantMemberWrapperBaseClass
