@@ -5,8 +5,8 @@ ListLines Off
 SetBatchLines -1
 SetWorkingDir %A_ScriptDir%\..
 
-FileDelete ITL.ahk
-FileAppend, % ProcessFile("ImportTypeLib.ahk"), ITL.ahk
+FileDelete ImportTypeLib.ahk
+FileAppend, % ProcessFile("Main.ahk"), ImportTypeLib.ahk
 MsgBox finished
 ExitApp
 

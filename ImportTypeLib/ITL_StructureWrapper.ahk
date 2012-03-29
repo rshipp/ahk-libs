@@ -1,11 +1,11 @@
-class ITL_StructureWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
+class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 {
 	__New(typeInfo, lib)
 	{
 		static GUID_NULL := "{00000000-0000-0000-0000-000000000000}", IID_ICreateTypeInfo := "{00020405-0000-0000-C000-000000000046}"
 		local Base, hr := 0x00, rcinfo := 0, guid:= 0
 
-		if (this != ITL_Wrapper.ITL_StructureWrapper)
+		if (this != ITL.ITL_StructureWrapper)
 		{
 			Base.__New(typeInfo, lib)
 

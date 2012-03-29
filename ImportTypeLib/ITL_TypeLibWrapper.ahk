@@ -8,14 +8,14 @@ class ITL_TypeLibWrapper
 
 		if (!IsObject(valid_typekinds)) ; init static field
 		{
-			 valid_typekinds := { (TYPEKIND_ENUM)		: ITL_Wrapper.ITL_EnumWrapper
-								, (TYPEKIND_RECORD)		: ITL_Wrapper.ITL_StructureWrapper
-								, (TYPEKIND_MODULE)		: ITL_Wrapper.ITL_ModuleWrapper
-								, (TYPEKIND_INTERFACE)	: ITL_Wrapper.ITL_InterfaceWrapper
-								, (TYPEKIND_COCLASS)	: ITL_Wrapper.ITL_CoClassWrapper }
+			 valid_typekinds := { (TYPEKIND_ENUM)		: ITL.ITL_EnumWrapper
+								, (TYPEKIND_RECORD)		: ITL.ITL_StructureWrapper
+								, (TYPEKIND_MODULE)		: ITL.ITL_ModuleWrapper
+								, (TYPEKIND_INTERFACE)	: ITL.ITL_InterfaceWrapper
+								, (TYPEKIND_COCLASS)	: ITL.ITL_CoClassWrapper }
 		 }
 
-		if (this != ITL_Wrapper.ITL_TypeLibWrapper)
+		if (this != ITL.ITL_TypeLibWrapper)
 		{
 			ObjInsert(this, "__New", Func("ITL_AbstractClassConstructor"))
 			this["internal://typelib-instance"] := lib
@@ -52,7 +52,7 @@ class ITL_TypeLibWrapper
 				typeName := this.GetName(A_Index - 1)
 				if (typeKind == TYPEKIND_ALIAS)
 				{
-					MsgBox %typeName% is an alias...
+					;MsgBox %typeName% is an alias...
 					hr := DllCall(NumGet(NumGet(typeInfo+0), 03*A_PtrSize, "Ptr"), "Ptr", typeInfo, "Ptr*", attr, "Int") ; ITypeInfo::GetTypeAttr()
 					if (ITL_FAILED(hr) || !attr)
 					{

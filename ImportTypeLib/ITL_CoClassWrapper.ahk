@@ -1,11 +1,11 @@
-class ITL_CoClassWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
+class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 {
 	__New(typeInfo, lib)
 	{
 		local hr, typeAttr := 0, implCount, implFlags := 0, implHref := -1, implInfo := 0, implAttr := 0, iid, Base
 		static IMPLTYPEFLAG_FDEFAULT := 1
 
-		if (this != ITL_Wrapper.ITL_CoClassWrapper)
+		if (this != ITL.ITL_CoClassWrapper)
 		{
 			Base.__New(typeInfo, lib)
 			ObjInsert(this, "__New", Func("ITL_CoClassConstructor"))

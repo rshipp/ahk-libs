@@ -5,7 +5,7 @@ class ITL_WrapperBaseClass
 		local hr, name := 0, typeInfo2
 		static IID_ITypeInfo2 := "{00020412-0000-0000-C000-000000000046}"
 
-		if (this != ITL_Wrapper.ITL_WrapperBaseClass)
+		if (this != ITL.ITL_WrapperBaseClass)
 		{
 			ObjInsert(this, "internal://data-storage", {})
 			this["internal://typelib-object"] := lib, ObjAddRef(lib)

@@ -1,6 +1,6 @@
 ; class: ITL_ConstantMemberWrapperBaseClass
 ; This is the base class for types that have constant variable members, i.e. enums and modules.
-class ITL_ConstantMemberWrapperBaseClass extends ITL_Wrapper.ITL_WrapperBaseClass
+class ITL_ConstantMemberWrapperBaseClass extends ITL.ITL_WrapperBaseClass
 {
 	; method: __Get
 	; gets the value of an enumeration field or module constant.

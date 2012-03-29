@@ -1,13 +1,13 @@
 ; class: ITL_InterfaceWrapper
 ; This class enwraps COM interfaces and provides the ability to call methods, set and retrieve properties.
-class ITL_InterfaceWrapper extends ITL_Wrapper.ITL_WrapperBaseClass
+class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 {
 	; method: __New
 	; This is the constructor for the wrapper, used by ITL_TypeLibWrapper.
 	__New(typeInfo, lib)
 	{
 		local Base
-		if (this != ITL_Wrapper.ITL_InterfaceWrapper)
+		if (this != ITL.ITL_InterfaceWrapper)
 		{
 			Base.__New(typeInfo, lib)
 			ObjInsert(this, "__New", Func("ITL_InterfaceConstructor")) ; change constructor for instances
