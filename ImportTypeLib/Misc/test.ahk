@@ -8,10 +8,10 @@ ListLines Off
 #include ..\
 #include Main.ahk
 
-std := ImportTypeLib("C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\StdOle2.Tlb")
-picDisp := ComObjCreate("StdPicture")
+;std := ImportTypeLib("C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\StdOle2.Tlb")
+;picDisp := ComObjCreate("StdPicture")
 
-MsgBox % "Return value: " ITL_FormatError(std.StdFunctions.SavePicture("Ptr", ComObjUnwrap(picDisp), "Str", A_Desktop "\test.jpg", "Int")) " - " ErrorLevel " - " A_LastError
+;MsgBox % "Return value: " ITL_FormatError(std.StdFunctions.SavePicture("Ptr", ComObjUnwrap(picDisp), "Str", A_Desktop "\test.jpg", "Int")) " - " ErrorLevel " - " A_LastError
 
 UIAutomation := ImportTypeLib(A_WinDir "\System32\UIAutomationCore.dll")
 
@@ -46,10 +46,10 @@ sleep 3000
 MouseGetPos,,,hwin
 
 request := new UIAutomation.IUIAutomationCacheRequest(automation.CreateCacheRequest())
-;MsgBox % "value: " request.TreeScope
-;request.TreeScope := UIAutomation.TreeScope.Children
+request.TreeScope := UIAutomation.TreeScope.Element|UIAutomation.TreeScope.Children
+MsgBox % "Set: " request.TreeScope " == " UIAutomation.TreeScope.Element|UIAutomation.TreeScope.Children
 
-elem := new UIAutomation.IUIAutomationElement(automation.ElementFromHandleBuildCache(ComObjParameter(0x4000, hwin), ComObjParameter(0xD, request["internal://type-instance"])))
+elem := new UIAutomation.IUIAutomationElement(automation.ElementFromHandleBuildCache(ComObjParameter(0x4000, hwin), ComObjParameter(0xD, request[ITL.Properties.INSTANCE_POINTER])))
 MsgBox % "The active window:`n`n" GetElementInfo(elem)
 
 GetElementInfo(elem)

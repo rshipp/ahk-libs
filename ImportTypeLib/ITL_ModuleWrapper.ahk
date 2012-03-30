@@ -16,13 +16,13 @@ class ITL_ModuleWrapper extends ITL.ITL_ConstantMemberWrapperBaseClass
 		static DISPID_UNKNOWN := -1, INVOKEKIND_FUNC := 1
 		local id := DISPID_UNKNOWN, hr := 0, addr := 0, info
 
-		info := this["internal://typeinfo-instance"]
+		info := this[ITL.Properties.TYPE_TYPEINFO]
 
 		hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", method, "UInt", INVOKEKIND_FUNC, "Ptr*", id, "Int") ; ITypeInfo::GetIDsOfNames()
 		if (ITL_FAILED(hr) || id == DISPID_UNKNOWN)
 		{
 			;throw Exception("GetIDsOfNames() for """ method "()"" failed.", -1, ITL_FormatError(hr))
-			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this[ITL.Properties.TYPE_NAME] """."
 											, "ITypeInfo::GetIDsOfNames() failed."
 											, ErrorLevel, hr
 											, id == DISPID_UNKNOWN, "Invalid DISPID: " id)*)
@@ -32,7 +32,7 @@ class ITL_ModuleWrapper extends ITL.ITL_ConstantMemberWrapperBaseClass
 		if (ITL_FAILED(hr) || !addr)
 		{
 			;throw Exception("AddressOfMember() for """ method "()"" failed.", -1, ITL_FormatError(hr))
-			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this[ITL.Properties.TYPE_NAME] """."
 											, "ITypeInfo::AddressOfMember() failed."
 											, ErrorLevel, hr
 											, !addr, "Invalid member address: " addr)*)

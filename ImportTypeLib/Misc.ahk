@@ -25,7 +25,7 @@ ITL_CreateStructureSafeArray(type, dims*)
 										, ErrorLevel)*)
 
 	arr := ComObjArray(VT_RECORD, dims*)
-	hr := DllCall("OleAut32\SafeArraySetRecordInfo", "Ptr", ComObjValue(arr), "Ptr", type["internal://rcinfo-instance"], "Int")
+	hr := DllCall("OleAut32\SafeArraySetRecordInfo", "Ptr", ComObjValue(arr), "Ptr", type[ITL.Properties.TYPE_RECORDINFO], "Int")
 	if (ITL_FAILED(hr))
 		throw Exception(ITL_FormatException("Failed to create a structure SAFEARRAY."
 										, "Could not set IRecordInfo."
@@ -37,7 +37,7 @@ ITL_CreateStructureSafeArray(type, dims*)
 ; for structures and interfaces
 ITL_GetInstancePointer(instance)
 {
-	return instance["internal://type-instance"]
+	return instance[ITL.Properties.INSTANCE_POINTER]
 }
 
 ITL_CreateStructureArray(type, count)

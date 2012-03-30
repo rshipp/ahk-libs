@@ -11,7 +11,6 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 		{
 			Base.__New(typeInfo, lib)
 			ObjInsert(this, "__New", Func("ITL_InterfaceConstructor")) ; change constructor for instances
-			this["internal://interface-iid"] := lib.GetGUID(typeInfo, false, true) ; save IID
 		}
 	}
 
@@ -28,8 +27,8 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 		local paramCount, dispparams, rgvarg := 0, hr, info, dispid := DISPID_UNKNOWN, instance, excepInfo, err_index, result, variant, index := -1, funcdesc := 0, vt ;, fn
 
 		paramCount := params.maxIndex() > 0 ? params.maxIndex() : 0 ; the ternary is necessary, otherwise it would hold an empty string, causing calculations to fail
-		info := this["internal://typeinfo-instance"]
-		instance := this["internal://type-instance"]
+		, info := this.base[ITL.Properties.TYPE_TYPEINFO]
+		, instance := this[ITL.Properties.INSTANCE_POINTER]
 
 		; init structures
 		if (VarSetCapacity(dispparams, sizeof_DISPPARAMS, 00) != sizeof_DISPPARAMS)
@@ -153,7 +152,7 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 		, sizeof_DISPPARAMS := 8 + 2 * A_PtrSize, sizeof_EXCEPINFO := 12 + 5 * A_PtrSize, sizeof_VARIANT := 8 + 2 * A_PtrSize
 		local dispparams, hr, info, dispid := DISPID_UNKNOWN, instance, excepInfo, err_index, result
 
-		if (property != "base" && !RegExMatch(property, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		if (property != "base" && !ITL.Properties.IsInternalProperty(property)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
 			; init structures
 			if (VarSetCapacity(dispparams, sizeof_DISPPARAMS, 00) != sizeof_DISPPARAMS)
@@ -172,8 +171,8 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 				throw Exception(ITL_FormatException("Out of memory", "Memory allocation for EXCEPINFO failed.", ErrorLevel)*)
 			}
 
-			info := this["internal://typeinfo-instance"]
-			instance := this["internal://type-instance"]
+			info := this.base[ITL.Properties.TYPE_TYPEINFO]
+			, instance := this[ITL.Properties.INSTANCE_POINTER]
 
 			; get MEMBERID for the method to be retrieved:
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", property, "UInt", 1, "UInt*", dispid, "Int") ; ITypeInfo::GetIDsOfNames()
@@ -206,13 +205,17 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 	{
 		; code inspired by AutoHotkey_L source (script_com.cpp)
 		static DISPATCH_PROPERTYPUTREF := 0x8, DISPATCH_PROPERTYPUT := 0x4
-		, DISPID_UNKNOWN := -1, DISPID_PROPERTYPUT := -3
+		, DISPID_UNKNOWN := -1, DISPID_PROPERTYPUT := ""
 		, sizeof_DISPPARAMS := 8 + 2 * A_PtrSize, sizeof_EXCEPINFO := 12 + 5 * A_PtrSize
 		, VT_UNKNOWN := 13, VT_DISPATCH := 9
 		, DISP_E_MEMBERNOTFOUND := -2147352573
 		local variant, dispparams, hr, info, dispid := DISPID_UNKNOWN, vt, instance, excepInfo, err_index := 0, variant
 
-		if (property != "base" && !RegExMatch(property, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		; need to store it that way as AHK integers are __int64 and therefore too large
+		if (!DISPID_PROPERTYPUT)
+			VarSetCapacity(DISPID_PROPERTYPUT, 4, 0), NumPut(-3, DISPID_PROPERTYPUT, 00, "Int")
+
+		if (property != "base" && !ITL.Properties.IsInternalProperty(property)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
 			; init structures
 			if (VarSetCapacity(dispparams, sizeof_DISPPARAMS, 00) != sizeof_DISPPARAMS)
@@ -234,8 +237,8 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 			NumPut(&DISPID_PROPERTYPUT, dispparams, A_PtrSize, "Ptr") ; DISPPARAMS::rgdispidNamedArgs - indicate a property is being set
 			NumPut(1, dispparams, 2 * A_PtrSize + 4, "UInt") ; DISPPARAMS::cNamedArgs
 
-			info := this["internal://typeinfo-instance"]
-			instance := this["internal://type-instance"]
+			info := this.base[ITL.Properties.TYPE_TYPEINFO]
+			, instance := this[ITL.Properties.INSTANCE_POINTER]
 
 			; get MEMBERID for the property to be set:
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", property, "UInt", 1, "UInt*", dispid, "Int") ; ITypeInfo::GetIDsOfNames()

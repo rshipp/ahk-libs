@@ -7,8 +7,7 @@ class ITL_WrapperBaseClass
 
 		if (this != ITL.ITL_WrapperBaseClass)
 		{
-			ObjInsert(this, "internal://data-storage", {})
-			this["internal://typelib-object"] := lib, ObjAddRef(lib)
+			this[ITL.Properties.TYPE_TYPELIBOBJ] := lib, ObjAddRef(lib[ITL.Properties.LIB_TYPELIB])
 
 			hr := DllCall(NumGet(NumGet(typeInfo+0), 12*A_PtrSize, "Ptr"), "Ptr", typeInfo, "Int", -1, "Ptr*", name, "Ptr*", 0, "UInt*", 0, "Ptr*", 0, "Int") ; ITypeInfo::GetDocumentation()
 			if (ITL_FAILED(hr) || !name)
@@ -20,7 +19,8 @@ class ITL_WrapperBaseClass
 												, !name, "Invalid name pointer: " name)*)
 			}
 
-			this["internal://typeinfo-name"] := StrGet(name, "UTF-16")
+			this[ITL.Properties.TYPE_NAME] := StrGet(name, "UTF-16")
+			this[ITL.Properties.TYPE_GUID] := lib.GetGUID(typeInfo, false, true)
 
 			typeInfo2 := ComObjQuery(typeInfo, IID_ITypeInfo2)
 			if (!typeInfo2)
@@ -31,25 +31,13 @@ class ITL_WrapperBaseClass
 												, ErrorLevel, ""
 												, !typeInfo2, "Invalid ITypeInfo2 pointer returned by ComObjQuery() : " typeInfo2)*)
 			}
-			this["internal://typeinfo-instance"] := typeInfo2, ObjAddRef(typeInfo2)
+			this[ITL.Properties.TYPE_TYPEINFO] := typeInfo2, ObjAddRef(typeInfo2)
 		}
 	}
 
 	__Delete()
 	{
-		ObjRelease(this["internal://typelib-object"])
-		, ObjRelease(this["internal://typeinfo-instance"])
-	}
-
-	__Set(property, value)
-	{
-		if (property != "base" && !RegExMatch(property, "^internal://"))
-			return this["internal://data-storage"][property] := value
-	}
-
-	__Get(property)
-	{
-		if (property != "base" && !RegExMatch(property, "^internal://"))
-			return this["internal://data-storage"][property]
+		ObjRelease(this[ITL.Properties.TYPE_TYPELIBOBJ][ITL.Properties.LIB_TYPELIB])
+		, ObjRelease(this[ITL.Properties.TYPE_TYPEINFO])
 	}
 }

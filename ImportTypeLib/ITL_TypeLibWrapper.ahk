@@ -4,7 +4,7 @@ class ITL_TypeLibWrapper
 	{
 		static valid_typekinds := "", VT_USERDEFINED := 29, MEMBERID_NIL := -1
 			, TYPEKIND_ENUM := 0, TYPEKIND_RECORD := 1, TYPEKIND_MODULE := 2, TYPEKIND_INTERFACE := 3, TYPEKIND_COCLASS := 5, TYPEKIND_ALIAS := 6
-		local typeKind := -1, hr, typeName, obj, typeInfo := 0, attr := 0, vt, mappings := [], refInfo := 0, hrefType, refAttr := 0, refKind
+		local typeKind := -1, hr, typeName, obj, typeInfo := 0, attr := 0, vt, mappings := [], refInfo := 0, hrefType, refAttr := 0, refKind, typeLibName
 
 		if (!IsObject(valid_typekinds)) ; init static field
 		{
@@ -18,8 +18,8 @@ class ITL_TypeLibWrapper
 		if (this != ITL.ITL_TypeLibWrapper)
 		{
 			ObjInsert(this, "__New", Func("ITL_AbstractClassConstructor"))
-			this["internal://typelib-instance"] := lib
-			this["internal://typelib-name"] := this.GetName()
+			this[ITL.Properties.LIB_TYPELIB] := lib
+			typeLibName := this[ITL.Properties.LIB_NAME] := this.GetName()
 
 			Loop % DllCall(NumGet(NumGet(lib+0), 03*A_PtrSize, "Ptr"), "Ptr", lib, "Int") ; ITypeLib::GetTypeInfoCount()
 			{
@@ -27,7 +27,7 @@ class ITL_TypeLibWrapper
 				if (ITL_FAILED(hr) || typeKind == -1)
 				{
 					;throw Exception("Type information kind no. " A_Index - 1 " could not be read.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "Type information kind no. " A_Index - 1 " could not be read."
 													, ErrorLevel, hr
 													, typeKind == -1, "Invalid TYPEKIND: " typeKind)*)
@@ -43,7 +43,7 @@ class ITL_TypeLibWrapper
 				if (ITL_FAILED(hr) || !typeInfo)
 				{
 					;throw Exception("Type information no. " A_Index - 1 " could not be read.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "Type information no. " A_Index - 1 " could not be read."
 													, ErrorLevel, hr
 													, !typeInfo, "Invalid ITypeInfo pointer: " typeInfo)*)
@@ -57,7 +57,7 @@ class ITL_TypeLibWrapper
 					if (ITL_FAILED(hr) || !attr)
 					{
 						;throw Exception("ITypeInfo::GetTypeAttr() failed.", -1, ITL_FormatError(hr))
-						throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+						throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 														, "ITypeInfo::GetTypeAttr() for type """ typeName """ failed."
 														, ErrorLevel, hr
 														, !attr, "Invalid TYPEATTR pointer: " attr)*)
@@ -71,7 +71,7 @@ class ITL_TypeLibWrapper
 						if (ITL_FAILED(hr) || !refInfo)
 						{
 							;throw Exception("ITypeInfo::GetRefTypeInfo() failed.", -1, ITL_FormatError(hr))
-							throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+							throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 															, "ITypeInfo::GetRefTypeInfo() for type """ typeName """ failed."
 															, ErrorLevel, hr
 															, !refInfo, "Invalid ITypeInfo pointer: " refInfo)*)
@@ -81,7 +81,7 @@ class ITL_TypeLibWrapper
 						if (ITL_FAILED(hr) || !refAttr)
 						{
 							;throw Exception("ITypeInfo::GetTypeAttr() failed.", -1, ITL_FormatError(hr))
-							throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+							throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 															, "ITypeInfo::GetTypeAttr() for type """ typeName """ failed."
 															, ErrorLevel, hr
 															, !refAttr, "Invalid TYPEATTR pointer: " refAttr)*)
@@ -115,7 +115,7 @@ class ITL_TypeLibWrapper
 				if (ITL_FAILED(hr) || !typeName)
 				{
 					;throw Exception("ITypeInfo::GetDocumentation() failed.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "ITypeInfo::GetDocumentation() for an alias failed."
 													, ErrorLevel, hr
 													, !typeName, "Invalid type name pointer: " typeName)*)
@@ -130,7 +130,7 @@ class ITL_TypeLibWrapper
 	{
 		local hr, name := 0, lib
 
-		lib := this["internal://typelib-instance"]
+		lib := this[ITL.Properties.LIB_TYPELIB]
 		hr := DllCall(NumGet(NumGet(lib+0), 09*A_PtrSize, "Ptr"), "Ptr", lib, "UInt", index, "Ptr*", name, "Ptr*", 0, "UInt*", 0, "Ptr*", 0, "Int") ; ITypeLib::GetDocumentation()
 		if (ITL_FAILED(hr) || !name)
 		{
@@ -148,14 +148,26 @@ class ITL_TypeLibWrapper
 	{
 		local hr, guid, lib, info, attr := 0, result
 
-		lib := this["internal://typelib-instance"]
+		lib := this[ITL.Properties.LIB_TYPELIB]
 		if obj is not integer
 		{
 			if (!IsObject(obj)) ; it's a string, a field name
 				obj := this[obj]
 
 			if (IsObject(obj)) ; a field, either passed directly or via name
-				info := obj["internal://typeinfo-instance"]
+			{
+				if obj[ITL.Properties.TYPE_GUID] ; if it's already stored, do not retrieve it again
+				{
+					if (!returnRaw)
+						return obj[ITL.Properties.TYPE_GUID]
+
+					guid := ITL_Mem_Allocate(16)
+					, ITL_GUID_FromString(obj[ITL.Properties.TYPE_GUID], attr)
+					, ITL_Mem_Copy(&attr, guid, 16)
+					return guid
+				}
+				info := obj[ITL.Properties.TYPE_TYPEINFO]
+			}
 			else
 			{
 				;throw Exception("Field could not be retrieved.", -1)

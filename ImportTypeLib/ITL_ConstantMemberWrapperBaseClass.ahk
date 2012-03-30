@@ -9,10 +9,10 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL.ITL_WrapperBaseClass
 		static VARKIND_CONST := 2, DISPID_UNKNOWN := -1
 		local hr, info, typeName, varID := DISPID_UNKNOWN, index := -1, varDesc := 0, varValue := ""
 
-		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		if (field != "base" && !ITL.Properties.IsInternalProperty(field)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
-			info := this["internal://typeinfo-instance"]
-			typeName := this["internal://typeinfo-name"]
+			info := this[ITL.Properties.TYPE_TYPEINFO]
+			typeName := this[ITL.Properties.TYPE_NAME]
 
 			; get the member id for the given field name
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", field, "UInt", 1, "UInt*", varID, "Int") ; ITypeInfo::GetIDsOfNames()
@@ -80,7 +80,7 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL.ITL_WrapperBaseClass
 	; throws an error if an attempt is made to change a constant value
 	__Set(field, params*)
 	{
-		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		if (field != "base" && !ITL.Properties.IsInternalProperty(field)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
 			; throw an exception as setting constants is impossible
 			;throw Exception("A field must not be set on this class!", -1)
@@ -98,12 +98,12 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL.ITL_WrapperBaseClass
 		local hr, typeName, info, obj, attr := 0, varCount, varDesc := 0, varID, pVarName := 0, varValue
 
 		; only loop through the members once, since the constant values won't change
-		obj := this["internal://enumerator-object"]
+		obj := this[ITL.Properties.TYPE_ENUMERATOR]
 		if (!IsObject(obj)) ; if this is the first iteration
 		{
-			obj := this["internal://enumerator-object"] := {} ; create a storage object
-			typeName := this["internal://typeinfo-name"]
-			info := this["internal://typeinfo-instance"]
+			obj := this[ITL.Properties.TYPE_ENUMERATOR] := {} ; create a storage object
+			typeName := this[ITL.Properties.TYPE_NAME]
+			info := this[ITL.Properties.TYPE_TYPEINFO]
 
 			; get some attributes of the type
 			hr := DllCall(NumGet(NumGet(info+0), 03*A_PtrSize, "Ptr"), "Ptr", info, "Ptr*", attr, "Int") ; ITypeInfo::GetTypeAttr()

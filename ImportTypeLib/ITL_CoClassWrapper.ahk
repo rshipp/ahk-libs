@@ -8,8 +8,8 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 		if (this != ITL.ITL_CoClassWrapper)
 		{
 			Base.__New(typeInfo, lib)
-			ObjInsert(this, "__New", Func("ITL_CoClassConstructor"))
-			this["internal://class-clsid"] := lib.GetGUID(typeInfo, false, true)
+			, ObjInsert(this, "__New", Func("ITL_CoClassConstructor"))
+			, typeName := this[ITL.Properties.TYPE_NAME]
 
 			; get default interface:
 			; =======================================
@@ -17,7 +17,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 			if (ITL_FAILED(hr) || !typeAttr)
 			{
 				;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
-				throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+				throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 												, "ITypeInfo::GetTypeAttr() failed."
 												, ErrorLevel, hr
 												, !typeAttr, "Invalid TYPEATTR pointer: " typeAttr)*)
@@ -30,7 +30,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 				if (ITL_FAILED(hr))
 				{
 					;throw Exception("ImplTypeFlags could not be read.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+					throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetImplTypeFlags() failed."
 														, ErrorLevel, hr)*)
 				}
@@ -40,7 +40,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					if (ITL_FAILED(hr) || implHref == -1)
 					{
 						;throw Exception("GetRefTypeOfImplType failed.", -1, ITL_FormatError(hr))
-						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetRefTypeOfImplType() failed."
 														, ErrorLevel, hr
 														, implHref == -1, "Invalid HREFTYPE: " implHref)*)
@@ -50,7 +50,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					if (ITL_FAILED(hr) || !implInfo)
 					{
 						;throw Exception("GetRefTypeInfo failed.", -1, ITL_FormatError(hr))
-						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetRefTypeInfo() failed."
 														, ErrorLevel, hr
 														, !implInfo, "Invalid ITypeInfo pointer: " implInfo)*)
@@ -60,7 +60,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					if (ITL_FAILED(hr) || !implAttr)
 					{
 						;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
-						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetTypeAttr() failed."
 														, ErrorLevel, hr
 														, !implAttr, "Invalid TYPEATTR pointer: " implAttr)*)
@@ -68,7 +68,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 
 					VarSetCapacity(iid, 16, 00)
 					ITL_Mem_Copy(implAttr, &iid, 16) ; TYPEATTR::guid
-					this["internal://default-iid"] := ITL_GUID_ToString(&iid)
+					this[ITL.Properties.TYPE_DEFAULTINTERFACE] := ITL_GUID_ToString(&iid)
 
 					DllCall(NumGet(NumGet(implInfo+0), 19*A_PtrSize, "Ptr"), "Ptr", implInfo, "Ptr", implAttr) ; ITypeInfo::ReleaseTypeAttr()
 					break

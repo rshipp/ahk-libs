@@ -1,15 +1,16 @@
 ITL_CoClassConstructor(this, iid = 0)
 {
 	static IMPLTYPEFLAG_FDEFAULT := 1
-	local info, typeAttr := 0, hr, iid_mem, instance := 0
+	local info, typeAttr := 0, hr, iid_mem, instance := 0, typeName
 
-	info := this.base["internal://typeinfo-instance"]
+	info := this.base[ITL.Properties.TYPE_TYPEINFO]
+	typeName := this.base[ITL.Properties.TYPE_NAME]
 
 	hr := DllCall(NumGet(NumGet(info+0), 03*A_PtrSize, "Ptr"), "Ptr", info, "Ptr*", typeAttr, "Int") ; ITypeInfo::GetTypeAttr()
 	if (ITL_FAILED(hr) || !typeAttr)
 	{
 		;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
-		throw Exception(ITL_FormatException("Failed to create an instance of the class """ this.base["internal://typeinfo-name"] """."
+		throw Exception(ITL_FormatException("Failed to create an instance of the class """ typeName """."
 										, "ITypeInfo::GetTypeAttr() failed."
 										, ErrorLevel, hr
 										, !typeAttr, "Invalid TYPEATTR pointer: " typeAttr)*)
@@ -17,11 +18,11 @@ ITL_CoClassConstructor(this, iid = 0)
 
 	if (!iid)
 	{
-		iid := this.base["internal://default-iid"] ; get coclass default interface
+		iid := this.base[ITL.Properties.TYPE_DEFAULTINTERFACE] ; get coclass default interface
 		if (!iid) ; there's no default interface
 		{
 			;throw Exception("An IID must be specified to create an instance of this class.", -1)
-			throw Exception(ITL_FormatException("Failed to create an instance of the class """ this.base["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to create an instance of the class """ typeName """."
 											, "An IID must be specified to create an instance of this class."
 											, ErrorLevel)*)
 		}
@@ -31,7 +32,7 @@ ITL_CoClassConstructor(this, iid = 0)
 	if (ITL_FAILED(hr))
 	{
 		;throw Exception("GUID could not be converted.", -1, ITL_FormatError(hr))
-		throw Exception(ITL_FormatException("Failed to create an instance of the class """ this.base["internal://typeinfo-name"] """."
+		throw Exception(ITL_FormatException("Failed to create an instance of the class """ typeName """."
 										, "The IID """ iid """ could not be converted."
 										, ErrorLevel, hr)*)
 	}
@@ -41,7 +42,7 @@ ITL_CoClassConstructor(this, iid = 0)
 	if (ITL_FAILED(hr) || !instance)
 	{
 		;throw Exception("CreateInstance failed.", -1, ITL_FormatError(hr))
-		throw Exception(ITL_FormatException("Failed to create an instance of the class """ this.base["internal://typeinfo-name"] """."
+		throw Exception(ITL_FormatException("Failed to create an instance of the class """ typeName """."
 										, "ITypeInfo::CreateInstance() failed."
 										, ErrorLevel, hr
 										, !instance, "Invalid instance pointer: " instance)*)
