@@ -3,12 +3,12 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 	__New(typeInfo, lib)
 	{
 		static GUID_NULL := "{00000000-0000-0000-0000-000000000000}", IID_ICreateTypeInfo := "{00020405-0000-0000-C000-000000000046}"
-		local Base, hr := 0x00, rcinfo := 0, guid:= 0
+		local Base, hr := 0x00, rcinfo := 0, guid:= 0, createInfo, guid, typeName
 
 		if (this != ITL.ITL_StructureWrapper)
 		{
 			Base.__New(typeInfo, lib)
-			typeName := this[ITL.Properties.TYPE_NAME]
+			, typeName := this[ITL.Properties.TYPE_NAME]
 
 			; If there's no GUID specified, this would cause GetRecordInfoFromTypeInfo() to fail
 			; So we're trying to add a random-generated GUID just to keep it satisfied.
@@ -88,24 +88,34 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 		if (field != "base" && !ITL.Properties.IsInternalProperty(field)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
 			ptr := this[ITL.Properties.INSTANCE_POINTER]
-			, rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO]
-
-			if (VarSetCapacity(variant, sizeof_VARIANT, 00) != sizeof_VARIANT)
+			if (ptr)
 			{
-				;throw Exception("Out of memory.", -1)
-				throw Exception(ITL_FormatException("Out of memory.", "Memory allocation for VARIANT failed.", ErrorLevel)*)
-			}
+				rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO]
 
-			hr := DllCall(NumGet(NumGet(rcinfo+0), 10*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::GetField()
-			if (ITL_FAILED(hr))
+				if (VarSetCapacity(variant, sizeof_VARIANT, 00) != sizeof_VARIANT)
+				{
+					;throw Exception("Out of memory.", -1)
+					throw Exception(ITL_FormatException("Out of memory.", "Memory allocation for VARIANT failed.", ErrorLevel)*)
+				}
+
+				hr := DllCall(NumGet(NumGet(rcinfo+0), 10*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::GetField()
+				if (ITL_FAILED(hr))
+				{
+					;throw Exception("GetField() failed.", -1, ITL_FormatError(hr))
+					throw Exception(ITL_FormatException("Failed to retrieve a structure field."
+													, "IRecordInfo::GetField() failed for field """ field """ on type """ this.base[ITL.Properties.TYPE_NAME] """."
+													, ErrorLevel, hr)*)
+				}
+
+				return ITL_VARIANT_GetValue(&variant)
+			}
+			else if field is integer
 			{
-				;throw Exception("GetField() failed.", -1, ITL_FormatError(hr))
-				throw Exception(ITL_FormatException("Failed to retrieve a structure field."
-												, "IRecordInfo::GetField() failed for field """ field """ on type """ this.base[ITL.Properties.TYPE_NAME] """."
-												, ErrorLevel, hr)*)
+				if (field > 0)
+				{
+					return new ITL.ITL_StructureArray(this, field)
+				}
 			}
-
-			return ITL_VARIANT_GetValue(&variant)
 		}
 	}
 

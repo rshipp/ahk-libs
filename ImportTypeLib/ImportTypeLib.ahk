@@ -186,15 +186,16 @@ ITL_FormatException(msg, detail, error, hr = "", special = false, special_msg = 
 ITL_CoClassConstructor(this, iid = 0)
 {
 	static IMPLTYPEFLAG_FDEFAULT := 1
-	local info, typeAttr := 0, hr, iid_mem, instance := 0
+	local info, typeAttr := 0, hr, iid_mem, instance := 0, typeName
 
-	info := this.base["internal://typeinfo-instance"]
+	info := this.base[ITL.Properties.TYPE_TYPEINFO]
+	typeName := this.base[ITL.Properties.TYPE_NAME]
 
 	hr := DllCall(NumGet(NumGet(info+0), 03*A_PtrSize, "Ptr"), "Ptr", info, "Ptr*", typeAttr, "Int") ; ITypeInfo::GetTypeAttr()
 	if (ITL_FAILED(hr) || !typeAttr)
 	{
 		;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
-		throw Exception(ITL_FormatException("Failed to create an instance of the class """ this.base["internal://typeinfo-name"] """."
+		throw Exception(ITL_FormatException("Failed to create an instance of the class """ typeName """."
 										, "ITypeInfo::GetTypeAttr() failed."
 										, ErrorLevel, hr
 										, !typeAttr, "Invalid TYPEATTR pointer: " typeAttr)*)
@@ -202,11 +203,11 @@ ITL_CoClassConstructor(this, iid = 0)
 
 	if (!iid)
 	{
-		iid := this.base["internal://default-iid"] ; get coclass default interface
+		iid := this.base[ITL.Properties.TYPE_DEFAULTINTERFACE] ; get coclass default interface
 		if (!iid) ; there's no default interface
 		{
 			;throw Exception("An IID must be specified to create an instance of this class.", -1)
-			throw Exception(ITL_FormatException("Failed to create an instance of the class """ this.base["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to create an instance of the class """ typeName """."
 											, "An IID must be specified to create an instance of this class."
 											, ErrorLevel)*)
 		}
@@ -216,7 +217,7 @@ ITL_CoClassConstructor(this, iid = 0)
 	if (ITL_FAILED(hr))
 	{
 		;throw Exception("GUID could not be converted.", -1, ITL_FormatError(hr))
-		throw Exception(ITL_FormatException("Failed to create an instance of the class """ this.base["internal://typeinfo-name"] """."
+		throw Exception(ITL_FormatException("Failed to create an instance of the class """ typeName """."
 										, "The IID """ iid """ could not be converted."
 										, ErrorLevel, hr)*)
 	}
@@ -226,7 +227,7 @@ ITL_CoClassConstructor(this, iid = 0)
 	if (ITL_FAILED(hr) || !instance)
 	{
 		;throw Exception("CreateInstance failed.", -1, ITL_FormatError(hr))
-		throw Exception(ITL_FormatException("Failed to create an instance of the class """ this.base["internal://typeinfo-name"] """."
+		throw Exception(ITL_FormatException("Failed to create an instance of the class """ typeName """."
 										, "ITypeInfo::CreateInstance() failed."
 										, ErrorLevel, hr
 										, !instance, "Invalid instance pointer: " instance)*)
@@ -240,20 +241,20 @@ ITL_CoClassConstructor(this, iid = 0)
 ITL_AbstractClassConstructor(this, p*)
 {
 	;throw Exception("An instance of the class """ this.__class """ must not be created.", -1)
-	throw Exception(ITL_FormatException("An instance of the class """ this.__class """ must not be created."
+	throw Exception(ITL_FormatException("An instance of the class """ this.base.__class """ must not be created."
 										, "The class is abstract."
 										, 0)*)
 }
 ITL_StructureConstructor(this, ptr = 0, noInit = false)
 {
-	local hr, rcinfo := this.base["internal://rcinfo-instance"]
+	local hr, rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO]
 
 	if (!ptr)
 	{
 		ptr := DllCall(NumGet(NumGet(rcinfo+0), 16*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr") ; IRecordInfo::RecordCreate()
 		if (!ptr)
 		{
-			throw Exception(ITL_FormatException("Failed to create an instance of the """ this.base["internal://typeinfo-name"] """ structure."
+			throw Exception(ITL_FormatException("Failed to create an instance of the """ this.base[ITL.Properties.TYPE_NAME] """ structure."
 											, "IRecordInfo::RecordCreate() failed."
 											, ErrorLevel, ""
 											, !ptr, "Invalid instance pointer: " ptr)*)
@@ -265,31 +266,31 @@ ITL_StructureConstructor(this, ptr = 0, noInit = false)
 		if (ITL_FAILED(hr))
 		{
 			;throw Exception("RecordInit() failed.", -1, ITL_FormatError(hr))
-			throw Exception(ITL_FormatException("Failed create an instance of the """ this.base["internal://typeinfo-name"] """ structure."
+			throw Exception(ITL_FormatException("Failed create an instance of the """ this.base[ITL.Properties.TYPE_NAME] """ structure."
 											, "IRecordInfo::RecordInit() failed."
 											, ErrorLevel, hr)*)
 		}
 	}
 
-	this["internal://type-instance"] := ptr
+	this[ITL.Properties.INSTANCE_POINTER] := ptr
 }
 ITL_InterfaceConstructor(this, instance)
 {
 	local interfacePtr
 	if (!instance)
 	{
-		throw Exception("An instance of abstract type " this.__class " must not be created without supplying a valid instance pointer.", -1)
+		throw Exception("An instance of abstract type " this.base.__class " must not be created without supplying a valid instance pointer.", -1)
 	}
-	interfacePtr := ComObjQuery(instance, this["internal://interface-iid"])
+	interfacePtr := ComObjQuery(instance, this.base[ITL.Properties.TYPE_GUID])
 	if (!interfacePtr)
 	{
 		;throw Exception("This interface is not supported by the given class instance.", -1)
-		throw Exception(ITL_FormatException("Failed to create an instance of interface """ this.base["internal://typeinfo-name"] """."
+		throw Exception(ITL_FormatException("Failed to create an instance of interface """ this.base[ITL.Properties.TYPE_NAME] """."
 										, "The interface is not supported by the given class instance."
 										, ErrorLevel, ""
 										, !interfacePtr, "Invalid pointer returned by ComObjQuery() : " interfacePtr)*)
 	}
-	this["internal://type-instance"] := interfacePtr
+	this[ITL.Properties.INSTANCE_POINTER] := interfacePtr
 }
 class ITL
 {
@@ -303,8 +304,7 @@ class ITL_WrapperBaseClass
 
 		if (this != ITL.ITL_WrapperBaseClass)
 		{
-			ObjInsert(this, "internal://data-storage", {})
-			this["internal://typelib-object"] := lib, ObjAddRef(lib)
+			this[ITL.Properties.TYPE_TYPELIBOBJ] := lib, ObjAddRef(lib[ITL.Properties.LIB_TYPELIB])
 
 			hr := DllCall(NumGet(NumGet(typeInfo+0), 12*A_PtrSize, "Ptr"), "Ptr", typeInfo, "Int", -1, "Ptr*", name, "Ptr*", 0, "UInt*", 0, "Ptr*", 0, "Int") ; ITypeInfo::GetDocumentation()
 			if (ITL_FAILED(hr) || !name)
@@ -316,7 +316,8 @@ class ITL_WrapperBaseClass
 												, !name, "Invalid name pointer: " name)*)
 			}
 
-			this["internal://typeinfo-name"] := StrGet(name, "UTF-16")
+			this[ITL.Properties.TYPE_NAME] := StrGet(name, "UTF-16")
+			this[ITL.Properties.TYPE_GUID] := lib.GetGUID(typeInfo, false, true)
 
 			typeInfo2 := ComObjQuery(typeInfo, IID_ITypeInfo2)
 			if (!typeInfo2)
@@ -327,26 +328,14 @@ class ITL_WrapperBaseClass
 												, ErrorLevel, ""
 												, !typeInfo2, "Invalid ITypeInfo2 pointer returned by ComObjQuery() : " typeInfo2)*)
 			}
-			this["internal://typeinfo-instance"] := typeInfo2, ObjAddRef(typeInfo2)
+			this[ITL.Properties.TYPE_TYPEINFO] := typeInfo2, ObjAddRef(typeInfo2)
 		}
 	}
 
 	__Delete()
 	{
-		ObjRelease(this["internal://typelib-object"])
-		, ObjRelease(this["internal://typeinfo-instance"])
-	}
-
-	__Set(property, value)
-	{
-		if (property != "base" && !RegExMatch(property, "^internal://"))
-			return this["internal://data-storage"][property] := value
-	}
-
-	__Get(property)
-	{
-		if (property != "base" && !RegExMatch(property, "^internal://"))
-			return this["internal://data-storage"][property]
+		ObjRelease(this[ITL.Properties.TYPE_TYPELIBOBJ][ITL.Properties.LIB_TYPELIB])
+		, ObjRelease(this[ITL.Properties.TYPE_TYPEINFO])
 	}
 }
 ; class: ITL_ConstantMemberWrapperBaseClass
@@ -360,10 +349,10 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL.ITL_WrapperBaseClass
 		static VARKIND_CONST := 2, DISPID_UNKNOWN := -1
 		local hr, info, typeName, varID := DISPID_UNKNOWN, index := -1, varDesc := 0, varValue := ""
 
-		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		if (field != "base" && !ITL.Properties.IsInternalProperty(field)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
-			info := this["internal://typeinfo-instance"]
-			typeName := this["internal://typeinfo-name"]
+			info := this[ITL.Properties.TYPE_TYPEINFO]
+			typeName := this[ITL.Properties.TYPE_NAME]
 
 			; get the member id for the given field name
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", field, "UInt", 1, "UInt*", varID, "Int") ; ITypeInfo::GetIDsOfNames()
@@ -431,7 +420,7 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL.ITL_WrapperBaseClass
 	; throws an error if an attempt is made to change a constant value
 	__Set(field, params*)
 	{
-		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		if (field != "base" && !ITL.Properties.IsInternalProperty(field)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
 			; throw an exception as setting constants is impossible
 			;throw Exception("A field must not be set on this class!", -1)
@@ -449,12 +438,12 @@ class ITL_ConstantMemberWrapperBaseClass extends ITL.ITL_WrapperBaseClass
 		local hr, typeName, info, obj, attr := 0, varCount, varDesc := 0, varID, pVarName := 0, varValue
 
 		; only loop through the members once, since the constant values won't change
-		obj := this["internal://enumerator-object"]
+		obj := this[ITL.Properties.TYPE_ENUMERATOR]
 		if (!IsObject(obj)) ; if this is the first iteration
 		{
-			obj := this["internal://enumerator-object"] := {} ; create a storage object
-			typeName := this["internal://typeinfo-name"]
-			info := this["internal://typeinfo-instance"]
+			obj := this[ITL.Properties.TYPE_ENUMERATOR] := {} ; create a storage object
+			typeName := this[ITL.Properties.TYPE_NAME]
+			info := this[ITL.Properties.TYPE_TYPEINFO]
 
 			; get some attributes of the type
 			hr := DllCall(NumGet(NumGet(info+0), 03*A_PtrSize, "Ptr"), "Ptr", info, "Ptr*", attr, "Int") ; ITypeInfo::GetTypeAttr()
@@ -535,14 +524,14 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 {
 	__New(typeInfo, lib)
 	{
-		local hr, typeAttr := 0, implCount, implFlags := 0, implHref := -1, implInfo := 0, implAttr := 0, iid, Base
+		local hr, typeAttr := 0, implCount, implFlags := 0, implHref := -1, implInfo := 0, implAttr := 0, iid, Base, typeName
 		static IMPLTYPEFLAG_FDEFAULT := 1
 
 		if (this != ITL.ITL_CoClassWrapper)
 		{
 			Base.__New(typeInfo, lib)
-			ObjInsert(this, "__New", Func("ITL_CoClassConstructor"))
-			this["internal://class-clsid"] := lib.GetGUID(typeInfo, false, true)
+			, ObjInsert(this, "__New", Func("ITL_CoClassConstructor"))
+			, typeName := this[ITL.Properties.TYPE_NAME]
 
 			; get default interface:
 			; =======================================
@@ -550,7 +539,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 			if (ITL_FAILED(hr) || !typeAttr)
 			{
 				;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
-				throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+				throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 												, "ITypeInfo::GetTypeAttr() failed."
 												, ErrorLevel, hr
 												, !typeAttr, "Invalid TYPEATTR pointer: " typeAttr)*)
@@ -563,7 +552,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 				if (ITL_FAILED(hr))
 				{
 					;throw Exception("ImplTypeFlags could not be read.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+					throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetImplTypeFlags() failed."
 														, ErrorLevel, hr)*)
 				}
@@ -573,7 +562,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					if (ITL_FAILED(hr) || implHref == -1)
 					{
 						;throw Exception("GetRefTypeOfImplType failed.", -1, ITL_FormatError(hr))
-						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetRefTypeOfImplType() failed."
 														, ErrorLevel, hr
 														, implHref == -1, "Invalid HREFTYPE: " implHref)*)
@@ -583,7 +572,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					if (ITL_FAILED(hr) || !implInfo)
 					{
 						;throw Exception("GetRefTypeInfo failed.", -1, ITL_FormatError(hr))
-						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetRefTypeInfo() failed."
 														, ErrorLevel, hr
 														, !implInfo, "Invalid ITypeInfo pointer: " implInfo)*)
@@ -593,7 +582,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					if (ITL_FAILED(hr) || !implAttr)
 					{
 						;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
-						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ this["internal://typeinfo-name"] """ class."
+						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetTypeAttr() failed."
 														, ErrorLevel, hr
 														, !implAttr, "Invalid TYPEATTR pointer: " implAttr)*)
@@ -601,7 +590,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 
 					VarSetCapacity(iid, 16, 00)
 					ITL_Mem_Copy(implAttr, &iid, 16) ; TYPEATTR::guid
-					this["internal://default-iid"] := ITL_GUID_ToString(&iid)
+					this[ITL.Properties.TYPE_DEFAULTINTERFACE] := ITL_GUID_ToString(&iid)
 
 					DllCall(NumGet(NumGet(implInfo+0), 19*A_PtrSize, "Ptr"), "Ptr", implInfo, "Ptr", implAttr) ; ITypeInfo::ReleaseTypeAttr()
 					break
@@ -625,7 +614,6 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 		{
 			Base.__New(typeInfo, lib)
 			ObjInsert(this, "__New", Func("ITL_InterfaceConstructor")) ; change constructor for instances
-			this["internal://interface-iid"] := lib.GetGUID(typeInfo, false, true) ; save IID
 		}
 	}
 
@@ -642,8 +630,8 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 		local paramCount, dispparams, rgvarg := 0, hr, info, dispid := DISPID_UNKNOWN, instance, excepInfo, err_index, result, variant, index := -1, funcdesc := 0, vt ;, fn
 
 		paramCount := params.maxIndex() > 0 ? params.maxIndex() : 0 ; the ternary is necessary, otherwise it would hold an empty string, causing calculations to fail
-		info := this["internal://typeinfo-instance"]
-		instance := this["internal://type-instance"]
+		, info := this.base[ITL.Properties.TYPE_TYPEINFO]
+		, instance := this[ITL.Properties.INSTANCE_POINTER]
 
 		; init structures
 		if (VarSetCapacity(dispparams, sizeof_DISPPARAMS, 00) != sizeof_DISPPARAMS)
@@ -767,7 +755,7 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 		, sizeof_DISPPARAMS := 8 + 2 * A_PtrSize, sizeof_EXCEPINFO := 12 + 5 * A_PtrSize, sizeof_VARIANT := 8 + 2 * A_PtrSize
 		local dispparams, hr, info, dispid := DISPID_UNKNOWN, instance, excepInfo, err_index, result
 
-		if (property != "base" && !RegExMatch(property, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		if (property != "base" && !ITL.Properties.IsInternalProperty(property)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
 			; init structures
 			if (VarSetCapacity(dispparams, sizeof_DISPPARAMS, 00) != sizeof_DISPPARAMS)
@@ -786,8 +774,8 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 				throw Exception(ITL_FormatException("Out of memory", "Memory allocation for EXCEPINFO failed.", ErrorLevel)*)
 			}
 
-			info := this["internal://typeinfo-instance"]
-			instance := this["internal://type-instance"]
+			info := this.base[ITL.Properties.TYPE_TYPEINFO]
+			, instance := this[ITL.Properties.INSTANCE_POINTER]
 
 			; get MEMBERID for the method to be retrieved:
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", property, "UInt", 1, "UInt*", dispid, "Int") ; ITypeInfo::GetIDsOfNames()
@@ -820,13 +808,17 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 	{
 		; code inspired by AutoHotkey_L source (script_com.cpp)
 		static DISPATCH_PROPERTYPUTREF := 0x8, DISPATCH_PROPERTYPUT := 0x4
-		, DISPID_UNKNOWN := -1, DISPID_PROPERTYPUT := -3
+		, DISPID_UNKNOWN := -1, DISPID_PROPERTYPUT := ""
 		, sizeof_DISPPARAMS := 8 + 2 * A_PtrSize, sizeof_EXCEPINFO := 12 + 5 * A_PtrSize
 		, VT_UNKNOWN := 13, VT_DISPATCH := 9
 		, DISP_E_MEMBERNOTFOUND := -2147352573
 		local variant, dispparams, hr, info, dispid := DISPID_UNKNOWN, vt, instance, excepInfo, err_index := 0, variant
 
-		if (property != "base" && !RegExMatch(property, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		; need to store it that way as "DISPID_PROPERTYPUT := -3, &DISPID_PROPERTYPUT" would be a STRING address
+		if (!DISPID_PROPERTYPUT)
+			VarSetCapacity(DISPID_PROPERTYPUT, 4, 0), NumPut(-3, DISPID_PROPERTYPUT, 00, "Int")
+
+		if (property != "base" && !ITL.Properties.IsInternalProperty(property)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
 			; init structures
 			if (VarSetCapacity(dispparams, sizeof_DISPPARAMS, 00) != sizeof_DISPPARAMS)
@@ -848,8 +840,8 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 			NumPut(&DISPID_PROPERTYPUT, dispparams, A_PtrSize, "Ptr") ; DISPPARAMS::rgdispidNamedArgs - indicate a property is being set
 			NumPut(1, dispparams, 2 * A_PtrSize + 4, "UInt") ; DISPPARAMS::cNamedArgs
 
-			info := this["internal://typeinfo-instance"]
-			instance := this["internal://type-instance"]
+			info := this.base[ITL.Properties.TYPE_TYPEINFO]
+			, instance := this[ITL.Properties.INSTANCE_POINTER]
 
 			; get MEMBERID for the property to be set:
 			hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", property, "UInt", 1, "UInt*", dispid, "Int") ; ITypeInfo::GetIDsOfNames()
@@ -914,11 +906,12 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 	__New(typeInfo, lib)
 	{
 		static GUID_NULL := "{00000000-0000-0000-0000-000000000000}", IID_ICreateTypeInfo := "{00020405-0000-0000-C000-000000000046}"
-		local Base, hr := 0x00, rcinfo := 0, guid:= 0
+		local Base, hr := 0x00, rcinfo := 0, guid:= 0, createInfo, guid, typeName
 
 		if (this != ITL.ITL_StructureWrapper)
 		{
 			Base.__New(typeInfo, lib)
+			, typeName := this[ITL.Properties.TYPE_NAME]
 
 			; If there's no GUID specified, this would cause GetRecordInfoFromTypeInfo() to fail
 			; So we're trying to add a random-generated GUID just to keep it satisfied.
@@ -927,8 +920,8 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 				createInfo := ComObjQuery(typeInfo, IID_ICreateTypeInfo) ; query for the ICreateTypeInfo interface which can be used to modify the type
 				if (!createInfo)
 				{
-					;throw Exception("QueryInterface() for ICreateTypeInfo failed.", -1, "This is needed because the type """ this["internal://typeinfo-name"] """ does not have a GUID.")
-					throw Exception(ITL_FormatException("Failed to create a wrapper for """ this["internal://typeinfo-name"] """."
+					;throw Exception("QueryInterface() for ICreateTypeInfo failed.", -1, "This is needed because the type """ typeName """ does not have a GUID.")
+					throw Exception(ITL_FormatException("Failed to create a wrapper for """ typeName """."
 													, "QueryInterface() for ICreateTypeInfo failed."
 													, ErrorLevel, ""
 													, !createInfo, "Invalid ICreateTypeInfo pointer returned by ComObjQuery() : " createInfo)*)
@@ -938,7 +931,7 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 				if (ITL_FAILED(hr))
 				{
 					;throw Exception("Creating a GUID failed.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to create a wrapper for """ this["internal://typeinfo-name"] """."
+					throw Exception(ITL_FormatException("Failed to create a wrapper for """ typeName """."
 													, "Creation of a GUID failed."
 													, ErrorLevel, hr)*)
 				}
@@ -947,7 +940,7 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 				if (ITL_FAILED(hr))
 				{
 					;throw Exception("ICreateTypeInfo::SetGUID() failed.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to create a wrapper for """ this["internal://typeinfo-name"] """."
+					throw Exception(ITL_FormatException("Failed to create a wrapper for """ typeName """."
 													, "ICreateTypeInfo::SetGuid() failed."
 													, ErrorLevel, hr)*)
 				}
@@ -956,13 +949,13 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 			hr := DllCall("OleAut32\GetRecordInfoFromTypeInfo", "Ptr", typeInfo, "Ptr*", rcinfo, "Int") ; retrieve an IRecordInfo instance for a type
 			if (ITL_FAILED(hr) || !rcinfo)
 			{
-				;throw Exception("GetRecordInfoFromTypeInfo() failed for type """ this["internal://typeinfo-name"] """.", -1, ITL_FormatError(hr))
-				throw Exception(ITL_FormatException("Failed to create a wrapper for """ this["internal://typeinfo-name"] """."
+				;throw Exception("GetRecordInfoFromTypeInfo() failed for type """ typeName """.", -1, ITL_FormatError(hr))
+				throw Exception(ITL_FormatException("Failed to create a wrapper for """ typeName """."
 												, "GetRecordInfoFromTypeInfo() failed."
 												, ErrorLevel, hr
 												, !rcinfo, "Invalid IRecordInfo pointer: " rcinfo)*)
 			}
-			this["internal://rcinfo-instance"] := rcinfo
+			this[ITL.Properties.TYPE_RECORDINFO] := rcinfo
 
 			ObjInsert(this, "__New", Func("ITL_StructureConstructor"))
 		}
@@ -971,21 +964,21 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 	__Delete()
 	{
 		local hr, ptr, rcinfo
-		if (ptr := this["internal://type-instance"])
+		if (ptr := this[ITL.Properties.INSTANCE_POINTER])
 		{
-			rcinfo := this.base["internal://rcinfo-instance"]
+			rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO]
 			hr := DllCall(NumGet(NumGet(rcinfo+0), 18*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordDestroy()
 			if (ITL_FAILED(hr))
 			{
 				;throw Exception("RecordDestroy() failed.", -1, ITL_FormatError(hr))
-				throw Exception(ITL_FormatException("Failed to release structure of type """ this.base["internal://typeinfo-name"] """."
+				throw Exception(ITL_FormatException("Failed to release structure of type """ this.base[ITL.Properties.TYPE_NAME] """."
 												, "IRecordInfo::RecordDestroy() failed."
 												, ErrorLevel, hr)*)
 			}
 		}
 		else
 		{
-			rcinfo := this["internal://rcinfo-instance"]
+			rcinfo := this[ITL.Properties.TYPE_RECORDINFO]
 			ObjRelease(rcinfo)
 		}
 	}
@@ -995,27 +988,37 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 		static sizeof_VARIANT := 8 + 2 * A_PtrSize
 		local hr, ptr, variant := 0, rcinfo
 
-		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		if (field != "base" && !ITL.Properties.IsInternalProperty(field)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
-			ptr := this["internal://type-instance"]
-			rcinfo := this.base["internal://rcinfo-instance"]
-
-			if (VarSetCapacity(variant, sizeof_VARIANT, 00) != sizeof_VARIANT)
+			ptr := this[ITL.Properties.INSTANCE_POINTER]
+			if (ptr)
 			{
-				;throw Exception("Out of memory.", -1)
-				throw Exception(ITL_FormatException("Out of memory.", "Memory allocation for VARIANT failed.", ErrorLevel)*)
-			}
+				rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO]
 
-			hr := DllCall(NumGet(NumGet(rcinfo+0), 10*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::GetField()
-			if (ITL_FAILED(hr))
+				if (VarSetCapacity(variant, sizeof_VARIANT, 00) != sizeof_VARIANT)
+				{
+					;throw Exception("Out of memory.", -1)
+					throw Exception(ITL_FormatException("Out of memory.", "Memory allocation for VARIANT failed.", ErrorLevel)*)
+				}
+
+				hr := DllCall(NumGet(NumGet(rcinfo+0), 10*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::GetField()
+				if (ITL_FAILED(hr))
+				{
+					;throw Exception("GetField() failed.", -1, ITL_FormatError(hr))
+					throw Exception(ITL_FormatException("Failed to retrieve a structure field."
+													, "IRecordInfo::GetField() failed for field """ field """ on type """ this.base[ITL.Properties.TYPE_NAME] """."
+													, ErrorLevel, hr)*)
+				}
+
+				return ITL_VARIANT_GetValue(&variant)
+			}
+			else if field is integer
 			{
-				;throw Exception("GetField() failed.", -1, ITL_FormatError(hr))
-				throw Exception(ITL_FormatException("Failed to retrieve a structure field."
-												, "IRecordInfo::GetField() failed for field """ field """ on type """ this.base["internal://typeinfo-name"] """."
-												, ErrorLevel, hr)*)
+				if (field > 0)
+				{
+					return new ITL.ITL_StructureArray(this, field)
+				}
 			}
-
-			return ITL_VARIANT_GetValue(&variant)
 		}
 	}
 
@@ -1024,10 +1027,10 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 		static INVOKE_PROPERTYPUT := 4
 		local hr, ptr, variant := 0, rcinfo
 
-		if (field != "base" && !RegExMatch(field, "^internal://")) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
+		if (field != "base" && !ITL.Properties.IsInternalProperty(field)) ; ignore base and internal properties (handled by ITL_WrapperBaseClass)
 		{
-			ptr := this["internal://type-instance"]
-			, rcinfo := this.base["internal://rcinfo-instance"]
+			ptr := this[ITL.Properties.INSTANCE_POINTER]
+			, rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO]
 
 			ITL_VARIANT_Create(value, variant)
 			hr := DllCall(NumGet(NumGet(rcinfo+0), 12*A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt", INVOKE_PROPERTYPUT, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::PutField()
@@ -1035,7 +1038,7 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 			{
 				;throw Exception("PutField() failed.", -1, ITL_FormatError(hr))
 				throw Exception(ITL_FormatException("Failed to set a structure field."
-												, "IRecordInfo::PutField() failed for field """ field """ on type """ this.base["internal://typeinfo-name"] """."
+												, "IRecordInfo::PutField() failed for field """ field """ on type """ this.base[ITL.Properties.TYPE_NAME] """."
 												, ErrorLevel, hr)*)
 			}
 
@@ -1047,15 +1050,15 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 	{
 		local hr, info, rcinfo, attr := 0, obj, names_array, varCount := -1, name := ""
 
-		obj := this["internal://enumerator-object"] := {} ; create a storage object
-		rcinfo := this.base["internal://rcinfo-instance"]
+		obj := {} ; create a storage object
+		rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO]
 
 		; call GetFieldNames() with a NULL array pointer -> retrieve the total field count through "varCount"
 		hr := DllCall(NumGet(NumGet(rcinfo+0), 14 * A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt*", varCount, "Ptr", 0, "Int") ; IRecordInfo::GetFieldNames()
 		if (ITL_FAILED(hr) || varCount == -1)
 		{
 			;throw Exception("IRecordInfo::GetFieldNames() failed.", -1, ITL_FormatError(hr))
-			throw Exception(ITL_FormatException("Failed to enumerate structure members of type """ this.base["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to enumerate structure members of type """ this.base[ITL.Properties.TYPE_NAME] """."
 											, "IRecordInfo::GetFieldNames() failed."
 											, ErrorLevel, hr
 											, varCount != -1, "Invalid member count: " varCount)*)
@@ -1067,7 +1070,7 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 		if (ITL_FAILED(hr))
 		{
 			;throw Exception("IRecordInfo::GetFieldNames() failed.", -1, ITL_FormatError(hr))
-			throw Exception(ITL_FormatException("Failed to enumerate structure members of type """ this.base["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to enumerate structure members of type """ this.base[ITL.Properties.TYPE_NAME] """."
 											, "IRecordInfo::GetFieldNames() failed."
 											, ErrorLevel, hr)*)
 		}
@@ -1088,10 +1091,10 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 
 	_Clone()
 	{
-		local hr, rcinfo := this.base["internal://rcinfo-instance"], ptrNew := 0, ptrOld := this["internal://type-instance"], newObj
+		local hr, rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO], ptrNew := 0, ptrOld := this[ITL.Properties.INSTANCE_POINTER], newObj
 
 		newObj := new this.base()
-		ptrNew := newObj["internal://type-instance"]
+		ptrNew := newObj[ITL.Properties.INSTANCE_POINTER]
 
 		hr := DllCall(NumGet(NumGet(rcinfo+0), 05*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptrOld, "Ptr", ptrNew, "Int") ; IRecordInfo::RecordCopy()
 		if (ITL_FAILED(hr))
@@ -1112,13 +1115,20 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 
 	GetSize()
 	{
-		local hr, size := -1, rcinfo := this["internal://rcinfo-instance"]
+		local hr, size := -1, type, rcinfo
+
+		type := this
+		if (this[ITL.Properties.INSTANCE_POINTER])
+			type := this.base
+		
+		rcinfo := type[ITL.Properties.TYPE_RECORDINFO]
+			
 
 		hr := DllCall(Numget(NumGet(rcinfo+0), 08*A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt*", size, "Int") ; IRecordInfo::GetSize()
 		if (ITL_FAILED(hr) || size == -1)
 		{
 			;throw Exception("GetSize() failed.", -1, ITL_FormatError(hr))
-			throw Exception(ITL_FormatException("Failed to retrieve structure size for """ this["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to retrieve structure size for """ type[ITL.Properties.TYPE_NAME] """."
 											, "IRecordInfo::GetSize() failed."
 											, ErrorLevel, hr)*)
 		}
@@ -1128,7 +1138,7 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 
 	Clear()
 	{
-		local hr, rcinfo := this["internal://rcinfo-instance"], ptr := this["internal://type-instance"]
+		local hr, rcinfo := this.base[ITL.Properties.TYPE_RECORDINFO], ptr := this[ITL.Properties.INSTANCE_POINTER]
 		hr := DllCall(NumGet(NumGet(rcinfo+0), 04*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordClear()
 		if (ITL_Failed(hr))
 		{
@@ -1163,13 +1173,13 @@ class ITL_ModuleWrapper extends ITL.ITL_ConstantMemberWrapperBaseClass
 		static DISPID_UNKNOWN := -1, INVOKEKIND_FUNC := 1
 		local id := DISPID_UNKNOWN, hr := 0, addr := 0, info
 
-		info := this["internal://typeinfo-instance"]
+		info := this[ITL.Properties.TYPE_TYPEINFO]
 
 		hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", method, "UInt", INVOKEKIND_FUNC, "Ptr*", id, "Int") ; ITypeInfo::GetIDsOfNames()
 		if (ITL_FAILED(hr) || id == DISPID_UNKNOWN)
 		{
 			;throw Exception("GetIDsOfNames() for """ method "()"" failed.", -1, ITL_FormatError(hr))
-			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this[ITL.Properties.TYPE_NAME] """."
 											, "ITypeInfo::GetIDsOfNames() failed."
 											, ErrorLevel, hr
 											, id == DISPID_UNKNOWN, "Invalid DISPID: " id)*)
@@ -1179,7 +1189,7 @@ class ITL_ModuleWrapper extends ITL.ITL_ConstantMemberWrapperBaseClass
 		if (ITL_FAILED(hr) || !addr)
 		{
 			;throw Exception("AddressOfMember() for """ method "()"" failed.", -1, ITL_FormatError(hr))
-			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this["internal://typeinfo-name"] """."
+			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this[ITL.Properties.TYPE_NAME] """."
 											, "ITypeInfo::AddressOfMember() failed."
 											, ErrorLevel, hr
 											, !addr, "Invalid member address: " addr)*)
@@ -1194,7 +1204,7 @@ class ITL_TypeLibWrapper
 	{
 		static valid_typekinds := "", VT_USERDEFINED := 29, MEMBERID_NIL := -1
 			, TYPEKIND_ENUM := 0, TYPEKIND_RECORD := 1, TYPEKIND_MODULE := 2, TYPEKIND_INTERFACE := 3, TYPEKIND_COCLASS := 5, TYPEKIND_ALIAS := 6
-		local typeKind := -1, hr, typeName, obj, typeInfo := 0, attr := 0, vt, mappings := [], refInfo := 0, hrefType, refAttr := 0, refKind
+		local typeKind := -1, hr, typeName, obj, typeInfo := 0, attr := 0, vt, mappings := [], refInfo := 0, hrefType, refAttr := 0, refKind, typeLibName, alias := ""
 
 		if (!IsObject(valid_typekinds)) ; init static field
 		{
@@ -1208,8 +1218,8 @@ class ITL_TypeLibWrapper
 		if (this != ITL.ITL_TypeLibWrapper)
 		{
 			ObjInsert(this, "__New", Func("ITL_AbstractClassConstructor"))
-			this["internal://typelib-instance"] := lib
-			this["internal://typelib-name"] := this.GetName()
+			this[ITL.Properties.LIB_TYPELIB] := lib
+			typeLibName := this[ITL.Properties.LIB_NAME] := this.GetName()
 
 			Loop % DllCall(NumGet(NumGet(lib+0), 03*A_PtrSize, "Ptr"), "Ptr", lib, "Int") ; ITypeLib::GetTypeInfoCount()
 			{
@@ -1217,7 +1227,7 @@ class ITL_TypeLibWrapper
 				if (ITL_FAILED(hr) || typeKind == -1)
 				{
 					;throw Exception("Type information kind no. " A_Index - 1 " could not be read.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "Type information kind no. " A_Index - 1 " could not be read."
 													, ErrorLevel, hr
 													, typeKind == -1, "Invalid TYPEKIND: " typeKind)*)
@@ -1233,7 +1243,7 @@ class ITL_TypeLibWrapper
 				if (ITL_FAILED(hr) || !typeInfo)
 				{
 					;throw Exception("Type information no. " A_Index - 1 " could not be read.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "Type information no. " A_Index - 1 " could not be read."
 													, ErrorLevel, hr
 													, !typeInfo, "Invalid ITypeInfo pointer: " typeInfo)*)
@@ -1247,7 +1257,7 @@ class ITL_TypeLibWrapper
 					if (ITL_FAILED(hr) || !attr)
 					{
 						;throw Exception("ITypeInfo::GetTypeAttr() failed.", -1, ITL_FormatError(hr))
-						throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+						throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 														, "ITypeInfo::GetTypeAttr() for type """ typeName """ failed."
 														, ErrorLevel, hr
 														, !attr, "Invalid TYPEATTR pointer: " attr)*)
@@ -1261,7 +1271,7 @@ class ITL_TypeLibWrapper
 						if (ITL_FAILED(hr) || !refInfo)
 						{
 							;throw Exception("ITypeInfo::GetRefTypeInfo() failed.", -1, ITL_FormatError(hr))
-							throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+							throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 															, "ITypeInfo::GetRefTypeInfo() for type """ typeName """ failed."
 															, ErrorLevel, hr
 															, !refInfo, "Invalid ITypeInfo pointer: " refInfo)*)
@@ -1271,7 +1281,7 @@ class ITL_TypeLibWrapper
 						if (ITL_FAILED(hr) || !refAttr)
 						{
 							;throw Exception("ITypeInfo::GetTypeAttr() failed.", -1, ITL_FormatError(hr))
-							throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+							throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 															, "ITypeInfo::GetTypeAttr() for type """ typeName """ failed."
 															, ErrorLevel, hr
 															, !refAttr, "Invalid TYPEATTR pointer: " refAttr)*)
@@ -1305,7 +1315,7 @@ class ITL_TypeLibWrapper
 				if (ITL_FAILED(hr) || !typeName)
 				{
 					;throw Exception("ITypeInfo::GetDocumentation() failed.", -1, ITL_FormatError(hr))
-					throw Exception(ITL_FormatException("Failed to wrap type library """ this["internal://typelib-name"] """."
+					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "ITypeInfo::GetDocumentation() for an alias failed."
 													, ErrorLevel, hr
 													, !typeName, "Invalid type name pointer: " typeName)*)
@@ -1320,7 +1330,7 @@ class ITL_TypeLibWrapper
 	{
 		local hr, name := 0, lib
 
-		lib := this["internal://typelib-instance"]
+		lib := this[ITL.Properties.LIB_TYPELIB]
 		hr := DllCall(NumGet(NumGet(lib+0), 09*A_PtrSize, "Ptr"), "Ptr", lib, "UInt", index, "Ptr*", name, "Ptr*", 0, "UInt*", 0, "Ptr*", 0, "Int") ; ITypeLib::GetDocumentation()
 		if (ITL_FAILED(hr) || !name)
 		{
@@ -1338,14 +1348,26 @@ class ITL_TypeLibWrapper
 	{
 		local hr, guid, lib, info, attr := 0, result
 
-		lib := this["internal://typelib-instance"]
+		lib := this[ITL.Properties.LIB_TYPELIB]
 		if obj is not integer
 		{
 			if (!IsObject(obj)) ; it's a string, a field name
 				obj := this[obj]
 
 			if (IsObject(obj)) ; a field, either passed directly or via name
-				info := obj["internal://typeinfo-instance"]
+			{
+				if obj[ITL.Properties.TYPE_GUID] ; if it's already stored, do not retrieve it again
+				{
+					if (!returnRaw)
+						return obj[ITL.Properties.TYPE_GUID]
+
+					guid := ITL_Mem_Allocate(16)
+					, ITL_GUID_FromString(obj[ITL.Properties.TYPE_GUID], attr)
+					, ITL_Mem_Copy(&attr, guid, 16)
+					return guid
+				}
+				info := obj[ITL.Properties.TYPE_TYPEINFO]
+			}
 			else
 			{
 				;throw Exception("Field could not be retrieved.", -1)
@@ -1422,25 +1444,25 @@ class ITL_StructureArray
 {
 	__New(type, count)
 	{
-		this["internal://type-obj"] := type
-		, this["internal://instance-count"] := count
-		, this["internal://memory-buffer"] := ITL_Mem_Allocate(count * type.GetSize())
-		, this["internal://instance-size"] := type.GetSize()
-		, this["internal://instance-array"] := []
+		this[ITL.Properties.ARRAY_ELEMTYPEOBJ] := type
+		, this[ITL.Properties.ARRAY_ELEMCOUNT] := count
+		, this[ITL.Properties.ARRAY_MEMBUFFER] := ITL_Mem_Allocate(count * type.GetSize())
+		, this[ITL.Properties.ARRAY_ELEMSIZE] := type.GetSize()
+		, this[ITL.Properties.ARRAY_INSTANCEOBJ] := []
 	}
 
 	__Get(property)
 	{
-		local buffer, size, index, struct
-		if (property != "base" && !RegExMatch(property, "^internal://"))
+		local buffer, size, index, struct, type
+		if (property != "base" && !ITL.Properties.IsInternalProperty(property))
 		{
-			count := this["internal://instance-count"]
+			count := this[ITL.Properties.ARRAY_ELEMCOUNT]
 			if (property == "")
 			{
-				buffer := this["internal://memory-buffer"], size := this["internal://instance-size"]
+				buffer := this[ITL.Properties.ARRAY_MEMBUFFER], size := this[ITL.Properties.ARRAY_ELEMSIZE]
 				for index, struct in this
 				{
-					ITL_Mem_Copy(struct["internal://type-instance"], buffer + index * size, size)
+					ITL_Mem_Copy(struct[ITL.Properties.INSTANCE_POINTER], buffer + index * size, size)
 				}
 				return buffer
 			}
@@ -1458,17 +1480,20 @@ class ITL_StructureArray
 												, ErrorLevel)*)
 			}
 
-			struct := this["internal://instance-array"][property]
+			struct := this[ITL.Properties.ARRAY_INSTANCEOBJ][property]
 			if (!IsObject(struct))
-				this["internal://instance-array"][property] := struct := new this["internal://type-obj"]()
+			{
+				type := this[ITL.Properties.ARRAY_ELEMTYPEOBJ]
+				, this[ITL.Properties.ARRAY_INSTANCEOBJ][property] := struct := new type()
+			}
 			return struct
 		}
 	}
 
 	__Set(property, value)
 	{
-		local count := this["internal://instance-count"]
-		if (property != "base" && !RegExMatch(property, "^internal://"))
+		local count := this[ITL.Properties.ARRAY_ELEMCOUNT]
+		if (property != "base" && !ITL.Properties.IsInternalProperty(property))
 		{
 			if property is not integer
 			{
@@ -1485,26 +1510,15 @@ class ITL_StructureArray
 
 			if value is integer
 			{
-				value := new this["internal://type-obj"](value, true)
+				value := new this[ITL.Properties.ARRAY_ELEMTYPEOBJ](value, true)
 			}
-			this["internal://instance-array"][property] := value
+			this[ITL.Properties.ARRAY_INSTANCEOBJ][property] := value
 		}
-	}
-
-	__Delete()
-	{
-		local index, struct, field, value
-
-		for index, struct in this
-			this[index] := ""
-		ITL_Mem_Release(this["internal://memory-buffer"])
-		for field, value in ObjNewEnum(this)
-			this[field] := ""
 	}
 
 	_NewEnum()
 	{
-		return ObjNewEnum(this["internal://instance-array"])
+		return ObjNewEnum(this[ITL.Properties.ARRAY_INSTANCEOBJ])
 	}
 
 	NewEnum()
@@ -1514,17 +1528,45 @@ class ITL_StructureArray
 
 	SetCapacity(newCount)
 	{
-		local newBuffer := ITL_Mem_Allocate(newCount * this["internal://type-obj"].GetSize())
-		, oldBuffer := this["internal://memory-buffer"]
-		, oldCount := this["internal://instance-count"]
+		local newBuffer := ITL_Mem_Allocate(newCount * this[ITL.Properties.ARRAY_ELEMSIZE])
+		, oldBuffer := this[ITL.Properties.ARRAY_MEMBUFFER]
+		, oldCount := this[ITL.Properties.ARRAY_ELEMCOUNT]
 
 		ITL_Mem_Copy(oldBuffer, newBuffer, oldCount), ITL_Mem_Release(oldBuffer)
-		this["internal://memory-buffer"] := newBuffer, this["internal://instance-count"] := newCount
+		this[ITL.Properties.ARRAY_MEMBUFFER] := newBuffer, this[ITL.Properties.ARRAY_ELEMCOUNT] := newCount
 
 		if (newCount < oldCount)
 		{
-			this["internal://instance-array"].Remove(newCount - 1, oldCount - 1)
+			this[ITL.Properties.ARRAY_INSTANCEOBJ].Remove(newCount - 1, oldCount - 1)
 		}
+	}
+}
+class Properties
+{
+	static INSTANCE_POINTER			:= "internal://type-instance"
+	static INSTANCE_ENUMERATOR		:= "internal://instance-enumerator"
+
+	static TYPE_TYPEINFO			:= "internal://typeinfo-instance"
+	static TYPE_NAME				:= "internal://typeinfo-name"
+	static TYPE_GUID				:= "internal://type-guid"
+	static TYPE_RECORDINFO			:= "internal://rcinfo-instance"
+	static TYPE_ENUMERATOR			:= "internal://enumerator-object"
+	static TYPE_DEFAULTINTERFACE	:= "internal://default-iid"
+	static TYPE_TYPELIBOBJ			:= "internal://typelib-object"
+
+	static ARRAY_ELEMCOUNT			:= "internal://instance-count"
+	static ARRAY_MEMBUFFER			:= "internal://memory-buffer"
+	static ARRAY_ELEMTYPEOBJ		:= "internal://type-obj"
+	static ARRAY_ELEMSIZE			:= "internal://instance-size"
+	static ARRAY_INSTANCEOBJ		:= "internal://instance-array"
+
+	static LIB_TYPELIB				:= "internal://typelib-instance"
+	static LIB_NAME					:= "internal://typelib-name"
+	static LIB_GUID					:= "internal://typelib-guid"
+
+	IsInternalProperty(property)
+	{
+		return RegExMatch(property, "^internal://")
 	}
 }
 }
@@ -1555,7 +1597,7 @@ ITL_CreateStructureSafeArray(type, dims*)
 										, ErrorLevel)*)
 
 	arr := ComObjArray(VT_RECORD, dims*)
-	hr := DllCall("OleAut32\SafeArraySetRecordInfo", "Ptr", ComObjValue(arr), "Ptr", type["internal://rcinfo-instance"], "Int")
+	hr := DllCall("OleAut32\SafeArraySetRecordInfo", "Ptr", ComObjValue(arr), "Ptr", type[ITL.Properties.TYPE_RECORDINFO], "Int")
 	if (ITL_FAILED(hr))
 		throw Exception(ITL_FormatException("Failed to create a structure SAFEARRAY."
 										, "Could not set IRecordInfo."
@@ -1567,7 +1609,7 @@ ITL_CreateStructureSafeArray(type, dims*)
 ; for structures and interfaces
 ITL_GetInstancePointer(instance)
 {
-	return instance["internal://type-instance"]
+	return instance[ITL.Properties.INSTANCE_POINTER]
 }
 
 ITL_CreateStructureArray(type, count)

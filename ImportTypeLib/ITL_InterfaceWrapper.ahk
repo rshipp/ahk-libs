@@ -211,7 +211,7 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 		, DISP_E_MEMBERNOTFOUND := -2147352573
 		local variant, dispparams, hr, info, dispid := DISPID_UNKNOWN, vt, instance, excepInfo, err_index := 0, variant
 
-		; need to store it that way as AHK integers are __int64 and therefore too large
+		; need to store it that way as "DISPID_PROPERTYPUT := -3, &DISPID_PROPERTYPUT" would be a STRING address
 		if (!DISPID_PROPERTYPUT)
 			VarSetCapacity(DISPID_PROPERTYPUT, 4, 0), NumPut(-3, DISPID_PROPERTYPUT, 00, "Int")
 

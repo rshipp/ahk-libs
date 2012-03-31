@@ -4,7 +4,7 @@ class ITL_TypeLibWrapper
 	{
 		static valid_typekinds := "", VT_USERDEFINED := 29, MEMBERID_NIL := -1
 			, TYPEKIND_ENUM := 0, TYPEKIND_RECORD := 1, TYPEKIND_MODULE := 2, TYPEKIND_INTERFACE := 3, TYPEKIND_COCLASS := 5, TYPEKIND_ALIAS := 6
-		local typeKind := -1, hr, typeName, obj, typeInfo := 0, attr := 0, vt, mappings := [], refInfo := 0, hrefType, refAttr := 0, refKind, typeLibName
+		local typeKind := -1, hr, typeName, obj, typeInfo := 0, attr := 0, vt, mappings := [], refInfo := 0, hrefType, refAttr := 0, refKind, typeLibName, alias := ""
 
 		if (!IsObject(valid_typekinds)) ; init static field
 		{

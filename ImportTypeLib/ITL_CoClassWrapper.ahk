@@ -2,7 +2,7 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 {
 	__New(typeInfo, lib)
 	{
-		local hr, typeAttr := 0, implCount, implFlags := 0, implHref := -1, implInfo := 0, implAttr := 0, iid, Base
+		local hr, typeAttr := 0, implCount, implFlags := 0, implHref := -1, implInfo := 0, implAttr := 0, iid, Base, typeName
 		static IMPLTYPEFLAG_FDEFAULT := 1
 
 		if (this != ITL.ITL_CoClassWrapper)

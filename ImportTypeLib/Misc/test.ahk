@@ -15,7 +15,9 @@ ListLines Off
 
 UIAutomation := ImportTypeLib(A_WinDir "\System32\UIAutomationCore.dll")
 
-struct := new UIAutomation.tagRECT()
+myArray := UIAutomation.tagRECT[3]
+
+struct := myArray[0]
 struct.left := 16
 
 rect := struct.Clone()
