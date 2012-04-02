@@ -5,6 +5,7 @@
 SetBatchLines -1
 ListLines Off
 
+#include GetParamInfo.ahk
 #include ..\
 #include Main.ahk
 
@@ -41,6 +42,7 @@ MsgBox % "Enumeration and structure fields:`n`n" list
 automation := new UIAutomation.IUIAutomation(new UIAutomation.CUIAutomation())
 
 desktop := new UIAutomation.IUIAutomationElement(automation.GetRootElement())
+
 MsgBox % "The desktop:`n`n" GetElementInfo(desktop) "`n`nClick [OK] and wait 3 seconds."
 
 sleep 3000
@@ -49,10 +51,9 @@ MouseGetPos,,,hwin
 
 request := new UIAutomation.IUIAutomationCacheRequest(automation.CreateCacheRequest())
 request.TreeScope := UIAutomation.TreeScope.Element|UIAutomation.TreeScope.Children
-MsgBox % "Set: " request.TreeScope " == " UIAutomation.TreeScope.Element|UIAutomation.TreeScope.Children
 
-elem := new UIAutomation.IUIAutomationElement(automation.ElementFromHandleBuildCache(ComObjParameter(0x4000, hwin), ComObjParameter(0xD, request[ITL.Properties.INSTANCE_POINTER])))
-MsgBox % "The active window:`n`n" GetElementInfo(elem)
+elem := new UIAutomation.IUIAutomationElement(automation.ElementFromHandleBuildCache(ComObjParameter(0x4000, hwin), request))
+MsgBox % "The window under the mouse:`n`n" GetElementInfo(elem)
 
 GetElementInfo(elem)
 {

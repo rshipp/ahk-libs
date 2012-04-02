@@ -21,27 +21,30 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 		; code inspired by AutoHotkey_L source (script_com.cpp)
 		static DISPATCH_METHOD := 0x1
 		, DISPID_UNKNOWN := -1
-		, sizeof_DISPPARAMS := 8 + 2 * A_PtrSize, sizeof_EXCEPINFO := 12 + 5 * A_PtrSize, sizeof_VARIANT := 8 + 2 * A_PtrSize
+		, sizeof_DISPPARAMS := 8 + 2 * A_PtrSize, sizeof_EXCEPINFO := 12 + 5 * A_PtrSize, sizeof_VARIANT := 8 + 2 * A_PtrSize, sizeof_ELEMDESC := 4 * A_PtrSize
 		, DISP_E_MEMBERNOTFOUND := -2147352573, DISP_E_UNKNOWNNAME := -2147352570
 		, INVOKEKIND_FUNC := 1
+		, VT_USERDEFINED := 29, VT_RECORD := 36, VT_UNKNOWN := 13, VT_PTR := 26
+		, TYPEKIND_RECORD := 1, TYPEKIND_INTERFACE := 3
 		local paramCount, dispparams, rgvarg := 0, hr, info, dispid := DISPID_UNKNOWN, instance, excepInfo, err_index, result, variant, index := -1, funcdesc := 0, vt ;, fn
+		, refHandle, refInfo := 0, refAttr := 0, refKind, tdesc, indirectionLevel
 
 		paramCount := params.maxIndex() > 0 ? params.maxIndex() : 0 ; the ternary is necessary, otherwise it would hold an empty string, causing calculations to fail
 		, info := this.base[ITL.Properties.TYPE_TYPEINFO]
 		, instance := this[ITL.Properties.INSTANCE_POINTER]
 
 		; init structures
-		if (VarSetCapacity(dispparams, sizeof_DISPPARAMS, 00) != sizeof_DISPPARAMS)
+		if (VarSetCapacity(dispparams, sizeof_DISPPARAMS, 00) < sizeof_DISPPARAMS)
 		{
 			;throw Exception("Out of memory.", -1)
 			throw Exception(ITL_FormatException("Out of memory", "Memory allocation for DISPPARAMS failed.", ErrorLevel)*)
 		}
-		if (VarSetCapacity(result, sizeof_VARIANT, 00) != sizeof_VARIANT)
+		if (VarSetCapacity(result, sizeof_VARIANT, 00) < sizeof_VARIANT)
 		{
 			;throw Exception("Out of memory.", -1)
 			throw Exception(ITL_FormatException("Out of memory", "Memory allocation for the result VARIANT failed.", ErrorLevel)*)
 		}
-		if (VarSetCapacity(excepInfo, sizeof_EXCEPINFO, 00) != sizeof_EXCEPINFO)
+		if (VarSetCapacity(excepInfo, sizeof_EXCEPINFO, 00) < sizeof_EXCEPINFO)
 		{
 			;throw Exception("Out of memory.", -1)
 			throw Exception(ITL_FormatException("Out of memory", "Memory allocation for EXCEPINFO failed.", ErrorLevel)*)
@@ -69,8 +72,8 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 
 		if (paramCount > 0)
 		{
-			if (VarSetCapacity(rgvarg, sizeof_VARIANT * paramCount, 00) != (sizeof_VARIANT * paramCount)) ; create VARIANT array
-				throw Exception("Out of memory.", -1)
+			if (VarSetCapacity(rgvarg, sizeof_VARIANT * paramCount, 00) < (sizeof_VARIANT * paramCount)) ; create VARIANT array
+				throw Exception(ITL_FormatException("Out of memory.", "Memory allocation for VARIANT array failed.", ErrorLevel)*)
 
 			hr := DllCall(NumGet(NumGet(info+0), 24*A_PtrSize, "Ptr"), "Ptr", info, "UInt", dispid, "UInt", INVOKEKIND_FUNC, "UInt*", index) ; ITypeInfo2::GetFuncIndexOfMemId(_this, dispid, invkind, [out] index)
 			if (ITL_FAILED(hr) || index == -1)
@@ -82,7 +85,7 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 												, index == -1, "Invalid function index: " index)*)
 			}
 
-			hr := DllCall(NumGet(NumGet(info+0), 05*A_PtrSize, "Ptr"), "ptr", info, "UInt", index, "Ptr*", funcdesc) ; ITypeInfo::GetFuncDesc(_this, index, [out] funcdesc)
+			hr := DllCall(NumGet(NumGet(info+0), 05*A_PtrSize, "Ptr"), "Ptr", info, "UInt", index, "Ptr*", funcdesc) ; ITypeInfo::GetFuncDesc(_this, index, [out] funcdesc)
 			if (ITL_FAILED(hr) || !funcdesc)
 			{
 				;throw Exception("ITypeInfo::GetFuncDesc() failed.", -1, ITL_FormatError(hr))
@@ -104,10 +107,76 @@ class ITL_InterfaceWrapper extends ITL.ITL_WrapperBaseClass
 
 			Loop % paramCount
 			{
-				vt := NumGet(1*paramArray, (A_Index - 1) * (4*A_PtrSize) + A_PtrSize, "UShort") ; ELEMDESC[A_Index - 1]::tdesc::vt
+				tdesc := paramArray + (A_Index - 1) * sizeof_ELEMDESC ; ELEMDESC[A_Index - 1]::tdesc
+				, vt := NumGet(1*tdesc, A_PtrSize, "UShort") ; TYPEDESC::vt
 
-				ITL_VARIANT_Create(params[A_Index], variant) ; create VARIANT and put it in the array
-				, ITL_Mem_Copy(&variant, &rgvarg + (paramCount - A_Index) * sizeof_VARIANT, sizeof_VARIANT)
+				indirectionLevel := 0
+				while (vt == VT_PTR)
+				{
+					tdesc := NumGet(1*tdesc, 00, "Ptr") ; TYPEDESC::lptdesc
+					, vt := NumGet(1*tdesc, A_PtrSize, "UShort") ; TYPEDESC::vt
+					, indirectionLevel++
+				}
+
+				if (vt == VT_USERDEFINED && IsObject(params[A_Index]) && !ITL_IsComObject(params[A_Index])) ; a struct or interface wrapper was passed
+				{
+					VarSetCapacity(variant, sizeof_VARIANT, 00) ; init variant
+					, NumPut(params[A_Index][ITL.Properties.INSTANCE_POINTER], variant, 08, "Ptr") ; ... and put instance pointer into it
+
+					; get the type kind of the given wrapper:
+					; =============================================
+					refHandle := NumGet(1*tdesc, 00, "UInt") ; TYPEDESC::hreftype
+					hr := DllCall(NumGet(NumGet(info+0), 14*A_PtrSize, "Ptr"), "Ptr", info, "UInt", refHandle, "Ptr*", refInfo, "Int") ; ITypeInfo::GetRefTypeInfo()
+					if (ITL_FAILED(hr) || !refInfo)
+					{
+						throw Exception(ITL_FormatException("Failed to call a method."
+														, "ITypeInfo::GetRefTypeInfo() for param " A_Index " (handle: " refHandle ") failed."
+														, ErrorLevel, hr
+														, !refInfo, "Invalid ITypeInfo pointer: " refInfo)*)
+					}
+					hr := DllCall(NumGet(NumGet(refInfo+0), 03*A_PtrSize, "Ptr"), "Ptr", refInfo, "Ptr*", refAttr, "Int") ; ITypeInfo::GetTypeAttr()
+					if (ITL_FAILED(hr) || !refAttr)
+					{
+						throw Exception(ITL_FormatException("Failed to call a method."
+														, "ITypeInfo::GetTypeAttr() for param " A_Index " failed."
+														, ErrorLevel, hr
+														, !refAttr, "Invalid TYPEATTR pointer: " refAttr)*)
+					}
+					refKind := NumGet(1*refAttr, 36+A_PtrSize, "UInt")
+					; =============================================
+
+					if (refKind == TYPEKIND_RECORD)
+					{
+						; if (indirectionLevel > 0)
+						; 	...
+						NumPut(VT_RECORD, variant, 00, "UShort")
+						, NumPut(params[A_Index].base[ITL.Properties.TYPE_RECORDINFO], variant, 08 + A_PtrSize, "Ptr")
+					}
+					else if (refKind == TYPEKIND_INTERFACE)
+					{
+						if (indirectionLevel < 1)
+						{
+							throw Exception(ITL_FormatException("Failed to call a method."
+															, "Interfaces cannot be passed by value."
+															, ErrorLevel, ""
+															, indirectionLevel < 1, "Invalid indirection level: " indirectionLevel)*)
+						}
+						NumPut(VT_UNKNOWN, variant, 00, "UShort")
+					}
+					else
+					{
+						ObjRelease(refInfo) ; cleanup
+						throw Exception(ITL_FormatException("Failed to call a method."
+														, "Cannot handle other wrappers than interfaces and structures."
+														, ErrorLevel, "")*)
+					}
+					ObjRelease(refInfo), refInfo := 0, refAttr := 0 ; cleanup
+				}
+				; todo: handle arrays (native and safe)
+				else
+					ITL_VARIANT_Create(params[A_Index], variant) ; create VARIANT and put it in the array
+
+				ITL_Mem_Copy(&variant, &rgvarg + (paramCount - A_Index) * sizeof_VARIANT, sizeof_VARIANT)
 			}
 			NumPut(&rgvarg, dispparams, 00, "Ptr") ; DISPPARAMS::rgvarg - the pointer to the VARIANT array
 			NumPut(paramCount, dispparams, 2 * A_PtrSize, "UInt") ; DISPPARAMS::cArgs - the number of arguments passed
