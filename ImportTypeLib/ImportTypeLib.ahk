@@ -186,7 +186,7 @@ ITL_IsComObject(obj)
 }
 ITL_ParamToVARIANT(info, tdesc, value, byRef variant, index)
 {
-	static VT_PTR := 26, VT_USERDEFINED := 29, VT_VOID := 24, VT_BYREF := 0x4000, VT_RECORD := 36, VT_UNKNOWN := 13
+	static VT_PTR := 26, VT_USERDEFINED := 29, VT_VOID := 24, VT_BYREF := 0x4000, VT_RECORD := 36, VT_UNKNOWN := 13, VT_SAFEARRAY := 27
 		, sizeof_VARIANT := 8 + 2 * A_PtrSize
 		, TYPEKIND_RECORD := 1, TYPEKIND_INTERFACE := 3
 	local hr, vt := NumGet(1*tdesc, A_PtrSize, "UShort"), converted := false, indirectionLevel := 0
@@ -258,12 +258,52 @@ ITL_ParamToVARIANT(info, tdesc, value, byRef variant, index)
 	{
 		value := ComObjParameter(VT_BYREF, value)
 	}
-	; todo: handle arrays (native and safe)
+	else if (vt == VT_SAFEARRAY && indirectionLevel == 0)
+	{
+		; get the type of the SAFEARRAY elements:
+		tdesc := NumGet(1*tdesc, 00, "Ptr") ; TYPEDESC::lptdesc
+		, vt := NumGet(1*tdesc, A_PtrSize, "UShort") ; TYPEDESC::vt
+
+		if (!IsObject(value)) ; a raw pointer was passed
+		{
+			value := ComObjParameter(VT_ARRAY|vt, value)
+		}
+		if (!ITL_IsComObject(value)) ; a normal AHK-array (or object)
+		{
+			value := ITL_ArrayToSafeArray(value, vt)
+		}
+		; (if it is already a COM wrapper object, do nothing)
+	}
+	; todo: handle arrays (native)
 
 	if (!converted)
 		ITL_VARIANT_Create(value, variant) ; create VARIANT
 
 	; handle: VT_CARRAY, VT_I8, VT_LPSTR, VT_LPWSTR, VT_SAFEARRAY, VT_PTR, VT_UI8, ...
+}
+ITL_Min(params*)
+{
+	local each, value, minValue
+	for each, value in params
+	{
+		if (A_Index == 1)
+			minValue := value
+		else if (value < minValue)
+			minValue := value
+	}
+	return minValue
+}
+ITL_Max(params*)
+{
+	local each, value, maxValue
+	for each, value in params
+	{
+		if (A_Index == 1)
+			maxValue := value
+		else if (value > maxValue)
+			maxValue := value
+	}
+	return maxValue
 }
 ITL_CoClassConstructor(this, iid = 0)
 {
@@ -1636,20 +1676,24 @@ class Properties
 	}
 }
 }
-; various misc. helper functions, later t be sorted out to separate classes / libs / files.
+; various misc. helper functions, later to be sorted out to separate classes / libs / files.
 
 ITL_IsSafeArray(obj)
 {
 	static VT_ARRAY := 0x2000
-	return IsObject(obj) && ITL_HasEnumFlag(ComObjType(obj), VT_ARRAY)
+	local vt := 0
+	return (IsObject(obj) && ITL_HasEnumFlag(ComObjType(obj), VT_ARRAY)) ; a wrapper object was passed
+		|| (ITL_SUCCEEDED(DllCall("OleAut32\SafeArrayGetVartype", "Ptr", obj, "UShort*", vt, "Int")) && vt && ITL_IsSafeArray(ComObjParameter(VT_ARRAY|vt, obj))) ; a raw SAFEARRAY pointer was passed
 }
 
 ITL_SafeArrayType(obj)
 {
-	static VT_ARRAY := 0x2000, VT_NULL := 1
+	static VT_ARRAY := 0x2000
+	local vt := 0
 	if (ITL_IsSafeArray(obj))
-		return ComObjType(obj) ^ VT_ARRAY
-	return VT_NULL
+		return IsObject(obj)
+			? (ComObjType(obj) ^ VT_ARRAY) ; a wrapper object was passed
+			: (ITL_SUCCEEDED(DllCall("OleAut32\SafeArrayGetVartype", "Ptr", obj, "UShort*", vt, "Int")) && vt) ? vt : "" ; a raw SAFEARRAY pointer was passed
 }
 
 ITL_CreateStructureSafeArray(type, dims*)
@@ -1662,6 +1706,7 @@ ITL_CreateStructureSafeArray(type, dims*)
 										, "Invalid dimensions were specified."
 										, ErrorLevel)*)
 
+	; TODO: enable arrays with > 8 dimensions!
 	arr := ComObjArray(VT_RECORD, dims*)
 	hr := DllCall("OleAut32\SafeArraySetRecordInfo", "Ptr", ComObjValue(arr), "Ptr", type[ITL.Properties.TYPE_RECORDINFO], "Int")
 	if (ITL_FAILED(hr))
@@ -1672,13 +1717,125 @@ ITL_CreateStructureSafeArray(type, dims*)
 	return arr
 }
 
-; for structures and interfaces
-ITL_GetInstancePointer(instance)
-{
-	return instance[ITL.Properties.INSTANCE_POINTER]
-}
-
 ITL_CreateStructureArray(type, count)
 {
 	return new ITL.ITL_StructureArray(type, count)
+}
+
+ITL_ArrayToSafeArray(array, vt)
+{
+	static VT_ARRAY := 0x2000
+	local dimensions, dimCount, bounds, psa, each, dim
+
+	dimensions := ITL_ArrayGetDimensions(array), dimCount := dimensions.maxIndex(), bounds := ITL_Mem_Allocate(dimCount * 8)
+	for each, dim in dimensions
+	{
+		NumPut(dim.uBound - dim.lBound + 1,	bounds + (A_Index - 1) * 8, 00, "Int") ; SAFEARRAYBOUND::cElements
+		NumPut(dim.lBound,					bounds + (A_Index - 1) * 8, 04, "Int") ; SAFEARRAYBOUND::lLbound
+	}
+
+	psa := DllCall("OleAut32\SafeArrayCreate", "UShort", vt, "UInt", dimCount, "Ptr", bounds, "Ptr"), ITL_Mem_Release(bounds)
+	if (!psa)
+	{
+		throw Exception(ITL_FormatException("Failed to convert an array to a SAFEARRAY."
+										, "SafeArrayCreate() retruned NULL."
+										, ErrorLevel)*)
+	}
+
+	ITL_ArrayCopyToSafeArray(array, psa)
+
+	return ComObjParameter(VT_ARRAY|vt, psa)
+}
+
+ITL_ArrayCopyToSafeArray(array, psa) ; TODO
+{
+	local dimCount, indices
+
+	if ITL_IsComObject(psa)
+		psa := ComObjValue(psa)
+
+	dimCount := ITL_ArrayGetDimensionCount(array)
+
+	; ...
+	indices := ITL_Mem_Allocate(dimCount * 4)
+	; ...
+	ITL_Mem_Release(indices)
+	; ...
+}
+
+ITL_SafeArrayCopyToArray(psa, array) ; TODO
+{
+	local dimCount, indices
+
+	if ITL_IsComObject(psa)
+		psa := ComObjValue(psa)
+
+	dimCount := DllCall("OleAut32\SafeArrayGetDim", "Ptr", psa, "UInt")
+
+	; ...
+	indices := ITL_Mem_Allocate(dimCount * 4)
+	; ...
+	ITL_Mem_Release(indices)
+	; ...
+}
+
+ITL_SafeArrayToArray(safearray)
+{
+	local array := []
+	ITL_SafeArrayCopyToArray(safearray, array)
+	return array
+}
+
+ITL_ArrayGetDimensions(array, dimensions = "", index = 1)
+{
+	local dim, k, v
+
+	if (!dimensions)
+		dimensions := []
+
+	dim := ITL_ArrayGetBounds(array)
+	if (!dimensions.HasKey(index))
+		dimensions[index] := dim
+	else
+		dimensions[index].uBound := ITL_Max(dimensions[index].uBound, dim.uBound)
+		, dimensions[index].lBound := ITL_Min(dimensions[index].lBound, dim.lBound)
+
+	for k, v in array
+	{
+		if IsObject(v)
+			dimensions := ITL_ArrayGetDimensions(v, dimensions, index + 1)
+	}
+
+	return dimensions
+}
+
+; all "arms" of the array must be of equal "depth"
+ITL_ArrayGetDimensionCount(array)
+{
+	local k, v, dimCount := 0
+	while (IsObject(array))
+	{
+		dimCount++
+		for k, v in array
+		{
+			array := v
+			break
+		}
+	}
+	return dimCount
+}
+
+ITL_ArrayGetBounds(obj, byRef lBound = 0, byRef uBound = 0)
+{
+	local index
+
+	for index in obj
+	{
+		if (A_Index == 1)
+			lBound := uBound := index
+		else
+			uBound := ITL_Max(index, uBound), lBound := ITL_Min(index, lBound)
+	}
+
+	return { "lBound" : lBound, "uBound" : uBound }
 }

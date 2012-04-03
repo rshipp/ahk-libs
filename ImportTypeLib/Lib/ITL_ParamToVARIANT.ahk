@@ -1,6 +1,6 @@
 ITL_ParamToVARIANT(info, tdesc, value, byRef variant, index)
 {
-	static VT_PTR := 26, VT_USERDEFINED := 29, VT_VOID := 24, VT_BYREF := 0x4000, VT_RECORD := 36, VT_UNKNOWN := 13
+	static VT_PTR := 26, VT_USERDEFINED := 29, VT_VOID := 24, VT_BYREF := 0x4000, VT_RECORD := 36, VT_UNKNOWN := 13, VT_SAFEARRAY := 27
 		, sizeof_VARIANT := 8 + 2 * A_PtrSize
 		, TYPEKIND_RECORD := 1, TYPEKIND_INTERFACE := 3
 	local hr, vt := NumGet(1*tdesc, A_PtrSize, "UShort"), converted := false, indirectionLevel := 0
@@ -72,7 +72,23 @@ ITL_ParamToVARIANT(info, tdesc, value, byRef variant, index)
 	{
 		value := ComObjParameter(VT_BYREF, value)
 	}
-	; todo: handle arrays (native and safe)
+	else if (vt == VT_SAFEARRAY && indirectionLevel == 0)
+	{
+		; get the type of the SAFEARRAY elements:
+		tdesc := NumGet(1*tdesc, 00, "Ptr") ; TYPEDESC::lptdesc
+		, vt := NumGet(1*tdesc, A_PtrSize, "UShort") ; TYPEDESC::vt
+
+		if (!IsObject(value)) ; a raw pointer was passed
+		{
+			value := ComObjParameter(VT_ARRAY|vt, value)
+		}
+		if (!ITL_IsComObject(value)) ; a normal AHK-array (or object)
+		{
+			value := ITL_ArrayToSafeArray(value, vt)
+		}
+		; (if it is already a COM wrapper object, do nothing)
+	}
+	; todo: handle arrays (native)
 
 	if (!converted)
 		ITL_VARIANT_Create(value, variant) ; create VARIANT
