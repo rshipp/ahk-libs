@@ -3,7 +3,6 @@
 ; "Abstract" classes set this as their constructor.
 ITL_AbstractClassConstructor(this, p*)
 {
-	;throw Exception("An instance of the class """ this.__class """ must not be created.", -1)
 	throw Exception(ITL_FormatException("An instance of the class """ this.base.__class """ must not be created."
 										, "The class is abstract."
 										, 0)*)

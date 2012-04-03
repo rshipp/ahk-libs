@@ -26,7 +26,6 @@ class ITL_TypeLibWrapper
 				hr := DllCall(NumGet(NumGet(lib+0), 05*A_PtrSize, "Ptr"), "Ptr", lib, "UInt", A_Index - 1, "UInt*", typeKind, "Int") ; ITypeLib::GetTypeKind()
 				if (ITL_FAILED(hr) || typeKind == -1)
 				{
-					;throw Exception("Type information kind no. " A_Index - 1 " could not be read.", -1, ITL_FormatError(hr))
 					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "Type information kind no. " A_Index - 1 " could not be read."
 													, ErrorLevel, hr
@@ -42,7 +41,6 @@ class ITL_TypeLibWrapper
 				hr := DllCall(NumGet(NumGet(lib+0), 04*A_PtrSize, "Ptr"), "Ptr", lib, "UInt", A_Index - 1, "Ptr*", typeInfo, "Int") ; ITypeLib::GetTypeInfo()
 				if (ITL_FAILED(hr) || !typeInfo)
 				{
-					;throw Exception("Type information no. " A_Index - 1 " could not be read.", -1, ITL_FormatError(hr))
 					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "Type information no. " A_Index - 1 " could not be read."
 													, ErrorLevel, hr
@@ -56,7 +54,6 @@ class ITL_TypeLibWrapper
 					hr := DllCall(NumGet(NumGet(typeInfo+0), 03*A_PtrSize, "Ptr"), "Ptr", typeInfo, "Ptr*", attr, "Int") ; ITypeInfo::GetTypeAttr()
 					if (ITL_FAILED(hr) || !attr)
 					{
-						;throw Exception("ITypeInfo::GetTypeAttr() failed.", -1, ITL_FormatError(hr))
 						throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 														, "ITypeInfo::GetTypeAttr() for type """ typeName """ failed."
 														, ErrorLevel, hr
@@ -70,7 +67,6 @@ class ITL_TypeLibWrapper
 						hr := DllCall(NumGet(NumGet(typeInfo+0), 14*A_PtrSize, "Ptr"), "Ptr", typeInfo, "UInt", hrefType, "Ptr*", refInfo) ; ITypeInfo::GetRefTypeInfo()
 						if (ITL_FAILED(hr) || !refInfo)
 						{
-							;throw Exception("ITypeInfo::GetRefTypeInfo() failed.", -1, ITL_FormatError(hr))
 							throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 															, "ITypeInfo::GetRefTypeInfo() for type """ typeName """ failed."
 															, ErrorLevel, hr
@@ -80,7 +76,6 @@ class ITL_TypeLibWrapper
 						hr := DllCall(NumGet(NumGet(refInfo+0), 03*A_PtrSize, "Ptr"), "Ptr", refInfo, "Ptr*", refAttr, "Int") ; ITypeInfo::GetTypeAttr()
 						if (ITL_FAILED(hr) || !refAttr)
 						{
-							;throw Exception("ITypeInfo::GetTypeAttr() failed.", -1, ITL_FormatError(hr))
 							throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 															, "ITypeInfo::GetTypeAttr() for type """ typeName """ failed."
 															, ErrorLevel, hr
@@ -114,7 +109,6 @@ class ITL_TypeLibWrapper
 				hr := DllCall(NumGet(NumGet(typeInfo+0), 12*A_PtrSize, "Ptr"), "Ptr", typeInfo, "Int", MEMBERID_NIL, "Ptr*", typeName, "Int")
 				if (ITL_FAILED(hr) || !typeName)
 				{
-					;throw Exception("ITypeInfo::GetDocumentation() failed.", -1, ITL_FormatError(hr))
 					throw Exception(ITL_FormatException("Failed to wrap type library """ typeLibName """."
 													, "ITypeInfo::GetDocumentation() for an alias failed."
 													, ErrorLevel, hr
@@ -134,7 +128,6 @@ class ITL_TypeLibWrapper
 		hr := DllCall(NumGet(NumGet(lib+0), 09*A_PtrSize, "Ptr"), "Ptr", lib, "UInt", index, "Ptr*", name, "Ptr*", 0, "UInt*", 0, "Ptr*", 0, "Int") ; ITypeLib::GetDocumentation()
 		if (ITL_FAILED(hr) || !name)
 		{
-			;throw Exception("Name for the " (index == -1 ? "type library" : "type description no. " index) " could not be read.", -1, ITL_FormatError(hr))
 			throw Exception(ITL_FormatException("The name for the " (index == -1 ? "type library" : "type description no. " index) " could not be read."
 											, "ITypeLib::GetDocumentation() failed."
 											, ErrorLevel, hr
@@ -170,7 +163,6 @@ class ITL_TypeLibWrapper
 			}
 			else
 			{
-				;throw Exception("Field could not be retrieved.", -1)
 				throw Exception(ITL_FormatException("A type GUID could not be read."
 												, "The type wrapper object could not be retrieved."
 												, ErrorLevel, ""
@@ -186,7 +178,6 @@ class ITL_TypeLibWrapper
 				hr := DllCall(NumGet(NumGet(lib+0), 04*A_PtrSize, "Ptr"), "Ptr", lib, "UInt", obj, "Ptr*", info, "Int") ; ITypeLib::GetTypeInfo()
 				if (ITL_FAILED(hr) || !info)
 				{
-					;throw Exception("Type information could not be read.", -1, ITL_FormatError(hr))
 					throw Exception(ITL_FormatException("A type GUID could not be read."
 													, "ITypeLib::GetTypeInfo() failed on index " obj "."
 													, ErrorLevel, hr
@@ -200,7 +191,6 @@ class ITL_TypeLibWrapper
 			hr := DllCall(NumGet(NumGet(lib+0), 07*A_PtrSize, "Ptr"), "Ptr", lib, "Ptr*", attr, "Int") ; ITypeLib::GetLibAttr()
 			if (ITL_FAILED(hr) || !attr)
 			{
-				;throw Exception("TLIBATTR could not be read.", -1, ITL_FormatError(hr))
 				throw Exception(ITL_FormatException("The type library GUID could not be read."
 													, "ITypeLib::GetLibAttr() failed."
 													, ErrorLevel, hr
@@ -220,7 +210,6 @@ class ITL_TypeLibWrapper
 			hr := DllCall(NumGet(NumGet(info+0), 03*A_PtrSize, "Ptr"), "Ptr", info, "Ptr*", attr, "Int") ; ITypeInfo::GetTypeAttr()
 			if (ITL_FAILED(hr) || !attr)
 			{
-				;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
 				throw Exception(ITL_FormatException("A type GUID could not be read."
 												, "ITypeInfo::GetTypeAttr() failed."
 												, ErrorLevel, hr

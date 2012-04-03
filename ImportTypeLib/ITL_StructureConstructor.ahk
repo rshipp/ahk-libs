@@ -18,7 +18,6 @@ ITL_StructureConstructor(this, ptr = 0, noInit = false)
 		hr := DllCall(NumGet(NumGet(rcinfo+0), 03*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordInit()
 		if (ITL_FAILED(hr))
 		{
-			;throw Exception("RecordInit() failed.", -1, ITL_FormatError(hr))
 			throw Exception(ITL_FormatException("Failed create an instance of the """ this.base[ITL.Properties.TYPE_NAME] """ structure."
 											, "IRecordInfo::RecordInit() failed."
 											, ErrorLevel, hr)*)

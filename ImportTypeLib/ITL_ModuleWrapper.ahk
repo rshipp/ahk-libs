@@ -21,7 +21,6 @@ class ITL_ModuleWrapper extends ITL.ITL_ConstantMemberWrapperBaseClass
 		hr := DllCall(NumGet(NumGet(info+0), 10*A_PtrSize, "Ptr"), "Ptr", info, "Str*", method, "UInt", INVOKEKIND_FUNC, "Ptr*", id, "Int") ; ITypeInfo::GetIDsOfNames()
 		if (ITL_FAILED(hr) || id == DISPID_UNKNOWN)
 		{
-			;throw Exception("GetIDsOfNames() for """ method "()"" failed.", -1, ITL_FormatError(hr))
 			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this[ITL.Properties.TYPE_NAME] """."
 											, "ITypeInfo::GetIDsOfNames() failed."
 											, ErrorLevel, hr
@@ -31,7 +30,6 @@ class ITL_ModuleWrapper extends ITL.ITL_ConstantMemberWrapperBaseClass
 		hr := DllCall(NumGet(NumGet(info+0), 15*A_PtrSize, "Ptr"), "Ptr", info, "UInt", id, "UInt", 1, "Ptr*", addr, "Int") ; ITypeInfo::AddressOfMember()
 		if (ITL_FAILED(hr) || !addr)
 		{
-			;throw Exception("AddressOfMember() for """ method "()"" failed.", -1, ITL_FormatError(hr))
 			throw Exception(ITL_FormatException("Failed to call method """ method """ on module """ this[ITL.Properties.TYPE_NAME] """."
 											, "ITypeInfo::AddressOfMember() failed."
 											, ErrorLevel, hr

@@ -8,7 +8,6 @@ ITL_InterfaceConstructor(this, instance)
 	interfacePtr := ComObjQuery(instance, this.base[ITL.Properties.TYPE_GUID])
 	if (!interfacePtr)
 	{
-		;throw Exception("This interface is not supported by the given class instance.", -1)
 		throw Exception(ITL_FormatException("Failed to create an instance of interface """ this.base[ITL.Properties.TYPE_NAME] """."
 										, "The interface is not supported by the given class instance."
 										, ErrorLevel, ""

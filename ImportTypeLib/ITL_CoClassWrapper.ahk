@@ -16,7 +16,6 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 			hr := DllCall(NumGet(NumGet(typeInfo+0), 03*A_PtrSize, "Ptr"), "Ptr", typeInfo, "Ptr*", typeAttr, "Int") ; ITypeInfo::GetTypeAttr()
 			if (ITL_FAILED(hr) || !typeAttr)
 			{
-				;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
 				throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 												, "ITypeInfo::GetTypeAttr() failed."
 												, ErrorLevel, hr
@@ -29,7 +28,6 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 				hr := DllCall(NumGet(NumGet(typeInfo+0), 09*A_PtrSize, "Ptr"), "Ptr", typeInfo, "UInt", A_Index - 1, "UInt*", implFlags, "Int") ; ITypeInfo::GetImplTypeFlags()
 				if (ITL_FAILED(hr))
 				{
-					;throw Exception("ImplTypeFlags could not be read.", -1, ITL_FormatError(hr))
 					throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetImplTypeFlags() failed."
 														, ErrorLevel, hr)*)
@@ -39,7 +37,6 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					hr := DllCall(NumGet(NumGet(typeInfo+0), 08*A_PtrSize, "Ptr"), "Ptr", typeInfo, "UInt", A_Index - 1, "UInt*", implHref, "Int") ; ITypeInfo::GetRefTypeOfImplType()
 					if (ITL_FAILED(hr) || implHref == -1)
 					{
-						;throw Exception("GetRefTypeOfImplType failed.", -1, ITL_FormatError(hr))
 						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetRefTypeOfImplType() failed."
 														, ErrorLevel, hr
@@ -49,7 +46,6 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					hr := DllCall(NumGet(NumGet(typeInfo+0), 14*A_PtrSize, "Ptr"), "Ptr", typeInfo, "UInt", implHref, "Ptr*", implInfo, "Int") ; ITypeInfo::GetRefTypeInfo()
 					if (ITL_FAILED(hr) || !implInfo)
 					{
-						;throw Exception("GetRefTypeInfo failed.", -1, ITL_FormatError(hr))
 						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetRefTypeInfo() failed."
 														, ErrorLevel, hr
@@ -59,7 +55,6 @@ class ITL_CoClassWrapper extends ITL.ITL_WrapperBaseClass
 					hr := DllCall(NumGet(NumGet(implInfo+0), 03*A_PtrSize, "Ptr"), "Ptr", implInfo, "Ptr*", implAttr, "Int") ; ITypeInfo::GetTypeAttr()
 					if (ITL_FAILED(hr) || !implAttr)
 					{
-						;throw Exception("TYPEATTR could not be read.", -1, ITL_FormatError(hr))
 						throw Exception(ITL_FormatException("Failed to retrieve the default interface for the """ typeName """ class."
 														, "ITypeInfo::GetTypeAttr() failed."
 														, ErrorLevel, hr

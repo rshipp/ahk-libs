@@ -17,7 +17,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 				createInfo := ComObjQuery(typeInfo, IID_ICreateTypeInfo) ; query for the ICreateTypeInfo interface which can be used to modify the type
 				if (!createInfo)
 				{
-					;throw Exception("QueryInterface() for ICreateTypeInfo failed.", -1, "This is needed because the type """ typeName """ does not have a GUID.")
 					throw Exception(ITL_FormatException("Failed to create a wrapper for """ typeName """."
 													, "QueryInterface() for ICreateTypeInfo failed."
 													, ErrorLevel, ""
@@ -27,7 +26,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 				hr := ITL_GUID_Create(guid) ; dynamically create a new GUID
 				if (ITL_FAILED(hr))
 				{
-					;throw Exception("Creating a GUID failed.", -1, ITL_FormatError(hr))
 					throw Exception(ITL_FormatException("Failed to create a wrapper for """ typeName """."
 													, "Creation of a GUID failed."
 													, ErrorLevel, hr)*)
@@ -36,7 +34,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 				hr := DllCall(NumGet(NumGet(createInfo+0), 03*A_PtrSize, "Ptr"), "Ptr", createInfo, "Ptr", &guid, "Int") ; ICreateTypeInfo::SetGuid() - assign a GUID for the type
 				if (ITL_FAILED(hr))
 				{
-					;throw Exception("ICreateTypeInfo::SetGUID() failed.", -1, ITL_FormatError(hr))
 					throw Exception(ITL_FormatException("Failed to create a wrapper for """ typeName """."
 													, "ICreateTypeInfo::SetGuid() failed."
 													, ErrorLevel, hr)*)
@@ -46,7 +43,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 			hr := DllCall("OleAut32\GetRecordInfoFromTypeInfo", "Ptr", typeInfo, "Ptr*", rcinfo, "Int") ; retrieve an IRecordInfo instance for a type
 			if (ITL_FAILED(hr) || !rcinfo)
 			{
-				;throw Exception("GetRecordInfoFromTypeInfo() failed for type """ typeName """.", -1, ITL_FormatError(hr))
 				throw Exception(ITL_FormatException("Failed to create a wrapper for """ typeName """."
 												, "GetRecordInfoFromTypeInfo() failed."
 												, ErrorLevel, hr
@@ -67,7 +63,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 			hr := DllCall(NumGet(NumGet(rcinfo+0), 18*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Int") ; IRecordInfo::RecordDestroy()
 			if (ITL_FAILED(hr))
 			{
-				;throw Exception("RecordDestroy() failed.", -1, ITL_FormatError(hr))
 				throw Exception(ITL_FormatException("Failed to release structure of type """ this.base[ITL.Properties.TYPE_NAME] """."
 												, "IRecordInfo::RecordDestroy() failed."
 												, ErrorLevel, hr)*)
@@ -94,14 +89,12 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 
 				if (VarSetCapacity(variant, sizeof_VARIANT, 00) != sizeof_VARIANT)
 				{
-					;throw Exception("Out of memory.", -1)
 					throw Exception(ITL_FormatException("Out of memory.", "Memory allocation for VARIANT failed.", ErrorLevel)*)
 				}
 
 				hr := DllCall(NumGet(NumGet(rcinfo+0), 10*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::GetField()
 				if (ITL_FAILED(hr))
 				{
-					;throw Exception("GetField() failed.", -1, ITL_FormatError(hr))
 					throw Exception(ITL_FormatException("Failed to retrieve a structure field."
 													, "IRecordInfo::GetField() failed for field """ field """ on type """ this.base[ITL.Properties.TYPE_NAME] """."
 													, ErrorLevel, hr)*)
@@ -133,7 +126,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 			hr := DllCall(NumGet(NumGet(rcinfo+0), 12*A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt", INVOKE_PROPERTYPUT, "Ptr", ptr, "Str", field, "Ptr", &variant, "Int") ; IRecordInfo::PutField()
 			if (ITL_FAILED(hr))
 			{
-				;throw Exception("PutField() failed.", -1, ITL_FormatError(hr))
 				throw Exception(ITL_FormatException("Failed to set a structure field."
 												, "IRecordInfo::PutField() failed for field """ field """ on type """ this.base[ITL.Properties.TYPE_NAME] """."
 												, ErrorLevel, hr)*)
@@ -154,7 +146,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 		hr := DllCall(NumGet(NumGet(rcinfo+0), 14 * A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt*", varCount, "Ptr", 0, "Int") ; IRecordInfo::GetFieldNames()
 		if (ITL_FAILED(hr) || varCount == -1)
 		{
-			;throw Exception("IRecordInfo::GetFieldNames() failed.", -1, ITL_FormatError(hr))
 			throw Exception(ITL_FormatException("Failed to enumerate structure members of type """ this.base[ITL.Properties.TYPE_NAME] """."
 											, "IRecordInfo::GetFieldNames() failed."
 											, ErrorLevel, hr
@@ -166,7 +157,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 		hr := DllCall(NumGet(NumGet(rcinfo+0), 14 * A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt*", varCount, "Ptr", &names_array, "Int") ; IRecordInfo::GetFieldNames()
 		if (ITL_FAILED(hr))
 		{
-			;throw Exception("IRecordInfo::GetFieldNames() failed.", -1, ITL_FormatError(hr))
 			throw Exception(ITL_FormatException("Failed to enumerate structure members of type """ this.base[ITL.Properties.TYPE_NAME] """."
 											, "IRecordInfo::GetFieldNames() failed."
 											, ErrorLevel, hr)*)
@@ -196,7 +186,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 		hr := DllCall(NumGet(NumGet(rcinfo+0), 05*A_PtrSize, "Ptr"), "Ptr", rcinfo, "Ptr", ptrOld, "Ptr", ptrNew, "Int") ; IRecordInfo::RecordCopy()
 		if (ITL_FAILED(hr))
 		{
-			;throw Exception("IRecordInfo::RecordCopy() failed.", -1, ITL_FormatError(hr))
 			throw Exception(ITL_FormatException("Failed to clone a structure instance."
 											, "IRecordInfo::RecordCopy() failed."
 											, ErrorLevel, hr)*)
@@ -224,7 +213,6 @@ class ITL_StructureWrapper extends ITL.ITL_WrapperBaseClass
 		hr := DllCall(Numget(NumGet(rcinfo+0), 08*A_PtrSize, "Ptr"), "Ptr", rcinfo, "UInt*", size, "Int") ; IRecordInfo::GetSize()
 		if (ITL_FAILED(hr) || size == -1)
 		{
-			;throw Exception("GetSize() failed.", -1, ITL_FormatError(hr))
 			throw Exception(ITL_FormatException("Failed to retrieve structure size for """ type[ITL.Properties.TYPE_NAME] """."
 											, "IRecordInfo::GetSize() failed."
 											, ErrorLevel, hr)*)

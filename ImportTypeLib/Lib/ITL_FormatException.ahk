@@ -1,7 +1,7 @@
 ITL_FormatException(msg, detail, error, hr = "", special = false, special_msg = "")
 {
 	static NL := "`n`t"
-	return [ "ImportTypeLib encountered an error:" . NL . msg
+	return [  msg
 			, -1
 			, (detail != ""	? NL . detail										:	"")
 			. (ErrorLevel	? NL . "ErrorLevel: " error							:	"")
