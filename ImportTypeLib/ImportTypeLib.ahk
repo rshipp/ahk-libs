@@ -1686,6 +1686,22 @@ ITL_IsSafeArray(obj)
 		|| (ITL_SUCCEEDED(DllCall("OleAut32\SafeArrayGetVartype", "Ptr", obj, "UShort*", vt, "Int")) && vt && ITL_IsSafeArray(ComObjParameter(VT_ARRAY|vt, obj))) ; a raw SAFEARRAY pointer was passed
 }
 
+ITL_IsPureArray(obj, zeroBased = false)
+{
+	for key in obj
+	{
+		if (!zeroBased && key != A_Index)
+		{
+			return false
+		}
+		else if (zeroBased && key != (A_Index - 1))
+		{
+			return false
+		}
+	}
+	return true
+}
+
 ITL_SafeArrayType(obj)
 {
 	static VT_ARRAY := 0x2000
@@ -1738,7 +1754,7 @@ ITL_ArrayToSafeArray(array, vt)
 	if (!psa)
 	{
 		throw Exception(ITL_FormatException("Failed to convert an array to a SAFEARRAY."
-										, "SafeArrayCreate() retruned NULL."
+										, "SafeArrayCreate() returned NULL."
 										, ErrorLevel)*)
 	}
 
@@ -1802,7 +1818,7 @@ ITL_ArrayGetDimensions(array, dimensions = "", index = 1)
 
 	for k, v in array
 	{
-		if IsObject(v)
+		if (IsObject(v) && (ITL_IsPureArray(v, true) || ITL_IsPureArray(v, false)))
 			dimensions := ITL_ArrayGetDimensions(v, dimensions, index + 1)
 	}
 
@@ -1813,7 +1829,7 @@ ITL_ArrayGetDimensions(array, dimensions = "", index = 1)
 ITL_ArrayGetDimensionCount(array)
 {
 	local k, v, dimCount := 0
-	while (IsObject(array))
+	while (IsObject(v) && (ITL_IsPureArray(v, true) || ITL_IsPureArray(v, false)))
 	{
 		dimCount++
 		for k, v in array
