@@ -7,6 +7,7 @@ This control extends <CControl>. All basic properties and functions are implemen
 Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and DropDownList
 {
 	SelectionChanged := new EventHandler()
+	DoubleClick := new EventHandler()
 	__New(Name, Options, Text, GUINum, Type)
 	{
 		Base.__New(Name, Options, Text, GUINum)
@@ -206,11 +207,18 @@ Class CChoiceControl Extends CControl ;This class is a ComboBox, ListBox and Dro
 	
 	Event: SelectionChanged(SelectedItem)
 	Invoked when the selection was changed.
+
+	Event: DoubleClick(Item)
+	Invoked when an item in a ListBox is double-clicked.
 	*/
 	HandleEvent(Event)
 	{
-		this.ProcessSubControlState(this._.PreviouslySelectedItem, this.SelectedItem)
-		this.CallEvent("SelectionChanged", this.SelectedItem)
+		if(this._.PreviouslySelectedItem != this.SelectedItem)
+			this.ProcessSubControlState(this._.PreviouslySelectedItem, this.SelectedItem)
+		if(Event.GUIEvent = "DoubleClick")
+			this.CallEvent("DoubleClick", this.SelectedItem)
+		else
+			this.CallEvent("SelectionChanged", this.SelectedItem)
 		this._.PreviouslySelectedItem := this.SelectedItem
 	}
 	/*

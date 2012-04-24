@@ -50,6 +50,17 @@ Class CGUI
 	;Used for keeping track of the window size. Until the window is shown for the first time or manual size is set
 	;it will keep updating the size of the (invisible) window when new controls are added.
 	_Initialized := false
+
+	/*
+	Event Handler: OnClose(Source)
+	Invoked when the window is closed (hidden or destroyed).
+
+	Event Handler: OnDestroy(Source)
+	Invoked when the window is destroyed.
+	*/
+	OnClose := new EventHandler()
+	OnDestroy := new EventHandler()
+
 	__New(instance)
 	{
 		if(!CGUI_Assert(IsObject(instance) && !instance.HasKey("hwnd"), "CGUI constructor must not be called!"))
@@ -238,7 +249,10 @@ Class CGUI
 		Gui, % this.GUINum ":Destroy"
 		;Call PostDestroy function
 		if(IsFunc(this.PostDestroy))
+		{
 			this.PostDestroy()
+			this.OnDestroy.(this)
+		}
 	}
 	
 	/*
@@ -459,7 +473,7 @@ Class CGUI
 	
 	Returns: The created control object
 	*/
-	AddControl(Control, Name, Options, Text, ControlList="", ParentControl = "")
+	AddControl(Control, Name, Options = "", Text = "", ControlList="", ParentControl = "")
 	{
 		local hControl, type, testHWND, vName, NeedsGLabel
 		if(this.IsDestroyed)
@@ -581,24 +595,33 @@ Class CGUI
 	Property: IsDestroyed
 	True if the window has been destroyed and this object is not usable anymore.
 	
-	Property: x
-	x-Position of the window.
+	Property: X
+	x-Position of the window (including its border) in screen coordinates.
 	
-	Property: y
-	y-Position of the window.
+	Property: Y
+	y-Position of the window (including its border) in screen coordinates.
 	
-	Property: width
+	Property: Width
+	Width of the client area of the window.
+	
+	Property: Height
+	Height of the client area of the window.
+	
+	Property: WindowWidth
 	Width of the window.
-	
-	Property: height
+
+	Property: WindowHeight
 	Height of the window.
-	
+
 	Property: Position
-	An object containing the x and y values. They can not be set separately through this object, only both at once.
+	An object containing the X and Y properties. They can not be set separately through this object, only both at once.
 	
 	Property: Size
-	An object containing the width and height values. They can not be set separately through this object, only both at once.
+	An object containing the Width and Height values. They can not be set separately through this object, only both at once.
 	
+	Property: WindowSize
+	An object containing the WindowWidth and WindowHeight values. They can not be set separately through this object, only both at once.
+
 	Property: Title
 	The window title.
 	
@@ -703,23 +726,37 @@ Class CGUI
 			}
 			else if(Name != "IsDestroyed" && !this.IsDestroyed)
 			{
-				if Name in x,y,width,height
+				if Name in width,height
 				{
 					VarSetCapacity(rc, 16)
 					DllCall("GetClientRect", "PTR", this.hwnd, "PTR", &rc, "UINT")
 					Value := NumGet(rc, {x : 0, y : 4, width : 8, height : 12}[Name], "int")
 				}
+				else if Name in X,Y
+				{
+					WinGetPos, X, Y, , , % "ahk_id " this.hwnd
+					return Name = "X" ? X : Y
+				}
 				else if(Name = "Position")
 				{
-					VarSetCapacity(rc, 16)
-					DllCall("GetClientRect", "PTR", this.hwnd, "PTRP", rc, "UINT")
-					Value := {x : NumGet(rc, 0, "int"), y : NumGet(rc, 4, "int")}
+					WinGetPos, X, Y, , , % "ahk_id " this.hwnd
+					Value := {x : X, y : Y}
+				}
+				else if Name in WindowWidth,WindowHeight
+				{
+					WinGetPos, , , Width, Height, % "ahk_id " this.hwnd
+					return Name = "WindowWidth" ? Width : Height
 				}
 				else if(Name = "Size")
 				{
 					VarSetCapacity(rc, 16)
 					DllCall("GetClientRect", "PTR", this.hwnd, "PTRP", rc, "UINT")
 					Value := {width : NumGet(rc, 8, "int"), height : NumGet(rc, 12, "int")}
+				}
+				else if(Name = "WindowSize")
+				{
+					WinGetPos, , , Width, Height, % "ahk_id " this.hwnd
+					return {Width : Width, Height : Height}
 				}
 				else if(Name = "Title")
 					WinGetTitle, Value, % "ahk_id " this.hwnd
@@ -853,10 +890,10 @@ Class CGUI
 				WinSet, Region, %Value%, % "ahk_id " this.hwnd
 				this._.Region := Value
 			}
-			else if Name in x,y,width,height
+			else if Name in x,y,WindowWidth,WindowHeight
 			{
-				WinMove,% "ahk_id " this.hwnd,,% Name = "x" ? Value : "", % Name = "y" ? Value : "", % Name = "width" ? Value : "", % Name = "height" ? Value : ""
-				if(Name = "width" || Name = "height") ;Prevent recalculating size after it has been set manually
+				WinMove,% "ahk_id " this.hwnd,,% Name = "x" ? Value : "", % Name = "y" ? Value : "", % Name = "WindowWidth" ? Value : "", % Name = "WindowHeight" ? Value : ""
+				if(Name = "WindowWidth" || Name = "WindowHeight") ;Prevent recalculating size after it has been set manually
 					this.Remove("_Initialized")
 				else if(this.HasKey("_Initialized")) ;Mark that position was changed manually during recalculation phase
 					this._Initialized := true
@@ -869,9 +906,15 @@ Class CGUI
 			}
 			else if(Name = "Size")
 			{
-				WinMove,% "ahk_id " this.hwnd,,,, % Value.width, % Value.height
-				if(Name = "width" || Name = "height") ;Prevent recalculating size after it has been set manually
-					this.Remove("_Initialized")
+				Size := this.Size
+				WinSize := this.WindowSize
+				WinMove, % "ahk_id " this.hwnd,,,, % Value.width + WinSize.Width - Size.Width, % Value.height + WinSize.Height - Size.Height
+				this.Remove("_Initialized")
+			}
+			else if(Name = "WindowSize")
+			{
+				WinMove, % "ahk_id " this.hwnd,,,, % Value.width, % Value.height
+				this.Remove("_Initialized")
 			}
 			else if(Name = "Title")
 				WinSetTitle, % "ahk_id " this.hwnd,,%Value%
@@ -1007,6 +1050,9 @@ Class CGUI
 				}
 				if(!this.IsDestroyed)
 				{
+					;Call event handler
+					if(func = "PreClose")
+						this.OnClose.(this)
 					if(func = "PreClose" && !result && !GUI.DestroyOnClose) ;Hide the GUI if closing was not aborted and the GUI should not destroy itself on closing
 						GUI.Hide()
 					else if(func = "PreClose" && !result) ;Otherwise if not aborted destroy the GUI
@@ -1291,6 +1337,46 @@ CGUI_IndexOf(Array, Value)
 CGUI_TypeOf(Object)
 {
 	return Object.__Class
+}
+
+CGUI_ScreenToClient(hwnd, ByRef x, ByRef y)
+{
+    VarSetCapacity(pt, 8)
+    NumPut(x, pt, 0)
+    NumPut(y, pt, 4)
+    DllCall("ScreenToClient", "PTR", hwnd, "PTR", &pt)
+    x := NumGet(pt, 0, "int")
+    y := NumGet(pt, 4, "int")
+}
+
+CGUI_ClientToScreen(hwnd, ByRef x, ByRef y)
+{
+    VarSetCapacity(pt, 8)
+    NumPut(x, pt, 0)
+    NumPut(y, pt, 4)
+    DllCall("ClientToScreen", "PTR", hwnd, "PTR", &pt)
+    x := NumGet(pt, 0, "int")
+    y := NumGet(pt, 4, "int")
+}
+CGUI_WinToClient(hwnd, ByRef x, ByRef y)
+{
+    WinGetPos, wx, wy,,, ahk_id %hwnd%
+    VarSetCapacity(pt, 8)
+    NumPut(x + wx, pt, 0)
+    NumPut(y + wy, pt, 4)
+    DllCall("ScreenToClient", "PTR", hwnd, "PTR", &pt)
+    x := NumGet(pt, 0, "int")
+    y := NumGet(pt, 4, "int")
+}
+CGUI_ClientToWin(hwnd, ByRef x, ByRef y)
+{
+    VarSetCapacity(pt, 8)
+    NumPut(x, pt, 0)
+    NumPut(y, pt, 4)
+    DllCall("ClientToScreen", "PTR", hwnd, "PTR", &pt)
+    WinGetPos, wx, wy,,, ahk_id %hwnd%
+    x := NumGet(pt, 0, "int") - wx
+    y := NumGet(pt, 4, "int") - wy
 }
 #include <gdip>
 #include <CControl>
