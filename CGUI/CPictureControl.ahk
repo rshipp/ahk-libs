@@ -11,14 +11,25 @@ Class CPictureControl Extends CControl
 	
 	__New(Name, Options, Text, GUINum)
 	{
-		base.__New(Name, Options, Text, GUINum)
+		if Text is Number
+			base.__New(Name, Options, Text, GUINum)
+		else
+			base.__New(Name, Options, Text, GUINum)
 		this.Type := "Picture"
-		this._.Picture := Text
-		this._.Insert("Picture", "Text")
+		this._.Insert("Picture", Text)
 		this._.Insert("ControlStyles", {Center : 0x200, ResizeImage : 0x40})
 		this._.Insert("Events", ["Click", "DoubleClick"])
 	}
-	
+	PostCreate()
+	{
+		base.PostCreate()
+		text := this._.Picture
+		if text is number
+		{
+			this._.Picture := ""
+			this.SetImageFromHBitmap(text)
+		}
+	}
 	/*
 	Property: Picture
 	The picture can be changed by assigning a filename to this property.

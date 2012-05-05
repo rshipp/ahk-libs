@@ -23,6 +23,35 @@ Class CControl ;Never created directly
 	{
 		this.Font._.hwnd := this.hwnd
 	}
+
+	/*
+	Function: Autosize
+	Resizes the control to fit its contents
+	*/
+	AutoSize() ; www.autohotkey.com/forum/viewtopic.php?p=465438#465438 By SKAN and SEAN, merged by Fragman
+	{
+		SendMessage 0x31, 0, 0, , % "ahk_id " this.hwnd ; WM_GETFONT
+		if(ErrorLevel = "FAIL")
+			return
+		hFont := Errorlevel
+
+		hDC := DllCall("GetDC", "PTR", 0)
+		if(hFont && hDC)
+		{
+			;Store old font
+			hFold := DllCall("SelectObject", "PTR", hDC, "PTR", hFont)
+
+			DllCall("GetTextExtentPoint32", "PTR", hDC, "Str", this.Text, "Int", StrLen(this.Text), "PTR", (size := new _Struct("LONG width, LONG height"))[""])
+
+			;Restore old font
+			DllCall("SelectObject", "PTR", hDC, "PTR", hFold)
+			DllCall("ReleaseDC", "PTR", 0, "PTR", hDC)
+		}
+		else
+			return
+		this.Size := {Width : size.width, Height : size.height}
+	}
+
 	/*
 	Function: Show
 	Shows the control if it was previously hidden.
@@ -72,6 +101,16 @@ Class CControl ;Never created directly
 		if(CGUI.GUIList[this.GUINum].IsDestroyed)
 			return
 		ControlFocus,,% "ahk_id " this.hwnd
+	}
+	/*
+	Function: Redraw
+	Redraws the control. This can sometimes fix drawing issues.
+	*/
+	Redraw()
+	{
+		if(CGUI.GUIList[this.GUINum].IsDestroyed)
+			return
+		GuiControl, % this.GUINum ":MoveDraw",% this.hwnd
 	}
 	;~ Font(Options, Font="")
 	;~ {
