@@ -201,6 +201,14 @@
 			return Value
 		}
 	}
+	;Waits until the worker thread has started its next task. This function can be used to make sure the Worker thread is really running before checking its state.
+	;Usually the worker thread will still be in Stopped state immediately after starting it since the main thread has to wait for a message from the worker thread.
+	WaitForStart(Timeout = 5)
+	{
+		Time := A_TickCount + Timeout * 1000
+		while(A_TickCount < Time && this.State != "Running")
+			Sleep 10
+	}
 }
 
 /*
