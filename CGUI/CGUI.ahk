@@ -26,7 +26,6 @@ Class CGUI
 	var DestroyOnClose := 0 ;If true, the gui will be destroyed instead of being hidden when it gets closed by the user.
 		
 	Not supported:
-	var Delimiter := "|" ;It's always | for now
 	var Label := "CGUI_" ;Labels are handled internally and get rerouted to event functions defined in the class which extends CGUI
 	var LastFoundExist := 0 ;This is not needed because the GUI is created anyway when the class gets instantiated.
 	
@@ -84,6 +83,7 @@ Class CGUI
 		CGUI.GUIList[instance.GUINum] := instance
 		GUI, % instance.GUINum ":+LabelCGUI_ +LastFound"
 		instance.hwnd := WinExist()
+		instance._.Delimiter := "|"
 		/*
 		Prepare for some HAX!
 		The code below enables the user of this library to create subclasses inside the GUI class that represent controls.
@@ -631,6 +631,9 @@ Class CGUI
 	Property: ExStyle
 	The window extended style.
 	
+	Property: Delimiter
+	The delimiter used (mostly internally) for multiple items in a control. The default value is "|", but you can change it to something like "`n" or "`t" if you need to use "|" in the control text.
+
 	Property: Transcolor
 	A color that will be made invisible/see-through on the window. Values: RGB|ColorName|Off
 	
@@ -795,7 +798,7 @@ Class CGUI
 					if(GUI.__Class = this.__Class)
 						Value.Insert(GUI)
 			}
-			else if(Value = "" && CGUI_IndexOf(["MinSize", "MaxSize", "Theme", "ToolWindow", "Owner", "OwnDialogs", "Region", "WindowColor", "ControlColor", "ValidateOnFocusLeave"], Name))
+			else if(Value = "" && CGUI_IndexOf(["Delimiter", "MinSize", "MaxSize", "Theme", "ToolWindow", "Owner", "OwnDialogs", "Region", "WindowColor", "ControlColor", "ValidateOnFocusLeave"], Name))
 				Value := this._[Name]
 			if(!DetectHidden)
 				DetectHiddenWindows, Off
@@ -837,6 +840,11 @@ Class CGUI
 					else
 						this._[Name][A_Index = 1 ? "width" : "height"] := A_LoopField
 				}
+			}
+			else if(Name = "Delimiter")
+			{
+				Gui, % this.GUINum ":+Delimiter" Value
+				this._.Delimiter := Value
 			}
 			else if(Name = "Owner")
 			{

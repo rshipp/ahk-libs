@@ -258,13 +258,15 @@ Class CListViewControl Extends CControl
 				{
 					if(LV_GetCount("Selected") = 1)
 					{
+						this._.PreviouslySelectedItem := this.Items[this._.SelectedIndex]
+						this._.SelectedIndex := this.SelectedIndex
 						this.ProcessSubControlState(this._.PreviouslySelectedItem, this.SelectedItem)
-						this._.PreviouslySelectedItem := this.SelectedItem
 					}
 					else
 					{
 						this.ProcessSubControlState(this._.PreviouslySelectedItem, "")
 						this._.PreviouslySelectedItem := ""
+						this._.SelectedIndex := ""
 					}
 				}
 			}
@@ -282,13 +284,15 @@ Class CListViewControl Extends CControl
 					{
 						if(LV_GetCount("Selected") = 1)
 						{
+							this._.PreviouslySelectedItem := this.Items[this._.SelectedIndex]
+							this._.SelectedIndex := this.SelectedIndex
 							this.ProcessSubControlState(this._.PreviouslySelectedItem, this.SelectedItem)
-							this._.PreviouslySelectedItem := this.SelectedItem
 						}
 						else
 						{
 							this.ProcessSubControlState(this._.PreviouslySelectedItem, "")
 							this._.PreviouslySelectedItem := ""
+							this._.SelectedIndex := ""
 						}
 					}
 				}
@@ -387,13 +391,15 @@ Class CListViewControl Extends CControl
 			{
 				if(LV_GetCount("Selected") = 1)
 				{
-					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, Row)
-					Control._.PreviouslySelectedItem := Row
+					Control._.PreviouslySelectedItem := Control.Items[Control._.SelectedIndex]
+					Control._.SelectedIndex := Control.SelectedIndex
+					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, Control.SelectedItem)
 				}
 				else
 				{
 					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, "")
 					Control._.PreviouslySelectedItem := ""
+					Control._.SelectedIndex := ""
 				}
 			}
 			return Row
@@ -437,13 +443,15 @@ Class CListViewControl Extends CControl
 			{
 				if(LV_GetCount("Selected") = 1)
 				{
+					Control._.PreviouslySelectedItem := Control.Items[Control._.SelectedIndex]
+					Control._.SelectedIndex := Control.SelectedIndex
 					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, Control.SelectedItem)
-					Control._.PreviouslySelectedItem := Control.SelectedItem
 				}
 				else
 				{
 					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, "")
 					Control._.PreviouslySelectedItem := ""
+					Control._.SelectedIndex := ""
 				}
 			}
 		}
@@ -484,8 +492,9 @@ Class CListViewControl Extends CControl
 			LV_Delete()
 			Loop % Control.Items._.MaxIndex()
 				Control.Items._.Remove(A_Index, "")
+			Control._.PreviouslySelectedItem := Control.Items[Control._.SelectedIndex]
 			Control.ProcessSubControlState(Control._.PreviouslySelectedItem, "")
-			Control._.PreviouslySelectedItem := ""
+			Control._.SelectedIndex := ""
 		}
 		/*
 		Function: Delete
@@ -521,13 +530,15 @@ Class CListViewControl Extends CControl
 			{
 				if(LV_GetCount("Selected") = 1)
 				{
+					Control._.PreviouslySelectedItem := Control.Items[Control._.SelectedIndex]
+					Control._.SelectedIndex := Control.SelectedIndex
 					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, Control.SelectedItem)
-					Control._.PreviouslySelectedItem := Control.SelectedItem
 				}
 				else
 				{
 					Control.ProcessSubControlState(Control._.PreviouslySelectedItem, "")
 					Control._.PreviouslySelectedItem := ""
+					Control._.SelectedIndex := ""
 				}
 			}
 		}
@@ -744,13 +755,15 @@ Class CListViewControl Extends CControl
 				{
 					if(LV_GetCount("Selected") = 1)
 					{
+						Control._.PreviouslySelectedItem := Control.Items[Control._.SelectedIndex]
+						Control._.SelectedIndex := Control.SelectedIndex
 						Control.ProcessSubControlState(Control._.PreviouslySelectedItem, Control.SelectedItem)
-						Control._.PreviouslySelectedItem := Control.SelectedItem
 					}
 					else
 					{
 						Control.ProcessSubControlState(Control._.PreviouslySelectedItem, "")
 						Control._.PreviouslySelectedItem := ""
+						Control._.SelectedIndex := ""
 					}
 				}
 			}
@@ -856,13 +869,15 @@ Class CListViewControl Extends CControl
 						{
 							if(LV_GetCount("Selected") = 1)
 							{
+								Control._.PreviouslySelectedItem := Control.Items[Control._.SelectedIndex]
+								Control._.SelectedIndex := Control.SelectedIndex
 								Control.ProcessSubControlState(Control._.PreviouslySelectedItem, Control.SelectedItem)
-								Control._.PreviouslySelectedItem := Control.SelectedItem
 							}
 							else
 							{
 								Control.ProcessSubControlState(Control._.PreviouslySelectedItem, "")
 								Control._.PreviouslySelectedItem := ""
+								Control._.SelectedIndex := ""
 							}
 						}
 						return Value
@@ -985,9 +1000,17 @@ Class CListViewControl Extends CControl
 			if(InStr(Event.Errorlevel, "S")) ;Process sub control state
 			{
 				if(LV_GetCount("Selected") = 1)
+				{
+					this._.PreviouslySelectedItem := this.Items[this._.SelectedIndex]
+					this._.SelectedIndex := this.SelectedIndex
 					this.ProcessSubControlState(this._.PreviouslySelectedItem, this.SelectedItem)
+				}
 				else
+				{
 					this.ProcessSubControlState(this._.PreviouslySelectedItem, "")
+					this._.PreviouslySelectedItem := ""
+					this._.SelectedIndex := ""
+				}
 			}
 			Mapping := {Ca : "ItemChecked", cb : "ItemUnChecked"} ;Case insensitivity strikes back!
 			for EventIndex, Function in Mapping
@@ -1016,13 +1039,6 @@ Class CListViewControl Extends CControl
 				this.CallEvent("CheckedChanged", Row)
 			if(InStr(Event.ErrorLevel, "F"))
 				this.CallEvent("FocusedChanged", Row)
-			if(InStr(Event.Errorlevel, "S")) ;Process sub control state
-			{
-				if(this.SelectedItems.MaxIndex() = 1)
-					this._.PreviouslySelectedItem := this.SelectedItem
-				else
-					this._.PreviouslySelectedItem := ""
-			}
 		}
 	}
 }

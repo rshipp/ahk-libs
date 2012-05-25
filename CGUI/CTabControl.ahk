@@ -320,13 +320,14 @@ Class CTabControl Extends CControl
 				}
 				if(Name = "Text")
 				{
-					Control := CGUI.GUIList[this.GUINum].Controls[this.hwnd]
+					GUI := CGUI.GUIList[this.GUINum]
+					Control := GUI.Controls[this.hwnd]
 					Tabs := ""
 					for index, Tab in Control.Tabs
 						if(index != this._.TabNumber)
-							Tabs .= "|" Tab.Text
+							Tabs .= GUI._.Delimiter Tab.Text
 						else
-							Tabs .= "|" Value
+							Tabs .= GUI._.Delimiter Value
 					this._[Name] := Value
 					GuiControl, % this.GUINum ":", % Control.ClassNN, %Tabs%
 					return Value
