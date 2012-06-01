@@ -80,67 +80,66 @@ Dlg_Color(ByRef Color, hGui=0){
 Dlg_Find( hGui, Handler, Flags="d", FindText="") {
 	static FINDMSGSTRING = "commdlg_FindReplace"
 	static FR_DOWN=1, FR_MATCHCASE=4, FR_WHOLEWORD=2, FR_HIDEMATCHCASE=0x8000, FR_HIDEWHOLEWORD=0x10000, FR_HIDEUPDOWN=0x4000
-	static buf, FR, len
+	static buf, FINDREPLACE, len, sizeof_FINDREPLACE
+	PtrSize := A_PtrSize ? A_PtrSize : 4, PtrType := A_PtrSize ? "Ptr" : "UInt"
 
 	if len =
-		VarSetCapacity(FR, 40, 0), VarSetCapacity(buf, len := 256)
+		VarSetCapacity(FINDREPLACE, sizeof_FINDREPLACE := 12 + 7 * PtrSize, 0), VarSetCapacity(buf, len := 256)
 
 	ifNotEqual, FindText, , SetEnv, buf, %FindText%
-	
-	f := 0
-	 ,InStr(flags, "d")  ? f |= FR_DOWN			 : ""
-	 ,InStr(flags, "c")  ? f |= FR_MATCHCASE	 : ""
-	 ,InStr(flags, "w")  ? f |= FR_WHOLEWORD	 : ""
-	 ,InStr(flags, "-d") ? f |= FR_HIDEUPDOWN	 : ""
-	 ,InStr(flags, "-w") ? f |= FR_HIDEWHOLEWORD : ""
-	 ,InStr(flags, "-c") ? f |= FR_HIDEMATCHCASE : ""
 
-	NumPut(40,		FR, 0)	;size
-	 ,NumPut( hGui,	FR, 4)	;hwndOwner
-	 ,NumPut( f,	FR, 12)	;Flags
-	 ,NumPut( &buf,	FR, 16)	;lpstrFindWhat
-	 ,NumPut( len,	FR, 24) ;wFindWhatLen
+	f := 0
+	, InStr(flags, "d")  ? f |= FR_DOWN			 : ""
+	, InStr(flags, "c")  ? f |= FR_MATCHCASE	 : ""
+	, InStr(flags, "w")  ? f |= FR_WHOLEWORD	 : ""
+	, InStr(flags, "-d") ? f |= FR_HIDEUPDOWN	 : ""
+	, InStr(flags, "-w") ? f |= FR_HIDEWHOLEWORD : ""
+	, InStr(flags, "-c") ? f |= FR_HIDEMATCHCASE : ""
+
+	NumPut(sizeof_FINDREPLACE,	FINDREPLACE, 00, "UInt")					; size
+	, NumPut( hGui,				FINDREPLACE, 04, PtrType)					; hwndOwner
+	, NumPut( f,				FINDREPLACE, 04 + 2 * PtrSize, "UInt")		; Flags
+	, NumPut( &buf,				FINDREPLACE, 08 + 2 * PtrSize, PtrType)		; lpstrFindWhat
+	, NumPut( len,				FINDREPLACE, 08 + 4 * PtrSize, "UShort")	; wFindWhatLen
 
 	if !IsFunc(Handler)
 		return A_ThisFunc ">Invalid handler: " Handler
 
 	Dlg_callback(Handler,"","","")
-	OnMessage( DllCall("RegisterWindowMessage", "str", FINDMSGSTRING), "Dlg_callback" )
+	, OnMessage( DllCall("RegisterWindowMessage", "str", FINDMSGSTRING), "Dlg_callback" )
 
-	return DllCall("comdlg32\FindTextA", "str", FR)
+	return DllCall("comdlg32\FindText" . (A_IsUnicode ? "W" : "A"), PtrType, &FINDREPLACE)
 }
 
 Dlg_Replace( hGui, Handler, Flags="", FindText="", ReplaceText="") {
 	static FINDMSGSTRING = "commdlg_FindReplace"
 	static FR_MATCHCASE=4, FR_WHOLEWORD=2, FR_HIDEMATCHCASE=0x8000, FR_HIDEWHOLEWORD=0x10000, FR_HIDEUPDOWN=0x4000
-	static buf_f, buf_r, FR, len
+	static buf_f, buf_r, FINDREPLACE, len, sizeof_FINDREPLACE
+	PtrSize := A_PtrSize ? A_PtrSize : 4, PtrType := A_PtrSize ? "Ptr" : "UInt"
 
 	if len =
-		len := 256, VarSetCapacity(FR, 40, 0), VarSetCapacity(buf_f, len), VarSetCapacity(buf_r, len)
+		len := 256, VarSetCapacity(FINDREPLACE, sizeof_FINDREPLACE := 12 + 7 * PtrSize, 0), VarSetCapacity(buf_f, len), VarSetCapacity(buf_r, len)
 
 	f := 0
-	f |= InStr(flags, "c")  ? FR_MATCHCASE : 0
-	f |= InStr(flags, "w")  ? FR_WHOLEWORD : 0
-	f |= InStr(flags, "-w") ? FR_HIDEWHOLEWORD :0 
-	f |= InStr(flags, "-c") ? FR_HIDEMATCHCASE :0
-
+	, f |= InStr(flags, "c")  ? FR_MATCHCASE : 0
+	, f |= InStr(flags, "w")  ? FR_WHOLEWORD : 0
+	, f |= InStr(flags, "-w") ? FR_HIDEWHOLEWORD :0 
+	, f |= InStr(flags, "-c") ? FR_HIDEMATCHCASE :0
 
 	ifNotEqual, FindText, ,SetEnv, buf_f, %FindText%
 	ifNotEqual, ReplaceText, ,SetEnv, buf_r, %ReplaceText%
 
-	
-	NumPut( 40,		  FR, 0)	;size
-	 ,NumPut( hGui,	  FR, 4)	;hwndOwner
-	 ,NumPut( f,	  FR, 12)	;Flags
-	 ,NumPut( &buf_f, FR, 16)	;lpstrFindWhat
-	 ,NumPut( &buf_r, FR, 20)	;lpstrReplaceWith
-	 ,NumPut( len,	  FR, 24)	;wFindWhatLen
-	 ,NumPut( len,	  FR, 26)	;wReplaceWithLen
-
+	NumPut( sizeof_FINDREPLACE,	FINDREPLACE, 00, "UInt")					;size
+	, NumPut( hGui,				FINDREPLACE, 04, PtrType)					;hwndOwner
+	, NumPut( f,				FINDREPLACE, 04 + 2 * PtrSize, "UInt")		;Flags
+	, NumPut( &buf_f,			FINDREPLACE, 08 + 2 * PtrSize, PtrType)		;lpstrFindWhat
+	, NumPut( &buf_r,			FINDREPLACE, 08 + 3 * PtrSize, PtrType)		;lpstrReplaceWith
+	, NumPut( len,				FINDREPLACE, 08 + 4 * PtrSize, "UShort")	;wFindWhatLen
+	, NumPut( len,				FINDREPLACE, 10 + 4 * PtrSize, "UShort")	;wReplaceWithLen
 
 	Dlg_callback(Handler,"","","")
 	OnMessage( DllCall("RegisterWindowMessage", "str", FINDMSGSTRING), "Dlg_callback" )
-	return DllCall("comdlg32\ReplaceTextA", "str", FR)
+	return DllCall("comdlg32\ReplaceText" . (A_IsUnicode ? "W" : "A"), PtrType, &FINDREPLACE)
 }
 
 /*
@@ -158,30 +157,32 @@ Dlg_Replace( hGui, Handler, Flags="", FindText="", ReplaceText="") {
             False if user canceled the dialog or if error occurred.
  */
 Dlg_Font(ByRef Name, ByRef Style, ByRef Color, Effects=true, hGui=0) {
+	PtrType := A_PtrSize ? "Ptr" : "UInt"
+	, PtrSize := A_PtrSize ? A_PtrSize : 4
 
-   LogPixels := DllCall("GetDeviceCaps", "uint", DllCall("GetDC", "uint", hGui), "uint", 90)	;LOGPIXELSY
-   VarSetCapacity(LOGFONT, 128, 0)
+   LogPixels := DllCall("GetDeviceCaps", PtrType, DllCall("GetDC", PtrType, hGui), "uint", 90)	;LOGPIXELSY
+   VarSetCapacity(LOGFONT, 28 + 32 * (A_IsUnicode ? 2 : 1), 0)
 
    Effects := 0x041 + (Effects ? 0x100 : 0)  ;CF_EFFECTS = 0x100, CF_SCREENFONTS=1, CF_INITTOLOGFONTSTRUCT = 0x40
 
    ;set initial name
-   DllCall("RtlMoveMemory", "uint", &LOGFONT+28, "Uint", &Name, "Uint", 32)
+   StrPut(Name, &LOGFONT+28, 32)
 
    ;convert from rgb  
-   clr := ((Color & 0xFF) << 16) + (Color & 0xFF00) + ((Color >> 16) & 0xFF) 
+   clr := ((Color & 0xFF) << 16) + (Color & 0xFF00) + ((Color >> 16) & 0xFF)
 
    ;set intial data
    if InStr(Style, "bold")
-      NumPut(700, LOGFONT, 16)
+      NumPut(700, LOGFONT, 16, "UInt")
 
    if InStr(Style, "italic")
-      NumPut(255, LOGFONT, 20, 1)
+      NumPut(255, LOGFONT, 20, "Char")
 
    if InStr(Style, "underline")
-      NumPut(1, LOGFONT, 21, 1)
+      NumPut(1, LOGFONT, 21, "Char")
    
    if InStr(Style, "strikeout")
-      NumPut(1, LOGFONT, 22, 1)
+      NumPut(1, LOGFONT, 22, "Char")
 
    if RegExMatch(Style, "s[1-9][0-9]*", s){
       StringTrimLeft, s, s, 1      
@@ -190,32 +191,30 @@ Dlg_Font(ByRef Name, ByRef Style, ByRef Color, Effects=true, hGui=0) {
    }
    else  NumPut(16, LOGFONT, 0)         ; set default size
 
-   VarSetCapacity(CHOOSEFONT, 60, 0)
-    ,NumPut(60,		 CHOOSEFONT, 0)		; DWORD lStructSize
-    ,NumPut(hGui,    CHOOSEFONT, 4)		; HWND hwndOwner (makes dialog "modal").
-    ,NumPut(&LOGFONT,CHOOSEFONT, 12)	; LPLOGFONT lpLogFont
-    ,NumPut(Effects, CHOOSEFONT, 20)	
-    ,NumPut(clr,	 CHOOSEFONT, 24)	; rgbColors
+   size := 28 + 8 * PtrSize
+    ,VarSetCapacity(CHOOSEFONT, size, 0)
+    ,NumPut(size,	 CHOOSEFONT, 00, "UInt")		; DWORD lStructSize
+    ,NumPut(hGui,    CHOOSEFONT, 04, PtrType)		; HWND hwndOwner (makes dialog "modal").
+    ,NumPut(&LOGFONT,CHOOSEFONT, 04 + 2 * PtrSize, PtrType)	; LPLOGFONT lpLogFont
+    ,NumPut(Effects, CHOOSEFONT, 08 + 3 * PtrSize, "UInt")
+    ,NumPut(clr,	 CHOOSEFONT, 12 + 3 * PtrSize, "UInt")	; rgbColors
 
-   r := DllCall("comdlg32\ChooseFontA", "uint", &CHOOSEFONT)  ; Display the dialog.
+   r := DllCall("comdlg32\ChooseFont" . (A_IsUnicode ? "W" : "A"), PtrType, &CHOOSEFONT)  ; Display the dialog. ; NOTE: omitting the encoding ternary makes it fail on AHK classic
    if !r
       return false
 
   ;font name
-	VarSetCapacity(Name, 32)
-	DllCall("RtlMoveMemory", "str", Name, "Uint", &LOGFONT + 28, "Uint", 32)
-	Style := "s" NumGet(CHOOSEFONT, 16) // 10
+	Name := StrGet(&LOGFONT + 28, 32)
+	Style := "s" NumGet(CHOOSEFONT, 4 + 3 * A_PtrSize, "UInt") // 10
 
   ;color
 	old := A_FormatInteger
 	SetFormat, integer, hex                      ; Show RGB color extracted below in hex format.
-	Color := NumGet(CHOOSEFONT, 24)
+	Color := NumGet(CHOOSEFONT, 12 + 3 * PtrSize, "UInt")
 	SetFormat, integer, %old%
 
   ;styles
 	Style =
-	VarSetCapacity(s, 3)
-	DllCall("RtlMoveMemory", "str", s, "Uint", &LOGFONT + 20, "Uint", 3)
 
 	if NumGet(LOGFONT, 16) >= 700
 	  Style .= "bold "
@@ -261,18 +260,24 @@ Dlg_Font(ByRef Name, ByRef Style, ByRef Color, Effects=true, hGui=0) {
  Remarks:
 			This is simple and non-flexible dialog. If you need more features, use <IconEx> instead.
  */
-Dlg_Icon(ByRef Icon, ByRef Index, hGui=0) {      
-    VarSetCapacity(wIcon, 1025, 0) 
-    If (Icon) && !DllCall("MultiByteToWideChar", "UInt", 0, "UInt", 0, "Str", Icon, "Int", StrLen(Icon), "UInt", &wIcon, "Int", 1025) 
+Dlg_Icon(ByRef Icon, ByRef Index, hGui=0) {
+	PtrType := A_PtrSize ? "Ptr" : "UInt"
+
+	VarSetCapacity(wIcon, 1025, 0)
+	if (Icon && !StrPut(Icon, &wIcon, StrLen(Icon) + 1, "UTF-16"))
 		return false
 
-	r := DllCall(DllCall("GetProcAddress", "Uint", DllCall("LoadLibrary", "str", "shell32.dll"), "Uint", 62), "uint", hGui, "uint", &wIcon, "uint", 1025, "intp", --Index)
+	r := DllCall(DllCall("GetProcAddress", PtrType, DllCall("LoadLibrary", "str", "shell32.dll"), "Uint", 62, PtrType), PtrType, hGui, PtrType, &wIcon, "uint", 1025, "intp", --Index)
 	Index++
 	IfEqual, r, 0, return false
 
-	VarSetCapacity(Icon, len := DllCall("lstrlenW", "UInt", &wIcon) ) 
-	r := DllCall("WideCharToMultiByte" , "UInt", 0, "UInt", 0, "UInt", &wIcon, "Int", len, "Str", Icon, "Int", len, "UInt", 0, "UInt", 0) 
-	IfEqual, r, 0, return false
+	len := DllCall("lstrlenW", "UInt", &wIcon)
+	if (A_IsUnicode)
+		return true, VarSetCapacity(wIcon, -1), Icon := wIcon
+
+	if (!Icon := StrGet(&wIcon, len + 1, "UTF-16"))
+		return false
+
     Return True 
 }
 
@@ -317,6 +322,7 @@ Dlg_Icon(ByRef Icon, ByRef Index, hGui=0) {
  */	
 Dlg_Open( hGui=0, Title="", Filter="", DefaultFilter="", Root="", DefaultExt="", Flags="FILEMUSTEXIST HIDEREADONLY" ) { 
 	static OFN_S:=0, OFN_ALLOWMULTISELECT:=0x200, OFN_CREATEPROMPT:=0x2000, OFN_DONTADDTORECENT:=0x2000000, OFN_EXTENSIONDIFFERENT:=0x400, OFN_FILEMUSTEXIST:=0x1000, OFN_FORCESHOWHIDDEN:=0x10000000, OFN_HIDEREADONLY:=0x4, OFN_NOCHANGEDIR:=0x8, OFN_NODEREFERENCELINKS:=0x100000, OFN_NOVALIDATE:=0x100, OFN_OVERWRITEPROMPT:=0x2, OFN_PATHMUSTEXIST:=0x800, OFN_READONLY:=0x1, OFN_SHOWHELP:=0x10, OFN_NOREADONLYRETURN:=0x8000, OFN_NOTESTFILECREATE:=0x10000
+	PtrType := A_PtrSize ? "Ptr" : "UInt", PtrSize := A_PtrSize ? A_PtrSize : 4
 
 	IfEqual, Filter, ,SetEnv, Filter, All Files (*.*)
 	SplitPath, Root, rootFN, rootDir
@@ -327,38 +333,42 @@ Dlg_Open( hGui=0, Title="", Filter="", DefaultFilter="", Root="", DefaultExt="",
 			hFlags |= OFN_%A_LoopField%
 
 	ifEqual, hFlags, , return A_ThisFunc "> Some of the flags are invalid: " Flags
-	VarSetCapacity( FN, 0xffff ), VarSetCapacity( lpstrFilter, 2*StrLen(filter))
+	VarSetCapacity( FN, 0xffff ), VarSetCapacity( lpstrFilter, 2*StrLen(filter) * (A_IsUnicode ? 2 : 1))
 
 	if rootFN !=
 		  DllCall("lstrcpyn", "str", FN, "str", rootFN, "int", StrLen(rootFN)+1) 
 
-	; Contruct FilterText seperate by \0 
-	delta := 0										;Used by Loop as Offset
+	; Contruct FilterText separate by \0 
+	delta := 0										; Used by Loop as Offset
 	loop, Parse, Filter, |                
-	{ 
-		desc := A_LoopField,  ext := SubStr(A_LoopField, InStr( A_LoopField,"(" )+1, -1) 
-		lenD := StrLen(A_LoopField)+1,	lenE := StrLen(ext)+1				;including /0
+	{
+		ext := SubStr(A_LoopField, InStr( A_LoopField,"(" )+1, -1)
 
-		DllCall("lstrcpyn", "uint", &lpstrFilter + delta, "uint", &desc, "int", lenD) 
-		DllCall("lstrcpyn", "uint", &lpstrFilter + delta + lenD, "uint", &ext, "int", lenE)
-		delta += lenD + lenE
-	} 
-	NumPut(0, lpstrFilter, delta, "UChar" )		  ; Double Zero Termination 
+		, lenD := (StrLen(A_LoopField) + 1) * (A_IsUnicode ? 2 : 1)
+		, lenE := (StrLen(ext) + 1) * (A_IsUnicode ? 2 : 1)		; including \0
 
-	; Contruct OPENFILENAME Structure   
-	VarSetCapacity( OFN ,90, 0)
-	 ,NumPut( 76,			 OFN, 0,  "UInt" )    ; Length of Structure 
-	 ,NumPut( hGui,			 OFN, 4,  "UInt" )    ; HWND 
-	 ,NumPut( &lpstrFilter,	 OFN, 12, "UInt" )    ; Pointer to FilterStruc 
-	 ,NumPut( DefaultFilter, OFN, 24, "UInt" )    ; DefaultFilter Pair 
-	 ,NumPut( &FN,			 OFN, 28, "UInt" )    ; lpstrFile / InitialisationFileName 
-	 ,NumPut( 0xffff,		 OFN, 32, "UInt" )    ; MaxFile / lpstrFile length 
-	 ,NumPut( &rootDir,		 OFN, 44, "UInt" )    ; StartDir 
-	 ,NumPut( &Title,		 OFN, 48, "UInt" )	  ; DlgTitle
-	 ,NumPut( hFlags,		 OFN, 52, "UInt" )    ; Flags 
-	 ,NumPut( &DefaultExt,	 OFN, 60, "UInt" )    ; DefaultExt 
+		, StrPut(A_LoopField, &lpstrFilter + delta, lenD)
+		, StrPut(ext, &lpstrFilter + delta + lenD, lenE)
+		, delta += lenD + lenE
+	}
+	NumPut(0, lpstrFilter, delta, A_IsUnicode ? "UShort" : "UChar" )		  ; Double Zero Termination 
 
-	res := SubStr(Flags, 1, 1)="S" ? DllCall("comdlg32\GetSaveFileNameA", "Uint", &OFN ) : DllCall("comdlg32\GetOpenFileNameA", "Uint", &OFN )
+	; Contruct OPENFILENAME Structure
+	sizeof_OPENFILENAME := 36 + 13 * PtrSize
+	, VarSetCapacity( OPENFILENAME, sizeof_OPENFILENAME, 0)
+	, NumPut( sizeof_OPENFILENAME,	OPENFILENAME, 00 + 0 * PtrSize, "UInt" )    ; Length of Structure
+	, NumPut( hGui,					OPENFILENAME, 04 + 0 * PtrSize, "UInt" )    ; HWND
+	, NumPut( &lpstrFilter,	 		OPENFILENAME, 04 + 2 * PtrSize, "UInt" )    ; Pointer to FilterStruct
+	, NumPut( DefaultFilter,		OPENFILENAME, 08 + 4 * PtrSize, "UInt" )    ; DefaultFilter Pair
+	, NumPut( &FN,					OPENFILENAME, 12 + 4 * PtrSize, "UInt" )    ; lpstrFile / InitialisationFileName
+	, NumPut( 0xffff,				OPENFILENAME, 12 + 5 * PtrSize, "UInt" )    ; MaxFile / lpstrFile length
+	, NumPut( &rootDir,				OPENFILENAME, 20 + 6 * PtrSize, "UInt" )    ; StartDir
+	, NumPut( &Title,				OPENFILENAME, 20 + 7 * PtrSize, "UInt" )	; DlgTitle
+	, NumPut( hFlags,				OPENFILENAME, 20 + 8 * PtrSize, "UInt" )    ; Flags
+	, NumPut( &DefaultExt,			OPENFILENAME, 28 + 8 * PtrSize, "UInt" )    ; DefaultExt
+
+	suffix := A_IsUnicode ? "W" : "A"
+	, res := SubStr(Flags, 1, 1)="S" ? DllCall("comdlg32\GetSaveFileName" . suffix, PtrType, &OPENFILENAME ) : DllCall("comdlg32\GetOpenFileName" . suffix, PtrType, &OPENFILENAME )
 	IfEqual, res, 0, return
 
 	adr := &FN,  f := d := DllCall("MulDiv", "Int", adr, "Int",1, "Int",1, "str"), res := ""
@@ -366,7 +376,7 @@ Dlg_Open( hGui=0, Title="", Filter="", DefaultFilter="", Root="", DefaultExt="",
 		d.="\"		
 	if ms := InStr(Flags, "ALLOWMULTISELECT")
 		loop 
-			if f := DllCall("MulDiv", "Int", adr += StrLen(f)+1, "Int",1, "Int",1, "str") 
+			if f := DllCall("MulDiv", "Int", adr += (StrLen(f) + 1) * (A_IsUnicode ? 2 : 1), "Int",1, "Int",1, "str") 
 				res .= d f "`n"
 			else {
 				 IfEqual, A_Index, 1, SetEnv, res, %d%		;if user selects only 1 file with multiselect flag, windows ignores this flag.... 

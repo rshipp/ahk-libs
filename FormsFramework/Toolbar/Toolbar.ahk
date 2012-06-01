@@ -77,20 +77,23 @@
  */
 Toolbar_Add(hGui, Handler, Style="", ImageList="", Pos="") {
 	static MODULEID
-	static WS_CHILD := 0x40000000, WS_VISIBLE := 0x10000000, WS_CLIPSIBLINGS = 0x4000000, WS_CLIPCHILDREN = 0x2000000, TBSTYLE_THICKFRAME=0x40000, TBSTYLE_TABSTOP = 0x10000
-    static TBSTYLE_WRAPABLE = 0x200, TBSTYLE_FLAT = 0x800, TBSTYLE_LIST=0x1000, TBSTYLE_TOOLTIPS=0x100, TBSTYLE_TRANSPARENT = 0x8000, TBSTYLE_ADJUSTABLE = 0x20, TBSTYLE_VERTICAL=0x80
-	static TBSTYLE_EX_DRAWDDARROWS = 0x1, TBSTYLE_EX_HIDECLIPPEDBUTTONS=0x10, TBSTYLE_EX_MIXEDBUTTONS=0x8
-	static TB_BUTTONSTRUCTSIZE=0x41E, TB_SETEXTENDEDSTYLE := 0x454, TB_SETUNICODEFORMAT := 0x2005
-	static TBSTYLE_NODIVIDER=0x40, CCS_NOPARENTALIGN=0x8, CCS_NORESIZE = 0x4, TBSTYLE_BOTTOM = 0x3, TBSTYLE_MENU=0, TBSTYLE_BORDER=0x800000
+	static WM_NOTIFY := 0x4E
+	static WS_CHILD := 0x40000000, WS_VISIBLE := 0x10000000, WS_CLIPSIBLINGS := 0x4000000, WS_CLIPCHILDREN := 0x2000000
+		, TBSTYLE_THICKFRAME := 0x40000, TBSTYLE_TABSTOP := 0x10000, TBSTYLE_WRAPABLE := 0x200, TBSTYLE_FLAT := 0x800, TBSTYLE_LIST := 0x1000
+		, TBSTYLE_TOOLTIPS := 0x100, TBSTYLE_TRANSPARENT := 0x8000, TBSTYLE_ADJUSTABLE := 0x20, TBSTYLE_VERTICAL := 0x80
+	static TBSTYLE_EX_DRAWDDARROWS := 0x1, TBSTYLE_EX_HIDECLIPPEDBUTTONS := 0x10, TBSTYLE_EX_MIXEDBUTTONS := 0x8
+	static TB_BUTTONSTRUCTSIZE := 0x41E, TB_SETEXTENDEDSTYLE := 0x454, TB_SETUNICODEFORMAT := 0x2005
+	static TBSTYLE_NODIVIDER := 0x40, CCS_NOPARENTALIGN := 0x8, CCS_NORESIZE := 0x4, TBSTYLE_BOTTOM := 0x3, TBSTYLE_MENU := 0, TBSTYLE_BORDER := 0x800000
 	PtrType := A_PtrSize ? "Ptr" : "UInt" ; use x64-compatible type if running AHK_L
 
-	if !MODULEID { 
-		old := OnMessage(0x4E, "Toolbar_onNotify"),	MODULEID := 80609
-		if old != Toolbar_onNotify
-			Toolbar("oldNotify", RegisterCallback(old))
+	if !MODULEID { ; toolbar module is not already initialized:
+		old := OnMessage(WM_NOTIFY, "Toolbar_onNotify") ; register callback for toolbar notifications
+		, MODULEID := 80609 ; define module as initialized
+		if (old != "Toolbar_onNotify") ; if there was another message handler:
+			Toolbar("oldNotify", RegisterCallback(old)) ; store it
 	}
 
-	Style .= Style="" ? "WRAPABLE" : "", ImageList .= ImageList="" ? "1L" : ""
+	Style .= Style == "" ? "WRAPABLE" : "", ImageList .= ImageList == "" ? "1L" : ""
 
   	hStyle := 0
 	hExStyle := TBSTYLE_EX_MIXEDBUTTONS ; TBSTYLE_EX_HIDECLIPPEDBUTTONS
@@ -98,7 +101,7 @@ Toolbar_Add(hGui, Handler, Style="", ImageList="", Pos="") {
 		 hStyle |= TBSTYLE_FLAT | TBSTYLE_LIST | WS_CLIPSIBLINGS		;set this style only if custom flag MENU is set. It serves only as a mark later
 	else hExStyle |= TBSTYLE_EX_DRAWDDARROWS
 
-	loop, parse, Style, %A_Tab%%A_Space%, %A_Tab%%A_Space%
+	loop, parse, Style, %A_Tab%%A_Space%, %A_Tab%%A_Space% ; parse styles
 		ifEqual, A_LoopField,,continue
 		else hStyle |= A_LoopField+0 ? A_LoopField : TBSTYLE_%A_LoopField%
 
@@ -106,7 +109,7 @@ Toolbar_Add(hGui, Handler, Style="", ImageList="", Pos="") {
 
 	if (Pos != ""){
 		x := y := 0, w := h := 100
-		loop, parse, Pos, %A_Tab%%A_Space%, %A_Tab%%A_Space%
+		loop, parse, Pos, %A_Tab%%A_Space%, %A_Tab%%A_Space% ; parse position variables
 		{
 			ifEqual, A_LoopField, , continue
 			p := SubStr(A_LoopField, 1, 1)
@@ -117,9 +120,9 @@ Toolbar_Add(hGui, Handler, Style="", ImageList="", Pos="") {
 		hStyle |= CCS_NOPARENTALIGN | TBSTYLE_NODIVIDER | CCS_NORESIZE
 	}
 
-    hCtrl := DllCall("CreateWindowEx" 
+    hCtrl := DllCall("CreateWindowEx"
              , "uint", 0
-             , "str",  "ToolbarWindow32" 
+             , "str",  "ToolbarWindow32"
              , PtrType, 0
              , "uint", WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | hStyle
              , "uint", x, "uint", y, "uint", w, "uint", h
@@ -127,18 +130,18 @@ Toolbar_Add(hGui, Handler, Style="", ImageList="", Pos="") {
              , PtrType, MODULEID
              , PtrType, 0
              , PtrType, 0, PtrType)
-    ifEqual, hCtrl, 0, return 0
-	
-	SendMessage, TB_BUTTONSTRUCTSIZE, 20, 0, , ahk_id %hCtrl%
-	SendMessage, TB_SETEXTENDEDSTYLE, 0, hExStyle, , ahk_id %hCtrl% 
-	SendMessage, TB_SETUNICODEFORMAT, 0, 0, , ahk_id %hCtrl%		  ;set to ANSI
+    ifEqual, hCtrl, 0, return 0 ; creation failed
 
-	if(ImageList != "")
+	SendMessage, TB_BUTTONSTRUCTSIZE, 20, 0, , ahk_id %hCtrl% ; set button structure size (NOTE: would this need to be changed to work on x64?)
+	SendMessage, TB_SETEXTENDEDSTYLE, 0, hExStyle, , ahk_id %hCtrl% ; set ex-styles
+	SendMessage, TB_SETUNICODEFORMAT, A_IsUnicode, 0, , ahk_id %hCtrl% ;set encoding
+
+	if (ImageList != "") ; if there's a valid image list, set it
 		Toolbar_SetImageList(hCtrl, ImageList)
-	
-	if IsFunc(Handler)
+
+	if IsFunc(Handler) ; store handler callback
 		Toolbar(hCtrl "Handler", Handler)
-	
+
 	return hCtrl 
 }
 
@@ -155,9 +158,10 @@ Toolbar_Add(hGui, Handler, Style="", ImageList="", Pos="") {
  			change either by setting the button or bitmap size or by adding strings for the first time.
  */
 Toolbar_AutoSize(hCtrl, Align="fit"){
+	static TB_AUTOSIZE := 0x421
 	PtrType := A_PtrSize ? "Ptr" : "UInt" ; use x64-compatible type if running AHK_L
 
-	if align !=
+	if (align != "")
 	{
 		dhw := A_DetectHiddenWindows
 		DetectHiddenWindows,on
@@ -180,7 +184,7 @@ Toolbar_AutoSize(hCtrl, Align="fit"){
 			ControlMove,,,ph-h-f,%w%,%h%, ahk_id %hCtrl%
 		DetectHiddenWindows, %dhw%
 	}
-	else SendMessage,0x421,,,,ahk_id %hCtrl%
+	else SendMessage,TB_AUTOSIZE,,,,ahk_id %hCtrl%
 }
 
 /*
@@ -188,11 +192,12 @@ Toolbar_AutoSize(hCtrl, Align="fit"){
  			Removes all buttons from the toolbar, both current and available
  */
 Toolbar_Clear(hCtrl){
+	static TB_DELETEBUTTON := 0x416, TB_AUTOSIZE := 0x421
 	loop % Toolbar_Count(hCtrl)
-		SendMessage, 0x416, , , ,ahk_id %hCtrl%		;TB_DELETEBUTTON
+		SendMessage, TB_DELETEBUTTON, , , ,ahk_id %hCtrl%
 
 	Toolbar_mfree( Toolbar( hCtrl "aBTN", "" ) )
- 	SendMessage,0x421,,,,ahk_id %hCtrl%				;Autosize
+	SendMessage,TB_AUTOSIZE,,,,ahk_id %hCtrl%				;Autosize
 }
 
 /*
@@ -207,7 +212,7 @@ Toolbar_Clear(hCtrl){
 			if pQ is empty function returns rational number in the form cntC.cntA otherwise  requested count
  */
 Toolbar_Count(hCtrl, pQ="c") {
-	static TB_BUTTONCOUNT = 0x418
+	static TB_BUTTONCOUNT := 0x418
 
 	SendMessage, TB_BUTTONCOUNT, , , ,ahk_id %hCtrl%
 	c := ErrorLevel	
@@ -231,7 +236,7 @@ Toolbar_Count(hCtrl, pQ="c") {
  */
 
 Toolbar_CommandToIndex( hCtrl, ID ) {
-	static TB_COMMANDTOINDEX=0x419
+	static TB_COMMANDTOINDEX := 0x419
 
 	SendMessage, TB_COMMANDTOINDEX, ID,, ,ahk_id %hCtrl%
 	ifEqual, ErrorLevel, 4294967295, return 0
@@ -244,7 +249,7 @@ Toolbar_CommandToIndex( hCtrl, ID ) {
  			(see Toolbar_customize.png)
  */
 Toolbar_Customize(hCtrl) {
-	static TB_CUSTOMIZE=0x41B
+	static TB_CUSTOMIZE := 0x41B
 	SendMessage, TB_CUSTOMIZE,,,, ahk_id %hCtrl%
 }
 
@@ -264,7 +269,7 @@ Toolbar_Customize(hCtrl) {
 			With groupcheck use this function to check button. Using <SetButton> function will not uncheck other buttons in the group.
  */
 Toolbar_CheckButton(hCtrl, WhichButton, bCheck=1) {
-	static TB_CHECKBUTTON = 0x402
+	static TB_CHECKBUTTON := 0x402, TB_GETBUTTON := 0x417
 
     if (WhichButton >= 1){
 		VarSetCapacity(TBB, 20)
@@ -317,7 +322,7 @@ Toolbar_Define(hCtrl, pQ="") {
  			TRUE if successful.
  */
 Toolbar_DeleteButton(hCtrl, Pos=1) {
-	static TB_DELETEBUTTON = 0x416
+	static TB_DELETEBUTTON := 0x416
 
 	if InStr(Pos, "*") {
 		Pos := SubStr(Pos, 2),  aBTN := Toolbar(hCtrl "aBTN"),  cnta := NumGet(aBTN+0)
@@ -356,7 +361,7 @@ Toolbar_DeleteButton(hCtrl, Pos=1) {
 	(end code)
  */
 Toolbar_GetButton(hCtrl, WhichButton, pQ="") {
-	static TB_GETBUTTON = 0x417, TB_GETBUTTONTEXT=0x42D, TB_GETSTRING=0x45C, TB_COMMANDTOINDEX=0x419
+	static TB_GETBUTTON := 0x417, TB_GETSTRINGA := 0x45C, TB_GETSTRINGW := 0x45B, TB_COMMANDTOINDEX := 0x419 ;, TB_GETBUTTONTEXTA := 0x42D, TB_GETBUTTONTEXTW := 0x44B
 
 	if WhichButton is not number
 		return A_ThisFunc "> Invalid button position or ID: " WhichButton
@@ -392,7 +397,7 @@ Toolbar_GetButton(hCtrl, WhichButton, pQ="") {
 
  ;get caption
 	VarSetCapacity( buf, 128 ), sIdx := NumGet(aTBB+0, 16)
-	SendMessage, TB_GETSTRING, (sIdx<<16)|128, &buf, ,ahk_id %hCtrl%			;SendMessage, TB_GETBUTTONTEXT,id,&buf,,ahk_id %hCtrl%
+	SendMessage, (A_IsUnicode ? TB_GETSTRINGW : TB_GETSTRINGA), (sIdx<<16)|128, &buf, ,ahk_id %hCtrl%			;SendMessage, (A_IsUnicode ? TB_GETBUTTONTEXTW : TB_GETBUTTONTEXTA),id,&buf,,ahk_id %hCtrl%
 	VarSetCapacity( buf, -1 )
 	if a
 		buf := "*" buf
@@ -422,7 +427,7 @@ Toolbar_GetButton(hCtrl, WhichButton, pQ="") {
  
  */
 Toolbar_GetButtonSize(hCtrl, ByRef W, ByRef H) {
-	static TB_GETBUTTONSIZE=1082
+	static TB_GETBUTTONSIZE := 0x43A
 
 	SendMessage, TB_GETBUTTONSIZE, , , ,ahk_id %hCtrl%
 	W := ErrorLevel & 0xFFFF, H := ErrorLevel >> 16
@@ -439,7 +444,7 @@ Toolbar_GetButtonSize(hCtrl, ByRef W, ByRef H) {
  			Returns TRUE if successful.
  */
 Toolbar_GetMaxSize(hCtrl, ByRef Width, ByRef Height){
-	static TB_GETMAXSIZE = 0x453
+	static TB_GETMAXSIZE := 0x453
 
 	VarSetCapacity(SIZE, 8)
 	SendMessage, TB_GETMAXSIZE, 0, &SIZE, , ahk_id %hCtrl%
@@ -459,7 +464,7 @@ Toolbar_GetMaxSize(hCtrl, ByRef Width, ByRef Height){
  			String with 4 values separated by space or requested information
  */
 Toolbar_GetRect(hCtrl, Pos="", pQ="") {
-	static TB_GETITEMRECT=0x41D
+	static TB_GETITEMRECT := 0x41D
 	PtrType := A_PtrSize ? "Ptr" : "UInt" ; use x64-compatible type if running AHK_L
 
 	if pPos !=
@@ -527,13 +532,13 @@ Toolbar_GetRect(hCtrl, Pos="", pQ="") {
  	    (i.e. their captions are seen as tooltips and are not displayed.
  */
 Toolbar_Insert(hCtrl, Btns, Pos=""){
-	static TB_INSERT = 0x414, TB_INSERTBUTTON = 0x415
+	static TB_ADDBUTTONSA := 0x414, TB_ADDBUTTONSW := 0x444, TB_INSERTBUTTONA := 0x415, TB_INSERTBUTTONW := 0x443
 
 	cnt := Toolbar_compileButtons(hCtrl, Btns, cBTN)
 	if Pos =
-		SendMessage, TB_INSERT, cnt, cBTN ,, ahk_id %hCtrl%
+		SendMessage, (A_IsUnicode ? TB_ADDBUTTONSW : TB_ADDBUTTONSA), cnt, cBTN ,, ahk_id %hCtrl%
 	else loop, %cnt%
-		SendMessage, TB_INSERTBUTTON, Pos+A_Index-2, cBTN + 20*(A_Index-1) ,, ahk_id %hCtrl%
+		SendMessage, (A_IsUnicode ? TB_INSERTBUTTONW : TB_INSERTBUTTONA), Pos+A_Index-2, cBTN + 20*(A_Index-1) ,, ahk_id %hCtrl%
 
 	Toolbar_mfree(cBTN)
 
@@ -554,7 +559,7 @@ Toolbar_Insert(hCtrl, Btns, Pos=""){
  			Returns nonzero if successful, or zero otherwise.
  */
 Toolbar_MoveButton(hCtrl, Pos, NewPos) {
-	static TB_MOVEBUTTON = 0x452
+	static TB_MOVEBUTTON := 0x452
     SendMessage, TB_MOVEBUTTON, Pos-1, NewPos-1, ,ahk_id %hCtrl%
 	return ErrorLevel
 }
@@ -575,7 +580,7 @@ Toolbar_MoveButton(hCtrl, Pos, NewPos) {
 			If an application does not explicitly set the bitmap size, the size defaults to 16 by 15 pixels. 
  */
 Toolbar_SetBitmapSize(hCtrl, Width=0, Height=0) {
-	static TB_SETBITMAPSIZE=1056
+	static TB_SETBITMAPSIZE := 1056
     SendMessage, TB_SETBITMAPSIZE, Width,Height, ,ahk_id %hCtrl%
 }
 
@@ -593,9 +598,9 @@ Toolbar_SetBitmapSize(hCtrl, Width=0, Height=0) {
  
  */
 Toolbar_SetButton(hCtrl, WhichButton, State="", Width=""){
-	static TBIF_TEXT=2, TBIF_STATE=4, TBIF_SIZE=0x40, 
-	static TB_SETBUTTONINFO=0x442, TB_GETSTATE=0x412, TB_GETBUTTON = 0x417
-	static TBSTATE_CHECKED=1, TBSTATE_ENABLED=4, TBSTATE_HIDDEN=8, TBSTATE_ELLIPSES=0x40, TBSTATE_DISABLED=0
+	static TBIF_TEXT := 2, TBIF_STATE := 4, TBIF_SIZE := 0x40
+	static TB_SETBUTTONINFOA := 0x442, TB_SETBUTTONINFOW := 0x44B, TB_GETSTATE := 0x412, TB_GETBUTTON := 0x417
+	static TBSTATE_CHECKED := 1, TBSTATE_ENABLED := 4, TBSTATE_HIDDEN := 8, TBSTATE_ELLIPSES := 0x40, TBSTATE_DISABLED := 0
 
 	if WhichButton is not number
 		return A_ThisFunc "> Invalid button position or ID: " WhichButton
@@ -635,7 +640,7 @@ Toolbar_SetButton(hCtrl, WhichButton, State="", Width=""){
 	NumPut(hState,	BI, 16, "Char")
 	NumPut(Width,	BI, 18, "Short")
    
-	SendMessage, TB_SETBUTTONINFO, WhichButton, &BI, ,ahk_id %hCtrl%
+	SendMessage, (A_IsUnicode ? TB_SETBUTTONINFOW : TB_SETBUTTONINFOA), WhichButton, &BI, ,ahk_id %hCtrl%
 	res := ErrorLevel
 	
 	SendMessage, 0x421, , ,,ahk_id %hCtrl%	;autosize
@@ -652,7 +657,7 @@ Toolbar_SetButton(hCtrl, WhichButton, State="", Width=""){
  			TRUE if successful.
  */
 Toolbar_SetButtonWidth(hCtrl, Min, Max=""){
-	static TB_SETBUTTONWIDTH=0x43B
+	static TB_SETBUTTONWIDTH := 0x43B
 	ifEqual, Max, , SetEnv, Max, %Min%
 
 	SendMessage, TB_SETBUTTONWIDTH, 0,(Max<<16) | Min,,ahk_id %hCtrl%
@@ -677,7 +682,7 @@ Toolbar_SetButtonWidth(hCtrl, Min, Max=""){
 			Toolbar_SetDrawTextFlags(hToolbar, 3, 2) ;right align text
  */
 Toolbar_SetDrawTextFlags(hCtrl, Mask, Flags) {
-	static TB_SETDRAWTEXTFLAGS = 1094
+	static TB_SETDRAWTEXTFLAGS := 0x446
 	SendMessage, TB_SETDRAWTEXTFLAGS, Mask,Flags,,ahk_id %hCtrl%
 	return ErrorLevel
 }
@@ -693,7 +698,7 @@ Toolbar_SetDrawTextFlags(hCtrl, Mask, Flags) {
 				With LIST style, you can only set the height.
  */
 Toolbar_SetButtonSize(hCtrl, W, H="") {
-	static TB_SETBUTTONSIZE = 0x41F
+	static TB_SETBUTTONSIZE := 0x41F
 	IfEqual, H, ,SetEnv, H, %W%
 	SendMessage, TB_SETBUTTONSIZE, ,(H<<16)|W ,,ahk_id %hCtrl%
 ;	SendMessage, 0x421,,,,ahk_id %hCtrl%	;autosize
@@ -710,9 +715,9 @@ Toolbar_SetButtonSize(hCtrl, W, H="") {
  			Handle of the previous image list.
  */
 Toolbar_SetImageList(hCtrl, hIL="1S"){
-	static TB_SETIMAGELIST = 0x430, TB_LOADIMAGES=0x432, TB_SETBITMAPSIZE=0x420
+	static TB_SETIMAGELIST := 0x430, TB_LOADIMAGES := 0x432, TB_SETBITMAPSIZE := 0x420
 
-	hIL .= 	if StrLen(hIL) = 1 ? "S" : ""
+	hIL .= StrLen(hIL) == 1 ? "S" : ""
 	if hIL is Integer
 		SendMessage, TB_SETIMAGELIST, 0, hIL, ,ahk_id %hCtrl%
 	else {
@@ -736,7 +741,7 @@ Toolbar_SetImageList(hCtrl, hIL="1S"){
  			button width by using <SetButtonWidth>. The text wraps at a word break. Text in LIST styled toolbars is always shown on a single line.
  */
 Toolbar_SetMaxTextRows(hCtrl, iMaxRows=0) {
-	static TB_SETMAXTEXTROWS = 0x43C
+	static TB_SETMAXTEXTROWS := 0x43C
     SendMessage, TB_SETMAXTEXTROWS,iMaxRows,,,ahk_id %hCtrl%
 	res := ErrorLevel
 ; 	SendMessage,0x421,,,,ahk_id %hCtrl% ;autosize
@@ -751,8 +756,9 @@ Toolbar_SetMaxTextRows(hCtrl, iMaxRows=0) {
 				Style	- Style to toggle, by default "LIST". You can also specify numeric style value.
  */
 Toolbar_ToggleStyle(hCtrl, Style="LIST"){
-    static TBSTYLE_WRAPABLE = 0x200, TBSTYLE_FLAT = 0x800, TBSTYLE_LIST=0x1000, TBSTYLE_TOOLTIPS=0x100, TBSTYLE_TRANSPARENT = 0x8000, TBSTYLE_ADJUSTABLE = 0x20,  TBSTYLE_BORDER=0x800000, TBSTYLE_THICKFRAME=0x40000, TBSTYLE_TABSTOP = 0x10000
-	static TB_SETSTYLE=1080, TB_GETSTYLE=1081
+    static TBSTYLE_WRAPABLE := 0x200, TBSTYLE_FLAT := 0x800, TBSTYLE_LIST := 0x1000, TBSTYLE_TOOLTIPS := 0x100, TBSTYLE_TRANSPARENT := 0x8000
+		, TBSTYLE_ADJUSTABLE := 0x20,  TBSTYLE_BORDER := 0x800000, TBSTYLE_THICKFRAME := 0x40000, TBSTYLE_TABSTOP := 0x10000
+	static TB_SETSTYLE := 1080, TB_GETSTYLE := 1081
 
 	s := Style+0 != "" ? Style : TBSTYLE_%Style%	
 	ifEqual, s, , return A_ThisFunc "> Invalid style: " Style
@@ -783,11 +789,12 @@ Button definition:
 	[*]caption, icon, state, style, id
  */
 Toolbar_compileButtons(hCtrl, Btns, ByRef cBTN) {
-	static BTNS_SEP=1, BTNS_CHECK =2, BTNS_CHECKGROUP = 6, BTNS_DROPDOWN = 8, BTNS_A=16, BTNS_AUTOSIZE = 16, BTNS_NOPREFIX = 32, BTNS_SHOWTEXT = 64
-	static TBSTATE_CHECKED=1, TBSTATE_ENABLED=4, TBSTATE_HIDDEN=8, TBSTATE_DISABLED=0, TBSTATE_WRAP = 0x20
-	static TB_ADDSTRING = 0x41C, WS_CLIPSIBLINGS = 0x4000000
-	static id=10000								; automatic IDing starts form 10000,     1 <= userID < 10 000
-	btn_struct_size := 8 + 3 * A_PtrSize ; define structure size compatible to x64
+	static BTNS_SEP := 1, BTNS_CHECK := 2, BTNS_CHECKGROUP := 6, BTNS_DROPDOWN := 8, BTNS_A := 16, BTNS_AUTOSIZE := 16, BTNS_NOPREFIX := 32, BTNS_SHOWTEXT := 64
+	static TBSTATE_CHECKED := 1, TBSTATE_ENABLED := 4, TBSTATE_HIDDEN := 8, TBSTATE_DISABLED := 0, TBSTATE_WRAP := 0x20
+	static TB_ADDSTRINGA := 0x41C, TB_ADDSTRINGW := 0x44D, WS_CLIPSIBLINGS := 0x4000000
+	static id := 10000								; automatic IDing starts form 10000,     1 <= userID < 10 000
+	PtrSize := A_PtrSize ? A_PtrSize : 4 ; ensure compatibility to AHK classic
+	, btn_struct_size := 8 + 3 * PtrSize ; define structure size compatible to x64
 	, PtrType := A_PtrSize ? "Ptr" : "UInt" ; use x64-compatible type if running AHK_L
 
 	; retrieve control style:
@@ -849,8 +856,9 @@ Toolbar_compileButtons(hCtrl, Btns, ByRef cBTN) {
 	 ;add caption to the string pool
 		if (hStyle != BTNS_SEP) {
 			StringReplace a1, a1, `r, `n, A		;replace `r with new lines (for multiline tooltips)
-			VarSetCapacity(buf, (StrLen(a1)+1) * A_IsUnicode ? 2 : 1, 0), Toolbar_memcpy(&buf, &a1, StrLen(a1) * A_IsUnicode ? 2 : 1)	 ;Buf must be double-NULL-terminated
-			sIdx := DllCall("SendMessage",PtrType,hCtrl,"uint", TB_ADDSTRING, "uint",0,PtrType,&buf)  ;returns the new index of the string within the string pool
+			VarSetCapacity(buf, (StrLen(a1)+1) * (A_IsUnicode ? 2 : 1), 0)
+			A_IsUnicode ? StrPut(a1, &buf, StrLen(a1) * 2, "UTF-16") : Toolbar_memcpy(&buf, &a1, StrLen(a1))	 ;Buf must be double-NULL-terminated
+			sIdx := DllCall("SendMessage",PtrType,hCtrl,"uint", A_IsUnicode ? TB_ADDSTRINGW : TB_ADDSTRINGA, "uint",0,PtrType,&buf)  ;returns the new index of the string within the string pool
 		} else sIdx := -1,  a2 := (StrLen(A_LoopField)-1)*10 + 1			;if separator, length of the "-" string determines width of the separation. Each - adds 10 pixels.
 
 	 ;TBBUTTON Structure
@@ -860,8 +868,8 @@ Toolbar_compileButtons(hCtrl, Btns, ByRef cBTN) {
 		NumPut(bid,		o+0, 4, "Int")			;Command identifier associated with the button
 		NumPut(hstate,  o+0, 8, "Char")			;Button state flags
 		NumPut(hStyle,  o+0, 9, "Char")			;Button style
-		NumPut(0,		o+0, 8 + 1 * A_PtrSize, "Ptr")	;User data
-		NumPut(sIdx,	o+0, 8 + 2 * A_PtrSize, "Int")	;Zero-based index of the button string
+		NumPut(0,		o+0, 8 + 1 * PtrSize, "Ptr")	;User data
+		NumPut(sIdx,	o+0, 8 + 2 * PtrSize, "Int")	;Zero-based index of the button string
 
 		if a
 		{
@@ -880,61 +888,69 @@ Toolbar_compileButtons(hCtrl, Btns, ByRef cBTN) {
 }
 
 Toolbar_onNotify(Wparam,Lparam,Msg,Hwnd) { 
-	static MODULEID = 80609, oldNotify="*" 
-	static NM_CLICK=-2, NM_RCLICK=-5, NM_LDOWN=-20, TBN_DROPDOWN=-710, TBN_HOTITEMCHANGE=-713, TBN_ENDDRAG=-702, TBN_GETBUTTONINFOA=-700, TBN_QUERYINSERT=-706, TBN_QUERYDELETE=-707, TBN_BEGINADJUST=-703, TBN_ENDADJUST=-704, TBN_RESET=-705, TBN_TOOLBARCHANGE=-708, TB_COMMANDTOINDEX=0x419
-	static cnt, cnta, cBTN, inDialog, tc=0
+	static MODULEID := 80609, oldNotify := "*"
+		, NM_CLICK := -2, NM_RCLICK := -5, NM_LDOWN := -20, TBN_DROPDOWN := -710, TBN_HOTITEMCHANGE := -713, TBN_ENDDRAG := -702
+		, TBN_GETBUTTONINFOA := -700, TBN_QUERYINSERT := -706, TBN_QUERYDELETE := -707, TBN_BEGINADJUST := -703, TBN_ENDADJUST := -704
+		, TBN_RESET := -705, TBN_TOOLBARCHANGE := -708, TB_COMMANDTOINDEX := 0x419
+	static cnt, cnta, cBTN, inDialog, tc := 0
 
-	if (_ := (NumGet(Lparam+4))) != MODULEID
-	 ifLess _, 10000, return	;if ahk control, return asap (AHK increments control ID starting from 1. Custom controls use IDs > 10000 as its unlikely that u will use more then 10K ahk controls.
-	 else {
-		ifEqual, oldNotify, *, SetEnv, oldNotify, % Toolbar("oldNotify")		
-		if oldNotify !=
-			return DllCall(oldNotify, "uint", Wparam, "uint", Lparam, "uint", Msg, "uint", Hwnd)
-	 }
-    
-	hw :=  NumGet(Lparam+0), code := NumGet(Lparam+8, 0, "Int"),  handler := Toolbar(hw "Handler") 
-	ifEqual, handler,, return 
+	if ((_ := NumGet(Lparam+4)) != MODULEID) ; if this was not sent from one of our toolbars:
+	{
+		if (_ < 10000)
+			return	;if ahk control, return asap (AHK increments control ID starting from 1. Custom controls use IDs > 10000 as its unlikely that u will use more then 10K ahk controls.)
+		else ; if not AHK control:
+		{
+			ifEqual, oldNotify, *, SetEnv, oldNotify, % Toolbar("oldNotify") ; if we don't yet know previous callback: get it
+			if oldNotify != ; if there is a previous callback:
+				return DllCall(oldNotify, "uint", Wparam, "uint", Lparam, "uint", Msg, "uint", Hwnd) ; call it
+		}
+	}
+
+	hw :=  NumGet(Lparam+0) ; get toolbar hwnd
+	, code := NumGet(Lparam+8, 0, "Int") ; notification code
+	,  handler := Toolbar(hw "Handler") ; get handler specified for this control
+	ifEqual, handler,, return
 	iItem  := (code != TBN_HOTITEMCHANGE) ? NumGet(lparam+12) : NumGet(lparam+16) 
 
-	SendMessage, TB_COMMANDTOINDEX,iItem,,,ahk_id %hw%    
+	SendMessage, TB_COMMANDTOINDEX,iItem,,,ahk_id %hw% ; get button id from notification structure
 	pos := ErrorLevel + 1 , txt := Toolbar_GetButton( hw, pos, "c")
 
-	
-	if (code=TBN_ENDDRAG) { 		
+	; call handler function with specific information
+	if (code == TBN_ENDDRAG) {
 		IfEqual, pos, 4294967296, return 
 		tc := A_TickCount
     } 
 
-	if (code=NM_CLICK) { 		
+	if (code == NM_CLICK) {
 		IfEqual, pos, 4294967296, return
 		if !(A_TickCount - tc)
 	 		%handler%(hw, "click", txt, pos, iItem)
-    } 
+    }
 
-	if (code=NM_RCLICK)
+	if (code == NM_RCLICK) {
 		ifEqual, pos, 4294967296, return
         else  %handler%(hw,"rclick", txt, pos, iItem) 
+	}
 
-
-	if (code = TBN_DROPDOWN)
+	if (code == TBN_DROPDOWN)
 		%handler%(hw, "menu", txt, pos, iItem)
- 
-	if (code = TBN_HOTITEMCHANGE) { 
+
+	if (code == TBN_HOTITEMCHANGE) {
       IfEqual, pos, 4294967296, return  
       return %handler%(hw, "hot", txt, pos,  iItem) 
    } 
 
   ;=================== CUSTOMIZATION NOTIFICATIONS =========================== 
 
-	if (code = TBN_BEGINADJUST) { 
+	if (code == TBN_BEGINADJUST) {
 		cnta := NumGet( Toolbar(hw "aBTN") ) , cnt := Toolbar_getButtonArray(hw, cBTN), inDialog := true 
 		if (cnt=0) && (cnta=0) 
 			Msgbox Nothing to customize 
 		return 
 	} 
 
-	if (code = TBN_GETBUTTONINFOA)   { 
-		if (iItem = cnt + cnta)					;iItem is position, not identifier. Win keeps sending incresing numbers until we say "no more" (return 0) 
+	if (code == TBN_GETBUTTONINFOA) {
+		if (iItem == cnt + cnta)					;iItem is position, not identifier. Win keeps sending increasing numbers until we say "no more" (return 0) 
 			return 0 
        
 		TBB := lparam + 16						;The OS buffer where to put the button structure 
@@ -944,22 +960,21 @@ Toolbar_onNotify(Wparam,Lparam,Msg,Hwnd) {
 	} 
 
     ;Return at least one TRUE in QueryInsert to show the dialog, if the dialog is openinig. When the dialog is open, QueryInsert affects btn addition. QueryDelete affects deletion. 
-	if (code = TBN_QUERYINSERT) or (code = TBN_QUERYDELETE) { 
+	if (code == TBN_QUERYINSERT or code == TBN_QUERYDELETE) {
 		if (cnta="" or cnta=0) AND (cnt=0) 
 			return FALSE 
 		return TRUE 
 	} 
 
-	if (code=TBN_ENDADJUST) { 
+	if (code == TBN_ENDADJUST) {
 		Toolbar_onEndAdjust(hw, cBTN, cnt), inDialog := false 
 		return %handler%(hw, "adjust", "", "", "") 
 	} 
 
 	;This will fire when user is dragging buttons around with adjustable style
-	if (code = TBN_TOOLBARCHANGE) and !inDialog 
+	if (code == TBN_TOOLBARCHANGE and !inDialog)
 		return %handler%(hw, "change", "", "", "") 
 }
-
 
 ;I am not keeping current buttons in memory, so I must obtain them if customization dialog is called, to populate it
 Toolbar_getButtonArray(hCtrl, ByRef cBtn){
@@ -975,8 +990,8 @@ Toolbar_getButtonArray(hCtrl, ByRef cBtn){
 }
 
 Toolbar_getStateName( hState ) {
-	static TBSTATE_HIDDEN=8, TBSTATE_PRESSED = 0x2, TBSTATE_CHECKED=1, TBSTATE_ENABLED=0x4
-	static states="hidden,pressed,checked,enabled"
+	static TBSTATE_HIDDEN := 8, TBSTATE_PRESSED := 0x2, TBSTATE_CHECKED := 1, TBSTATE_ENABLED := 0x4
+	static states := "hidden,pressed,checked,enabled"
 
 	if !(hState & TBSTATE_ENABLED)				
 		state := "disabled "
@@ -992,8 +1007,8 @@ Toolbar_getStateName( hState ) {
 }
 
 Toolbar_getStyleName( hStyle ) {
-	static BTNS_CHECK=2, BTNS_GROUP = 4, BTNS_DROPDOWN = 8, BTNS_AUTOSIZE = 16, BTNS_NOPREFIX = 32, BTNS_SHOWTEXT = 64
-	static styles="check,group,dropdown,autosize,noprefix,showtext"
+	static BTNS_CHECK := 2, BTNS_GROUP := 4, BTNS_DROPDOWN := 8, BTNS_AUTOSIZE := 16, BTNS_NOPREFIX := 32, BTNS_SHOWTEXT := 64
+	static styles := "check,group,dropdown,autosize,noprefix,showtext"
 	
 	loop, parse, styles, `,
 		if (hStyle & BTNS_%A_LoopField%)
@@ -1008,12 +1023,12 @@ As I keep available buttons as part of the AHK API, I must rebuild array of avai
  that are removed from the toolbar and remove buttons that are added to the toolbar.
  */
 Toolbar_onEndAdjust(hCtrl, cBTN, cnt) {
-	static TB_COMMANDTOINDEX = 0x419, BTNS_SEP=1
+	static TB_COMMANDTOINDEX := 0x419, BTNS_SEP := 1
 	
 	a := Toolbar(hCtrl "aBTN")
-	aBtn := a+4, cnta := NumGet(a+0)
-	size := cnt+cnta,  size := size<50 ? 50 : size			;reserve memory for new aBTN array, minimum 50 buttons
-	buf := Toolbar_malloc( size * 20 + 4)
+	, aBtn := a+4, cnta := NumGet(a+0)
+	, size := cnt+cnta,  size := size<50 ? 50 : size			;reserve memory for new aBTN array, minimum 50 buttons
+	, buf := Toolbar_malloc( size * 20 + 4)
 
   ;check current button changes
     cnta2 := 0
@@ -1048,7 +1063,7 @@ Toolbar_onEndAdjust(hCtrl, cBTN, cnt) {
 allocates the specified number of bytes
 */
 Toolbar_malloc(pSize){
-	static MEM_COMMIT=0x1000, PAGE_READWRITE=0x04
+	static MEM_COMMIT := 0x1000, PAGE_READWRITE := 0x04
 	PtrType := A_PtrSize ? "Ptr" : "UInt" ; use x64-compatible type if running AHK_L
 	return DllCall("VirtualAlloc", PtrType, 0, "uint", pSize, "uint", MEM_COMMIT, "uint", PAGE_READWRITE)
 }
@@ -1057,7 +1072,7 @@ Toolbar_malloc(pSize){
 frees memory allocated with Toolbar_malloc()
 */
 Toolbar_mfree(pAdr) {
-	static MEM_RELEASE = 0x8000
+	static MEM_RELEASE := 0x8000
 	PtrType := A_PtrSize ? "Ptr" : "UInt" ; use x64-compatible type if running AHK_L
 	return DllCall("VirtualFree", PtrType, pAdr, "uint", 0, "uint", MEM_RELEASE)
 }
@@ -1099,7 +1114,7 @@ Toolbar_add2Form(hParent, Txt, Opt) {
 ;Storage
 Toolbar(var="", value="~`a", ByRef o1="", ByRef o2="", ByRef o3="", ByRef o4="", ByRef o5="", ByRef o6="") { 
 	static
-	if (var = "" ){
+	if (var == "" ){
 		if ( _ := InStr(value, ")") )
 			__ := SubStr(value, 1, _-1), value := SubStr(value, _+1)
 		loop, parse, value, %A_Space%
