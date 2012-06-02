@@ -22,7 +22,7 @@ So far, the included libs are (in no particular order):
 * The 'ahkstdlib' collection, in its entirety (see
   http://www.autohotkey.com/forum/viewtopic.php?t=54996)
 * Several of Uberi's libs, including: 
-  AHK-DB (sqlite3 database functions)
+**  AHK-DB (sqlite3 database functions)
   AssociativeArrays
   AveragingFunctions
   BarGrapher
