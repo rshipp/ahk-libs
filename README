@@ -2,7 +2,11 @@ All the (redistributable) AHK libs I can find...
 Licenses are scattered around in there somewhere.
 At the moment, this repo contains well over 200 libraries, classes, and
 wrappers for AHK basic (vanilla), AHK_L, and AHK v2, implemented in over
-2100 ahk scripts. 
+2100 ahk scripts.
+
+Please note that, because this repo makes heavy use of git 'submodules',
+downloading a zip or tarball is not useful. Instead, please clone the
+repo if you wish to have access to all included libs. 
 
 So far, the included libs are (in no particular order):
 - The 'ahkstdlib' collection, in its entirety (see
