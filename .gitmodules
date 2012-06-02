@@ -1,0 +1,3 @@
+[submodule "WinHttpRequest"]
+	path = WinHttpRequest
+	url = git://github.com/infogulch/WinHttpRequest.git
