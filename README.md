@@ -22,41 +22,41 @@ So far, the included libs are (in no particular order):
 * The 'ahkstdlib' collection, in its entirety (see
   http://www.autohotkey.com/forum/viewtopic.php?t=54996)
 * Several of Uberi's libs, including: 
-**  AHK-DB (sqlite3 database functions)
-  AssociativeArrays
-  AveragingFunctions
-  BarGrapher
-  DeltaCompression
-  ExprEval()
-  Geolocation
-  ListCompare
-  ParallelPort
-  QuotedStringReplace
-  RangeOverlap
-  Raydium-AHK (game engine wrapper)
-  SingleCharArray
-  Speech (tts lib)
+  AHK-DB (sqlite3 database functions), 
+  AssociativeArrays, 
+  AveragingFunctions, 
+  BarGrapher, 
+  DeltaCompression, 
+  ExprEval(), 
+  Geolocation, 
+  ListCompare, 
+  ParallelPort, 
+  QuotedStringReplace, 
+  RangeOverlap, 
+  Raydium-AHK (game engine wrapper), 
+  SingleCharArray, 
+  Speech (tts lib), 
   TriangleCollisionDetection
 * Rseding91's "Fast ini library", basic and advanced versions
 * Several of infogulch's libs, including:
-  WinHttpRequest
-  Map
-  AsyncHttp
-  Zip
-  LSON
-  ahk2-bigint
-  CaseSensitiveObject
+  WinHttpRequest, 
+  Map, 
+  AsyncHttp, 
+  Zip, 
+  LSON, 
+  ahk2-bigint, 
+  CaseSensitiveObject, 
   ahk-OpenGL
 * nimdAHK's AHKLink lib (https://github.com/nimdahk/AHKLink)
 * ChrisS85's CGUI and WorkerThread libs (https://github.com/ChrisS85)
 * camerb's AHK libs (https://github.com/camerb/AHKs)
 * polyethene's AutoHotkey-Scripts (https://github.com/polyethene/AutoHotkey-Scripts)
 * Several of maul-esel's libs (https://github.com/maul-esel/), including:
-  COM-Classes
-  FormsFramework
-  ITaskbarList
-  AeroThumbnail
-  ImportTypeLib
+  COM-Classes, 
+  FormsFramework, 
+  ITaskbarList, 
+  AeroThumbnail, 
+  ImportTypeLib, 
   AHK-Util-Funcs (GUID, Mem, Obj, etc)
 * hoppfrosch's cTable class
 * HotKeyIt's _Struct libs for AHK v2 and _H
