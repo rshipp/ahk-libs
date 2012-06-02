@@ -1,5 +1,0 @@
-LICENSE AGREEMENT
-+++++++++++++++
-if(lic=true)
-if !lic
-then end

@@ -1,1 +1,0 @@
-Run, http://www.autohotkey.com/search/search.php

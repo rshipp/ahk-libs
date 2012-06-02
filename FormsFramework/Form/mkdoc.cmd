@@ -1,1 +1,0 @@
-mkdoc.bat
