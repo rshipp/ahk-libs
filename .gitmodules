@@ -94,3 +94,12 @@
 [submodule "ALD.ahk"]
 	path = ALD.ahk
 	url = https://github.com/Library-Distribution/ALD.ahk.git
+[submodule "AHK_cGist"]
+	path = AHK_cGist
+	url = https://github.com/hoppfrosch/AHK_cGist.git
+[submodule "ahk_library"]
+	path = ahk_library
+	url = https://github.com/lordkrandel/ahk_library.git
+[submodule "FF_COM"]
+	path = FF_COM
+	url = https://github.com/TLMcode/FF_COM.git

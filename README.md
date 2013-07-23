@@ -5,7 +5,7 @@ Licenses are scattered around in there somewhere.
 
 At the moment, this repo contains well over 200 libraries, classes, and
 wrappers for AHK basic (vanilla), AHK\_L, and AHK v2, implemented in over
-2700 ahk scripts.
+2800 ahk scripts.
 
 ## README!
 Please note that, because this repo makes heavy use of git 'submodules',
@@ -63,11 +63,13 @@ So far, the included libs are (in no particular order):
   ImportTypeLib, 
   AHK-Util-Funcs (GUID, Mem, Obj, etc),
   ALD.ahk
-* @hoppfrosch's cTable class
+* @hoppfrosch's cTable and cGist classes
 * @HotKeyIt's _Struct libs for AHK v2 and _H
 * @RaptorX's scintilla-wrapper and cURL-Wrapper libs
 * @IsNull's ahkDBA
 * @avi-aryan's "Avis-Autohotkey-Repo", which includes several AHK libraries.
+* @lordkrandel's ahk_library
+* @TLMcode's FF_COM
 
 The "Sources" file contains a list of the git repos from which
 submodules were created, and are included here. 
