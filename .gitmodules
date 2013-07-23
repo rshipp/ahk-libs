@@ -82,3 +82,15 @@
 [submodule "Avis-Autohotkey-Repo"]
 	path = Avis-Autohotkey-Repo
 	url = https://github.com/Uberi/Avis-Autohotkey-Repo.git
+[submodule "Fraction.ahk"]
+	path = Fraction.ahk
+	url = https://github.com/Uberi/Fraction.ahk.git
+[submodule "Canvas-AHK"]
+	path = Canvas-AHK
+	url = https://github.com/Uberi/Canvas-AHK.git
+[submodule "Parallelist"]
+	path = Parallelist
+	url = https://github.com/Uberi/Parallelist.git
+[submodule "ALD.ahk"]
+	path = ALD.ahk
+	url = https://github.com/Library-Distribution/ALD.ahk.git

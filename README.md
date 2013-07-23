@@ -37,7 +37,10 @@ So far, the included libs are (in no particular order):
   Raydium-AHK (game engine wrapper), 
   SingleCharArray, 
   Speech (tts lib), 
-  TriangleCollisionDetection
+  TriangleCollisionDetection,
+  Parallelist,
+  Canvas-AHK,
+  Fraction.ahk
 * Rseding91's "Fast ini library", basic and advanced versions
 * Several of @infogulch's libs, including:
   WinHttpRequest, 
@@ -58,7 +61,8 @@ So far, the included libs are (in no particular order):
   ITaskbarList, 
   AeroThumbnail, 
   ImportTypeLib, 
-  AHK-Util-Funcs (GUID, Mem, Obj, etc)
+  AHK-Util-Funcs (GUID, Mem, Obj, etc),
+  ALD.ahk
 * @hoppfrosch's cTable class
 * @HotKeyIt's _Struct libs for AHK v2 and _H
 * @RaptorX's scintilla-wrapper and cURL-Wrapper libs
