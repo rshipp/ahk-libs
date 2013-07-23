@@ -5,7 +5,7 @@ Licenses are scattered around in there somewhere.
 
 At the moment, this repo contains well over 200 libraries, classes, and
 wrappers for AHK basic (vanilla), AHK\_L, and AHK v2, implemented in over
-2100 ahk scripts.
+2700 ahk scripts.
 
 ## README!
 Please note that, because this repo makes heavy use of git 'submodules',
