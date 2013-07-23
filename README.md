@@ -9,16 +9,16 @@ wrappers for AHK basic (vanilla), AHK\_L, and AHK v2, implemented in over
 
 ## README!
 Please note that, because this repo makes heavy use of git 'submodules',
-downloading a zip or tarball is not useful. Instead, please run
+downloading a zip or tarball is not useful. Instead, if you wish to have
+access to all the libs included in this repo, please run:
 
     git clone git://github.com/george2/ahk-libs.git
     git submodule update --init --recursive
     git submodule update --remote --merge
 
-if you wish to have access to all the libs included in this repo.
 
 
-## Included:
+## Included
 So far, the included libs are (in no particular order):
 * The 'ahkstdlib' collection, in its entirety (see
   http://www.autohotkey.com/forum/viewtopic.php?t=54996)
@@ -70,7 +70,7 @@ So far, the included libs are (in no particular order):
 * @avi-aryan's "Avis-Autohotkey-Repo", which includes several AHK libraries.
 * @lordkrandel's ahk_library
 * @TLMcode's FF_COM
-* @MasterFocus's "AutoHotkey" repo, hich includes several AHK libraries and functions.
+* @MasterFocus's "AutoHotkey" repo, which includes several AHK libraries and functions.
 
 The "Sources" file contains a list of the git repos from which
 submodules were created, and are included here. 
