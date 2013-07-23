@@ -13,6 +13,7 @@ downloading a zip or tarball is not useful. Instead, please run
 
     git clone git://github.com/george2/ahk-libs.git
     git submodule update --init --recursive
+    git submodule update --remote --merge
 
 if you wish to have access to all the libs included in this repo.
 
@@ -61,7 +62,8 @@ So far, the included libs are (in no particular order):
 * @hoppfrosch's cTable class
 * @HotKeyIt's _Struct libs for AHK v2 and _H
 * @RaptorX's scintilla-wrapper and cURL-Wrapper libs
-
+* @IsNull's ahkDBA
+* @avi-aryan's "Avis-Autohotkey-Repo", which includes several AHK libraries.
 
 The "Sources" file contains a list of the git repos from which
 submodules were created, and are included here. 

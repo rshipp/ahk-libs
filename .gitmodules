@@ -52,9 +52,6 @@
 [submodule "_Struct"]
 	path = _Struct
 	url = git://github.com/HotKeyIt/_Struct.git
-[submodule "scintilla-wrapper"]
-	path = scintilla-wrapper
-	url = git://github.com/RaptorX/scintilla-wrapper.git
 [submodule "cURL-Wrapper"]
 	path = cURL-Wrapper
 	url = git://github.com/RaptorX/cURL-Wrapper.git
@@ -76,3 +73,12 @@
 [submodule "AHK-Util-Funcs"]
 	path = AHK-Util-Funcs
 	url = git://github.com/maul-esel/AHK-Util-Funcs.git
+[submodule "scintilla-wrapper"]
+	path = scintilla-wrapper
+	url = https://github.com/RaptorX/scintilla-wrapper.git
+[submodule "ahkDBA"]
+	path = ahkDBA
+	url = https://github.com/IsNull/ahkDBA.git
+[submodule "Avis-Autohotkey-Repo"]
+	path = Avis-Autohotkey-Repo
+	url = https://github.com/Uberi/Avis-Autohotkey-Repo.git
