@@ -5,7 +5,7 @@ Licenses are scattered around in there somewhere.
 
 At the moment, this repo contains well over 200 libraries, classes, and
 wrappers for AHK basic (vanilla), AHK\_L, and AHK v2, implemented in over
-2800 ahk scripts.
+2900 ahk scripts.
 
 ## README!
 Please note that, because this repo makes heavy use of git 'submodules',
@@ -70,6 +70,7 @@ So far, the included libs are (in no particular order):
 * @avi-aryan's "Avis-Autohotkey-Repo", which includes several AHK libraries.
 * @lordkrandel's ahk_library
 * @TLMcode's FF_COM
+* @MasterFocus's "AutoHotkey" repo, hich includes several AHK libraries and functions.
 
 The "Sources" file contains a list of the git repos from which
 submodules were created, and are included here. 

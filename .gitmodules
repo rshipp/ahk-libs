@@ -103,3 +103,6 @@
 [submodule "FF_COM"]
 	path = FF_COM
 	url = https://github.com/TLMcode/FF_COM.git
+[submodule "MasterFocus-AutoHotkey"]
+	path = MasterFocus-AutoHotkey
+	url = https://github.com/MasterFocus/AutoHotkey.git
