@@ -79,9 +79,6 @@
 [submodule "ahkDBA"]
 	path = ahkDBA
 	url = https://github.com/IsNull/ahkDBA.git
-[submodule "Avis-Autohotkey-Repo"]
-	path = Avis-Autohotkey-Repo
-	url = https://github.com/Uberi/Avis-Autohotkey-Repo.git
 [submodule "Fraction.ahk"]
 	path = Fraction.ahk
 	url = https://github.com/Uberi/Fraction.ahk.git
@@ -106,3 +103,6 @@
 [submodule "MasterFocus-AutoHotkey"]
 	path = MasterFocus-AutoHotkey
 	url = https://github.com/MasterFocus/AutoHotkey.git
+[submodule "Avis-Autohotkey-Repo"]
+	path = Avis-Autohotkey-Repo
+	url = https://github.com/avi-aryan/Avis-Autohotkey-Repo.git
