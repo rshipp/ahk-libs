@@ -1,6 +1,9 @@
-; httpQuery-0-3-6.ahk
-httpQuery(byref p1 = "", p2 = "", p3="", p4="")
-{   ; v0.3.6 (w) Oct, 26 2010 by derRaphael / zLib-Style release
+; httpQuery-0-3-5.ahk
+; httpQuery GET and POST requests by DerRaphael
+; http://www.autohotkey.com/forum/topic33506.html
+httpQuery(byref Result, lpszUrl, POSTDATA="", HEADERS="")
+{   ; v0.3.5 (w) Sep, 8 2008 by Heresy & derRaphael / zLib-Style release
+   ; updates Aug, 28 2008   
    ; currently the verbs showHeader, storeHeader, and updateSize are supported in httpQueryOps
    ; in case u need a different UserAgent, Proxy, ProxyByPass, Referrer, and AcceptType just
    ; specify them as global variables - mind the varname for referrer is httpQueryReferer [sic].
@@ -9,14 +12,6 @@ httpQuery(byref p1 = "", p2 = "", p3="", p4="")
    global httpQueryOps, httpAgent, httpProxy, httpProxyByPass, httpQueryReferer, httpQueryAcceptType
        , httpQueryDwFlags
    ; Get any missing default Values
-   
-   ;v0.3.6
-   ; check for syntax
-   if ( VarSetCapacity(p1) != 0 )
-      dReturn:=true,  result := "", lpszUrl := p1, POSTDATA := p2, HEADERS  := p3
-   else
-      result := p1, lpszUrl := p2, POSTDATA := p3, HEADERS  := p4
-   
    defaultOps =
    (LTrim Join|
       httpAgent=AutoHotkeyScript|httpProxy=0|httpProxyByPass=0|INTERNET_FLAG_SECURE=0x00800000
@@ -227,21 +222,15 @@ httpQuery(byref p1 = "", p2 = "", p3="", p4="")
    }
    sizeArray := SubStr(sizeArray,1,-1)   ; trim last PipeChar
    
-   VarSetCapacity( ( dReturn == true ) ? result : p1 ,fSize+1,0)      ; reconstruct the result from above generated chunkblocks
-   Dest := ( dReturn == true ) ? &result : &p1                 ; to a our ByRef result variable
+   VarSetCapacity(result,fSize+1,0)      ; reconstruct the result from above generated chunkblocks
+   Dest := &result                       ; to a our ByRef result variable
    Loop,Parse,SizeArray,|
       DllCall("RtlMoveMemory","uInt",Dest,"uInt",&buffer%A_Index%,"uInt",A_LoopField)
       , Dest += A_LoopField
-      
+     
    DllCall("WinINet\InternetCloseHandle", "uInt", hRequest)   ; close all opened
    DllCall("WinINet\InternetCloseHandle", "uInt", hInternet)
    DllCall("WinINet\InternetCloseHandle", "uInt", hConnect)
    DllCall("FreeLibrary", "UInt", hModule)                    ; unload the library
-   
-   if ( dReturn == true ) {
-      VarSetCapacity( result, -1 )
-      ErrorLevel := fSize
-      return Result
-   } else 
-      return fSize                      ; return the size - strings need update via VarSetCapacity(res,-1)
+   return fSize                          ; return the size - strings need update via VarSetCapacity(res,-1)
 }
