@@ -106,3 +106,9 @@
 [submodule "Avis-Autohotkey-Repo"]
 	path = Avis-Autohotkey-Repo
 	url = https://github.com/avi-aryan/Avis-Autohotkey-Repo.git
+[submodule "ahkzmq"]
+	path = ahkzmq
+	url = https://github.com/tinku99/ahkzmq.git
+[submodule "tinku99-stdlib"]
+	path = tinku99-stdlib
+	url = https://github.com/tinku99/stdlib.git

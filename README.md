@@ -71,6 +71,7 @@ So far, the included libs are (in no particular order):
 * @lordkrandel's ahk_library
 * @TLMcode's FF_COM
 * @MasterFocus's "AutoHotkey" repo, which includes several AHK libraries and functions.
+* @tinku99's ahkzmq wrapper and stdlib.
 
 The "Sources" file contains a list of the git repos from which
 submodules were created, and are included here. 
