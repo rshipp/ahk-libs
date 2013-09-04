@@ -112,3 +112,6 @@
 [submodule "tinku99-stdlib"]
 	path = tinku99-stdlib
 	url = https://github.com/tinku99/stdlib.git
+[submodule "LibCon.ahk"]
+	path = LibCon.ahk
+	url = https://github.com/joedf/LibCon.ahk.git
