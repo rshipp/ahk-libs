@@ -20,6 +20,7 @@ access to all the libs included in this repo, please run:
 
 ## Included
 So far, the included libs are (in no particular order):
+
 * The 'ahkstdlib' collection, in its entirety (see
   http://www.autohotkey.com/forum/viewtopic.php?t=54996)
 * Several of @Uberi's libs, including: 
@@ -72,6 +73,7 @@ So far, the included libs are (in no particular order):
 * @TLMcode's FF_COM
 * @MasterFocus's "AutoHotkey" repo, which includes several AHK libraries and functions.
 * @tinku99's ahkzmq wrapper and stdlib.
+* @joedf's LibCon.ahk
 
 The "Sources" file contains a list of the git repos from which
 submodules were created, and are included here. 
