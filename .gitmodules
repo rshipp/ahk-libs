@@ -118,3 +118,9 @@
 [submodule "AHK-Lib-Table"]
 	path = AHK-Lib-Table
 	url = https://github.com/Jim-VxE/AHK-Lib-Table.git
+[submodule "AHK-Lib-ADOSQL"]
+	path = AHK-Lib-ADOSQL
+	url = https://github.com/Jim-VxE/AHK-Lib-ADOSQL.git
+[submodule "AHK-Lib-JSON_ToObj"]
+	path = AHK-Lib-JSON_ToObj
+	url = https://github.com/Jim-VxE/AHK-Lib-JSON_ToObj.git
