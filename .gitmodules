@@ -115,3 +115,6 @@
 [submodule "LibCon.ahk"]
 	path = LibCon.ahk
 	url = https://github.com/joedf/LibCon.ahk.git
+[submodule "AHK-Lib-Table"]
+	path = AHK-Lib-Table
+	url = https://github.com/Jim-VxE/AHK-Lib-Table.git
