@@ -74,6 +74,8 @@ So far, the included libs are (in no particular order):
 * @MasterFocus's "AutoHotkey" repo, which includes several AHK libraries and functions.
 * @tinku99's ahkzmq wrapper and stdlib.
 * @joedf's LibCon.ahk
+* @avi-aryan's autohotkey-scripts repo, including Avi's Math-Functions library.
+* @Jim-VxE's JSON_ToObj, ADOSQL, and Table libraries.
 
 The "Sources" file contains a list of the git repos from which
 submodules were created, and are included here. 
