@@ -124,3 +124,18 @@
 [submodule "AHK-Lib-JSON_ToObj"]
 	path = AHK-Lib-JSON_ToObj
 	url = https://github.com/Jim-VxE/AHK-Lib-JSON_ToObj.git
+[submodule "ObjCSV"]
+	path = ObjCSV
+	url = https://github.com/JnLlnd/ObjCSV.git
+[submodule "ahkoop"]
+	path = ahkoop
+	url = https://github.com/fincs/ahkoop.git
+[submodule "AFC"]
+	path = AFC
+	url = https://github.com/fincs/AFC.git
+[submodule "dbgp"]
+	path = dbgp
+	url = https://github.com/fincs/dbgp.git
+[submodule "ahk-eval"]
+	path = ahk-eval
+	url = https://github.com/fincs/ahk-eval.git
