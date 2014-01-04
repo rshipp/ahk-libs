@@ -79,7 +79,6 @@ So far, the included libs are (in no particular order):
 * [JnLlnd](https://github.com/JnLlnd)'s ObjCSV library
 * [fincs](https://github.com/fincs)' ahkoop preprocessor, AutoHotkey
   Foundation Classes (AFC), DBGp library, and ahk-eval library.
-* 
 
 ## Note to developers of these libs
 If your code is in this repo, and you do not want it to be, I apologize. 
