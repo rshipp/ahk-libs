@@ -135,7 +135,7 @@
 	url = https://github.com/fincs/AFC.git
 [submodule "dbgp"]
 	path = dbgp
-	url = https://github.com/fincs/dbgp.git
+	url = https://github.com/Lexikos/dbgp.git
 [submodule "ahk-eval"]
 	path = ahk-eval
 	url = https://github.com/fincs/ahk-eval.git
