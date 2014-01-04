@@ -12,10 +12,7 @@ Please note that, because this repo makes heavy use of git 'submodules',
 downloading a zip or tarball is not useful. Instead, if you wish to have
 access to all the libs included in this repo, please run:
 
-    git clone git://github.com/george2/ahk-libs.git
-    git submodule update --init --recursive
-    git submodule update --remote --merge
-
+    git clone --recursive git://github.com/george2/ahk-libs.git
 
 
 ## Included
