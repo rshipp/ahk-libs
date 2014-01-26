@@ -77,6 +77,9 @@ So far, the included libs are (in no particular order):
 * [fincs](https://github.com/fincs)' AutoHotkey Foundation Classes
   (AFC), and ahk-eval library
 * [Lexikos](https://github.com/Lexikos)' DBGp library
+* [AHK-just-me](https://github.com/AHK-just-me)'s HD_EX, TC_EX, IL_EX,
+  LV_EX, Class_LV_Colors, Class_LV_InCellEdit, Class_SQLiteDB,
+  Class_ImageButton, and Class_RichEdit.
 
 ## Note to developers of these libs
 If your code is in this repo, and you do not want it to be, I apologize. 

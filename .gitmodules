@@ -139,3 +139,30 @@
 [submodule "ahk-eval"]
 	path = ahk-eval
 	url = https://github.com/fincs/ahk-eval.git
+[submodule "HD_EX"]
+	path = HD_EX
+	url = https://github.com/AHK-just-me/HD_EX.git
+[submodule "TC_EX"]
+	path = TC_EX
+	url = https://github.com/AHK-just-me/TC_EX.git
+[submodule "IL_EX"]
+	path = IL_EX
+	url = https://github.com/AHK-just-me/IL_EX.git
+[submodule "Class_SQLiteDB"]
+	path = Class_SQLiteDB
+	url = https://github.com/AHK-just-me/Class_SQLiteDB.git
+[submodule "LV_EX"]
+	path = LV_EX
+	url = https://github.com/AHK-just-me/LV_EX.git
+[submodule "Class_LV_Colors"]
+	path = Class_LV_Colors
+	url = https://github.com/AHK-just-me/Class_LV_Colors.git
+[submodule "Class_ImageButton"]
+	path = Class_ImageButton
+	url = https://github.com/AHK-just-me/Class_ImageButton.git
+[submodule "Class_LV_InCellEdit"]
+	path = Class_LV_InCellEdit
+	url = https://github.com/AHK-just-me/Class_LV_InCellEdit.git
+[submodule "Class_RichEdit"]
+	path = Class_RichEdit
+	url = https://github.com/AHK-just-me/Class_RichEdit.git
