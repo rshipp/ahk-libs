@@ -14,7 +14,7 @@ Want more libs? Several projects have similar goals to this one:
 * [package/stdlib distribution and management](https://trello.com/b/XVP4M76d/package-stdlib-distribution-and-management)
   from the [ahkscript](https://github.com/ahkscript) folks
 * [ALD](http://libba.net/) (discontinued)
-* tuncay's original [ahkstdlib](http://www.autohotkey.com/forum/viewtopic.php?t=54996)
+* tuncay's original [ahkstdlib](http://www.autohotkey.com/forum/viewtopic.php?t=54996) (discontinued)
 
 ## README!
 Please note that, because this repo makes heavy use of git 'submodules',
