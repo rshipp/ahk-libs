@@ -5,7 +5,7 @@ Licenses are scattered around in there somewhere.
 
 At the moment, this repo contains well over 200 libraries, classes, and
 wrappers for AHK basic (vanilla), AHK\_L, and AHK v2, implemented in over
-2900 ahk scripts.
+3000 ahk scripts.
 
 ## AutoHotkey Library distribution
 Want more libs? Several projects have similar goals to this one:
