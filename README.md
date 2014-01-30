@@ -13,6 +13,7 @@ Want more libs? Several projects have similar goals to this one:
 * [pAHKlite](https://github.com/hi5/pAHKlight)
 * [package/stdlib distribution and management](https://trello.com/b/XVP4M76d/package-stdlib-distribution-and-management)
   from the [ahkscript](https://github.com/ahkscript) folks
+* [ALD](http://libba.net/) (discontinued)
 * tuncay's original [ahkstdlib](http://www.autohotkey.com/forum/viewtopic.php?t=54996)
 
 ## README!
@@ -88,6 +89,10 @@ So far, the included libs are (in no particular order):
 * [AHK-just-me](https://github.com/AHK-just-me)'s HD_EX, TC_EX, IL_EX,
   LV_EX, Class_LV_Colors, Class_LV_InCellEdit, Class_SQLiteDB,
   Class_ImageButton, and Class_RichEdit.
+* [cocobelgica](https://github.com/cocobelgica)'s
+  AutoHotkey-ElementTree, AutoHotkey-PS-Control, AutoHotkey-Menu,
+  AutoHotkey-IPC, AutoHotkey-XConfig, AutoHotkey-JSON, AutoHotkey-XML,
+  and AutoHotkey-Expose.
 
 ## Note to developers of these libs
 If your code is in this repo, and you do not want it to be, I apologize. 

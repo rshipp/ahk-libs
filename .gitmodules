@@ -166,3 +166,27 @@
 [submodule "Class_RichEdit"]
 	path = Class_RichEdit
 	url = https://github.com/AHK-just-me/Class_RichEdit.git
+[submodule "AutoHotkey-ElementTree"]
+	path = AutoHotkey-ElementTree
+	url = https://github.com/cocobelgica/AutoHotkey-ElementTree.git
+[submodule "AutoHotkey-Menu"]
+	path = AutoHotkey-Menu
+	url = https://github.com/cocobelgica/AutoHotkey-Menu.git
+[submodule "AutoHotkey-PS-Control"]
+	path = AutoHotkey-PS-Control
+	url = https://github.com/cocobelgica/AutoHotkey-PS-Control.git
+[submodule "AutoHotkey-IPC"]
+	path = AutoHotkey-IPC
+	url = https://github.com/cocobelgica/AutoHotkey-IPC.git
+[submodule "AutoHotkey-XConfig"]
+	path = AutoHotkey-XConfig
+	url = https://github.com/cocobelgica/AutoHotkey-XConfig.git
+[submodule "AutoHotkey-JSON"]
+	path = AutoHotkey-JSON
+	url = https://github.com/cocobelgica/AutoHotkey-JSON.git
+[submodule "AutoHotkey-XML"]
+	path = AutoHotkey-XML
+	url = https://github.com/cocobelgica/AutoHotkey-XML.git
+[submodule "AutoHotkey-Expose"]
+	path = AutoHotkey-Expose
+	url = https://github.com/cocobelgica/AutoHotkey-Expose.git
