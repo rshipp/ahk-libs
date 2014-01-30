@@ -7,6 +7,14 @@ At the moment, this repo contains well over 200 libraries, classes, and
 wrappers for AHK basic (vanilla), AHK\_L, and AHK v2, implemented in over
 2900 ahk scripts.
 
+## AutoHotkey Library distribution
+Want more libs? Several projects have similar goals to this one:
+
+* [pAHKlite](https://github.com/hi5/pAHKlight)
+* [package/stdlib distribution and management](https://trello.com/b/XVP4M76d/package-stdlib-distribution-and-management)
+  from the [ahkscript](https://github.com/ahkscript) folks
+* tuncay's original [ahkstdlib](http://www.autohotkey.com/forum/viewtopic.php?t=54996)
+
 ## README!
 Please note that, because this repo makes heavy use of git 'submodules',
 downloading a zip or tarball is not useful. Instead, if you wish to have
