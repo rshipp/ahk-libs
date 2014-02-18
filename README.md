@@ -1,13 +1,14 @@
 # ahk-libs
-All the (redistributable) AHK libs I can find...
+All the (redistributable) [AutoHotkey](http://ahkscript.org/) libraries I can find...
 
 Licenses are scattered around in there somewhere.
 
 At the moment, this repo contains well over 200 libraries, classes, and
-wrappers for AHK basic (vanilla), AHK\_L, and AHK v2, implemented in over
-3000 ahk scripts.
+wrappers for [AHK 1.1](https://github.com/Lexikos/AutoHotkey_L) (previously AHK\_L),
+AHK 1.0 (previously basic/vanilla), and [AHK v2](https://github.com/Lexikos/AutoHotkey_L/tree/alpha),
+implemented in over 3000 scripts.
 
-## AutoHotkey Library distribution
+## AutoHotkey Library Distribution
 Want more libs? Several projects have similar goals to this one:
 
 * [pAHKlite](https://github.com/hi5/pAHKlight)
@@ -15,6 +16,7 @@ Want more libs? Several projects have similar goals to this one:
   from the [ahkscript](https://github.com/ahkscript) folks
 * [ALD](http://libba.net/) (discontinued)
 * tuncay's original [ahkstdlib](http://www.autohotkey.com/forum/viewtopic.php?t=54996) (discontinued)
+* [Salt](https://code.google.com/p/salt/) (discontinued)
 
 ## README!
 Please note that, because this repo makes heavy use of git 'submodules',
