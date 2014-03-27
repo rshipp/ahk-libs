@@ -12,7 +12,8 @@ implemented in over 3000 scripts.
 Want more libs? Several projects have similar goals to this one:
 
 * [pAHKlite](https://github.com/hi5/pAHKlight)
-* [package/stdlib distribution and management](https://trello.com/b/XVP4M76d/package-stdlib-distribution-and-management)
+* [APDM](https://github.com/ahkscript/ASPDM) and
+  [package/stdlib distribution and management](https://trello.com/b/XVP4M76d/package-stdlib-distribution-and-management)
   from the [ahkscript](https://github.com/ahkscript) folks
 * [ALD](http://libba.net/) (discontinued)
 * tuncay's original [ahkstdlib](http://www.autohotkey.com/forum/viewtopic.php?t=54996) (discontinued)
