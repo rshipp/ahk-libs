@@ -11,7 +11,7 @@ implemented in over 3000 scripts.
 ## AutoHotkey Library Distribution
 Want more libs? Several projects have similar goals to this one:
 
-* [pAHKlite](https://github.com/hi5/pAHKlight)
+* [pAHKlight](https://github.com/hi5/pAHKlight)
 * [ASPDM](https://github.com/ahkscript/ASPDM), for
   [package/stdlib distribution and management](https://trello.com/b/XVP4M76d/package-stdlib-distribution-and-management)
   from the [ahkscript](https://github.com/ahkscript) folks
