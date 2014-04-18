@@ -193,3 +193,9 @@
 [submodule "Class_Console"]
 	path = Class_Console
 	url = https://github.com/AfterLemon/Class_Console.git
+[submodule "AHK_DllCall_WinAPI"]
+	path = AHK_DllCall_WinAPI
+	url = https://github.com/jNizM/AHK_DllCall_WinAPI.git
+[submodule "jNizM_AutoHotkey_Scripts"]
+	path = jNizM_AutoHotkey_Scripts
+	url = https://github.com/jNizM/AutoHotkey_Scripts.git

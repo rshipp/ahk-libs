@@ -97,7 +97,9 @@ So far, the included libs are (in no particular order):
   AutoHotkey-IPC, AutoHotkey-XConfig, AutoHotkey-JSON, AutoHotkey-XML,
   and AutoHotkey-Expose.
 * [AfterLemon](https://github.com/AfterLemon) and
-  [tidbit](https://github.com/acorns)'s Class_Console
+  [tidbit](https://github.com/acorns)'s Class_Console.
+* [jNizM](https://github.com/jNizM)'s AHK_DllCall_WinAPI and
+  AutoHotkey_Scripts (jNizM_AutoHotkey_Scripts).
 
 ## Note to developers of these libs
 If your code is in this repo, and you do not want it to be, I apologize. 
