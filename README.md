@@ -96,6 +96,8 @@ So far, the included libs are (in no particular order):
   AutoHotkey-ElementTree, AutoHotkey-PS-Control, AutoHotkey-Menu,
   AutoHotkey-IPC, AutoHotkey-XConfig, AutoHotkey-JSON, AutoHotkey-XML,
   and AutoHotkey-Expose.
+* [AfterLemon](https://github.com/AfterLemon) and
+  [tidbit](https://github.com/acorns)'s Class_Console
 
 ## Note to developers of these libs
 If your code is in this repo, and you do not want it to be, I apologize. 

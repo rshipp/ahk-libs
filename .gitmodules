@@ -190,3 +190,6 @@
 [submodule "AutoHotkey-Expose"]
 	path = AutoHotkey-Expose
 	url = https://github.com/cocobelgica/AutoHotkey-Expose.git
+[submodule "Class_Console"]
+	path = Class_Console
+	url = https://github.com/AfterLemon/Class_Console.git
