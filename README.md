@@ -77,13 +77,12 @@ So far, the included libs are (in no particular order):
 * [HotKeyIt](https://github.com/HotKeyIt)'s _Struct libs for AHK v2 and _H
 * [RaptorX](https://github.com/RaptorX)'s scintilla-wrapper and cURL-Wrapper libs
 * [IsNull](https://github.com/IsNull)'s ahkDBA
-* [avi-aryan](https://github.com/avi-aryan)'s "Avis-Autohotkey-Repo", which includes several AHK libraries.
+* [aviaryan](https://github.com/aviaryan)'s "autohotkey-scripts", which includes several AHK libraries and scripts.
 * [lordkrandel](https://github.com/lordkrandel)'s ahk_library
 * [TLMcode](https://github.com/TLMcode)'s FF_COM
 * [MasterFocus](https://github.com/MasterFocus)'s "AutoHotkey" repo, which includes several AHK libraries and functions.
 * [tinku99](https://github.com/tinku99)'s ahkzmq wrapper and stdlib.
 * [joedf](https://github.com/joedf)'s LibCon.ahk
-* [avi-aryan](https://github.com/avi-aryan)'s autohotkey-scripts repo, including Avi's Math-Functions library.
 * [Jim-VxE](https://github.com/Jim-VxE)'s JSON_ToObj, ADOSQL, and Table libraries.
 * [JnLlnd](https://github.com/JnLlnd)'s ObjCSV library
 * [fincs](https://github.com/fincs)' AutoHotkey Foundation Classes
