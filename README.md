@@ -24,7 +24,7 @@ Please note that, because this repo makes heavy use of git 'submodules',
 downloading a zip or tarball is not useful. Instead, if you wish to have
 access to all the libs included in this repo, please run:
 
-    git clone --recursive git://github.com/george2/ahk-libs.git
+    git clone --recursive git://github.com/rshipp/ahk-libs.git
 
 
 ## Included
