@@ -196,9 +196,3 @@
 [submodule "jNizM_AutoHotkey_Scripts"]
 	path = jNizM_AutoHotkey_Scripts
 	url = https://github.com/jNizM/AutoHotkey_Scripts.git
-[submodule "Plaster"]
-	path = Plaster
-	url = https://github.com/Shambles-Dev/Plaster.git
-[submodule "Composer"]
-	path = Composer
-	url = https://github.com/Shambles-Dev/Composer.git

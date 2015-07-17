@@ -99,8 +99,11 @@ So far, the included libs are (in no particular order):
   [tidbit](https://github.com/acorns)'s Class_Console.
 * [jNizM](https://github.com/jNizM)'s AHK_DllCall_WinAPI and
   AutoHotkey_Scripts (jNizM_AutoHotkey_Scripts).
+
+## Removed
+
 * [Shambles-Dev](https://github.com/Shambles-Dev)’s Plaster introspection
-  and Composer functional programming libraries.
+  and Composer functional programming libraries. ([Issue #4](https://github.com/rshipp/ahk-libs/issues/4))
 
 ## Note to developers of these libs
 If your code is in this repo, and you do not want it to be, I apologize.
