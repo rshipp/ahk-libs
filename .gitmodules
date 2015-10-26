@@ -1,78 +1,78 @@
 [submodule "WinHttpRequest"]
 	path = WinHttpRequest
-	url = git://github.com/infogulch/WinHttpRequest.git
+	url = https://github.com/infogulch/WinHttpRequest.git
 [submodule "Map"]
 	path = Map
-	url = git://github.com/infogulch/Map.git
+	url = https://github.com/infogulch/Map.git
 [submodule "AsyncHttp"]
 	path = AsyncHttp
-	url = git://github.com/infogulch/AsyncHttp.git
+	url = https://github.com/infogulch/AsyncHttp.git
 [submodule "AutoHotkey-StdLib"]
 	path = AutoHotkey-StdLib
-	url = git://github.com/infogulch/AutoHotkey-StdLib.git
+	url = https://github.com/infogulch/AutoHotkey-StdLib.git
 [submodule "AutoHotkey-Scripts"]
 	path = AutoHotkey-Scripts
-	url = git://github.com/polyethene/AutoHotkey-Scripts.git
+	url = https://github.com/polyethene/AutoHotkey-Scripts.git
 [submodule "Zip"]
 	path = Zip
-	url = git://github.com/infogulch/Zip.git
+	url = https://github.com/infogulch/Zip.git
 [submodule "LSON"]
 	path = LSON
-	url = git://github.com/infogulch/LSON.git
+	url = https://github.com/infogulch/LSON.git
 [submodule "CGUI"]
 	path = CGUI
-	url = git://github.com/ChrisS85/CGUI.git
+	url = https://github.com/ChrisS85/CGUI.git
 [submodule "WorkerThread"]
 	path = WorkerThread
-	url = git://github.com/ChrisS85/WorkerThread.git
+	url = https://github.com/ChrisS85/WorkerThread.git
 [submodule "AHK-DB"]
 	path = AHK-DB
-	url = git://github.com/Uberi/AHK-DB.git
+	url = https://github.com/Uberi/AHK-DB.git
 [submodule "AHKs"]
 	path = AHKs
-	url = git://github.com/camerb/AHKs.git
+	url = https://github.com/camerb/AHKs.git
 [submodule "AHKLink"]
 	path = AHKLink
-	url = git://github.com/nimdahk/AHKLink.git
+	url = https://github.com/nimdahk/AHKLink.git
 [submodule "COM-Classes"]
 	path = COM-Classes
-	url = git://github.com/maul-esel/COM-Classes.git
+	url = https://github.com/maul-esel/COM-Classes.git
 [submodule "FormsFramework"]
 	path = FormsFramework
-	url = git://github.com/maul-esel/FormsFramework.git
+	url = https://github.com/maul-esel/FormsFramework.git
 [submodule "ITaskbarList"]
 	path = ITaskbarList
-	url = git://github.com/maul-esel/ITaskbarList.git
+	url = https://github.com/maul-esel/ITaskbarList.git
 [submodule "AeroThumbnail"]
 	path = AeroThumbnail
-	url = git://github.com/maul-esel/AeroThumbnail.git
+	url = https://github.com/maul-esel/AeroThumbnail.git
 [submodule "AHK_cTable"]
 	path = AHK_cTable
-	url = git://github.com/hoppfrosch/AHK_cTable.git
+	url = https://github.com/hoppfrosch/AHK_cTable.git
 [submodule "_Struct"]
 	path = _Struct
-	url = git://github.com/HotKeyIt/_Struct.git
+	url = https://github.com/HotKeyIt/_Struct.git
 [submodule "cURL-Wrapper"]
 	path = cURL-Wrapper
-	url = git://github.com/RaptorX/cURL-Wrapper.git
+	url = https://github.com/RaptorX/cURL-Wrapper.git
 [submodule "Raydium-AHK"]
 	path = Raydium-AHK
-	url = git://github.com/Uberi/Raydium-AHK.git
+	url = https://github.com/Uberi/Raydium-AHK.git
 [submodule "ImportTypeLib"]
 	path = ImportTypeLib
-	url = git://github.com/maul-esel/ImportTypeLib.git
+	url = https://github.com/maul-esel/ImportTypeLib.git
 [submodule "ahk2-bigint"]
 	path = ahk2-bigint
-	url = git://github.com/infogulch/ahk2-bigint.git
+	url = https://github.com/infogulch/ahk2-bigint.git
 [submodule "CaseSensitiveObject"]
 	path = CaseSensitiveObject
-	url = git://github.com/infogulch/CaseSensitiveObject.git
+	url = https://github.com/infogulch/CaseSensitiveObject.git
 [submodule "ahk-OpenGL"]
 	path = ahk-OpenGL
-	url = git://github.com/infogulch/ahk-OpenGL.git
+	url = https://github.com/infogulch/ahk-OpenGL.git
 [submodule "AHK-Util-Funcs"]
 	path = AHK-Util-Funcs
-	url = git://github.com/maul-esel/AHK-Util-Funcs.git
+	url = https://github.com/maul-esel/AHK-Util-Funcs.git
 [submodule "scintilla-wrapper"]
 	path = scintilla-wrapper
 	url = https://github.com/RaptorX/scintilla-wrapper.git
