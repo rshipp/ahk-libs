@@ -196,3 +196,6 @@
 [submodule "jNizM_AutoHotkey_Scripts"]
 	path = jNizM_AutoHotkey_Scripts
 	url = https://github.com/jNizM/AutoHotkey_Scripts.git
+[submodule "AutoHotkey-HashTable"]
+	path = AutoHotkey-HashTable
+	url = https://github.com/Shambles-Dev/AutoHotkey-HashTable.git
