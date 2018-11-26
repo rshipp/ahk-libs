@@ -199,3 +199,6 @@
 [submodule "AutoHotkey-HashTable"]
 	path = AutoHotkey-HashTable
 	url = https://github.com/Shambles-Dev/AutoHotkey-HashTable.git
+[submodule "AutoHotkey-Facade"]
+	path = AutoHotkey-Facade
+	url = https://github.com/Shambles-Dev/AutoHotkey-Facade.git
