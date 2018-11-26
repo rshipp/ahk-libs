@@ -112,6 +112,10 @@ So far, the included libs are (in no particular order):
 * [Shambles-Dev](https://github.com/Shambles-Dev)’s Plaster introspection
   and Composer functional programming libraries. ([Issue #4](https://github.com/rshipp/ahk-libs/issues/4))
 
+## Issues
+
+See https://github.com/rshipp/ahk-libs/issues/6 for a note on FTP PASV mode issues.
+
 ## Note to developers of these libs
 If your code is in this repo, and you do not want it to be, I apologize.
 Please just let me know, and I will remove it.
