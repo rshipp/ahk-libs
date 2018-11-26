@@ -8,6 +8,12 @@ wrappers for [AHK 1.1](https://github.com/Lexikos/AutoHotkey_L) (previously AHK\
 AHK 1.0 (previously basic/vanilla), and [AHK v2](https://github.com/Lexikos/AutoHotkey_L/tree/alpha),
 implemented in over 3000 scripts.
 
+## DEPRECATED
+
+I'm archiving this repo, and won't be updating it again. For a more modern
+collection of AutoHotkey resources, I suggest visiting the [Awesome
+AutoHotkey](https://github.com/ahkscript/awesome-AutoHotkey) list.
+
 ## AutoHotkey Library Distribution
 Want more libs? Several projects have similar goals to this one:
 
